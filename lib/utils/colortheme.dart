@@ -1,18 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AppTheme {
-  late final ThemeData customTheme;
+enum ColorThemes {
+  standard,
+  purple,
+}
 
-  final Color _primaryColor = const Color(0xFF047769);
+class AppTheme extends ChangeNotifier{
+  //Constant variables
+  late ThemeData customTheme;
+  late ColorThemes currentTheme;
 
+  //Theme variables
+  final _standardTheme = ThemeData(
+    textTheme: GoogleFonts.nunitoTextTheme(),
+    primaryColor: const Color(0xFF047769),
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Color(0xFF047769),
+    ),
+  );
+
+  final _purpleTheme = ThemeData(
+    textTheme: GoogleFonts.nunitoTextTheme(),
+    primaryColor: Colors.purple,
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Colors.purple,
+    ),
+  );
+
+  //Constructor
   AppTheme(){
-    customTheme = ThemeData(
-      textTheme: GoogleFonts.nunitoTextTheme(),
-      primaryColor: _primaryColor,
-      appBarTheme: AppBarTheme(
-        backgroundColor: _primaryColor
-      ),
-    );
+    currentTheme = ColorThemes.standard;
+    customTheme = _standardTheme;
+  }
+
+  //Methods
+  void changeTheme(ColorThemes theme){
+    switch (theme) {
+      case ColorThemes.standard:
+        customTheme = _standardTheme;
+        currentTheme = ColorThemes.standard;
+        notifyListeners();
+        break;
+      case ColorThemes.purple:
+        customTheme = _purpleTheme;
+        currentTheme = ColorThemes.purple;
+        notifyListeners();
+        break; 
+      default:
+        print("Theme not availabe!");
+        customTheme = _standardTheme;
+        currentTheme = ColorThemes.standard;
+        notifyListeners();
+        break;
+    }
   }
 }
