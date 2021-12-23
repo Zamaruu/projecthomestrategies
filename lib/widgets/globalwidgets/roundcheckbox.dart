@@ -39,9 +39,9 @@ class _RoundCheckboxState extends State<RoundCheckbox> {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           border: Border.all(
-            color: checked? context.read<AppTheme>().customTheme.primaryColor : Colors.grey,
+            color: checked? context.watch<AppTheme>().customTheme.primaryColor : Colors.grey,
           ),
-          color: checked? context.read<AppTheme>().customTheme.primaryColor : Colors.white,
+          color: checked? context.watch<AppTheme>().customTheme.primaryColor : Colors.white,
         ),
         child: checked? 
           Center(
