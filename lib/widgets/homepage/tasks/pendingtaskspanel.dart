@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:projecthomestrategies/widgets/homepage/tasks/pendingtasktile.dart';
 
 class PendingTasksPanel extends StatefulWidget {
@@ -39,18 +40,29 @@ class _PendingTasksPanelState extends State<PendingTasksPanel> {
               ),
             ),
           ),
-          ListView.builder(
-            itemCount: tasks.length,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (BuildContext context, int index) {
-              return PendingTaskTile(
-                key: Key(tasks[index]), //Damit die Checkboxen richtig gerendert werden wenn eine Task beendet wird! 
-                listIndex: index,
-                onTaskFinished: removeTaskFromList,
-                taskName: tasks[index],
-              );
-            },
+          AnimationLimiter(
+            child: ListView.builder(
+              itemCount: tasks.length,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (BuildContext context, int index) {
+                return AnimationConfiguration.staggeredList(
+                  position: index,
+                  duration: const Duration(milliseconds: 375),
+                  child: SlideAnimation(
+                    verticalOffset: 50.0,
+                    child: FadeInAnimation(
+                      child: PendingTaskTile(
+                        key: Key(tasks[index]), //Damit die Checkboxen richtig gerendert werden wenn eine Task beendet wird! 
+                        listIndex: index,
+                        onTaskFinished: removeTaskFromList,
+                        taskName: tasks[index],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),
