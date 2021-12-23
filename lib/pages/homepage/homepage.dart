@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/widgets/basescaffold/basescaffold.dart';
+import 'package:projecthomestrategies/widgets/homepage/shoppinglist/shoppinglistpanel.dart';
 import 'package:projecthomestrategies/widgets/homepage/tasks/pendingtaskspanel.dart';
 
 
@@ -13,6 +14,7 @@ class Homepage extends StatelessWidget {
       body: ListView(
         children: const [
           PendingTasksPanel(),
+          ShoppinglistPanel(),
         ],
       ),
     );

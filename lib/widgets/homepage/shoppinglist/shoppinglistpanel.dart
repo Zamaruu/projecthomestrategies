@@ -1,42 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/widgets/homepage/basiclistcontainer.dart';
 import 'package:projecthomestrategies/widgets/homepage/panelheading.dart';
-import 'package:projecthomestrategies/widgets/homepage/tasks/pendingtasktile.dart';
+import 'package:projecthomestrategies/widgets/homepage/shoppinglist/shoppinglistitem.dart';
 
-class PendingTasksPanel extends StatefulWidget {
-  const PendingTasksPanel({ Key? key }) : super(key: key);
+class ShoppinglistPanel extends StatefulWidget {
+  const ShoppinglistPanel({ Key? key }) : super(key: key);
 
   @override
-  _PendingTasksPanelState createState() => _PendingTasksPanelState();
+  _ShoppinglistPanelState createState() => _ShoppinglistPanelState();
 }
 
-class _PendingTasksPanelState extends State<PendingTasksPanel> {
-  late List<String> tasks;
+class _ShoppinglistPanelState extends State<ShoppinglistPanel> {
+  late List<String> shoppingItems;
 
   @override
   void initState() {
     super.initState();
-    tasks = List.generate(3, (index) => "Aufgabe $index");
+    shoppingItems = List.generate(4, (index) => "Essen $index");
   }
 
   void removeTaskFromList(int index){
     setState(() {
-      tasks.removeAt(index);
+      shoppingItems.removeAt(index);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return HomepageListContainer(
+      topMargin: 10,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const PanelHeading(heading: "Deine ausstehenden Aufgaben"),
-          tasks.isNotEmpty?
+          Row(
+            children: [
+              const PanelHeading(heading: "Einkaufsliste für den 24.12."),
+              const Spacer(),
+              IconButton(
+                splashRadius: Global.splashRadius,
+                onPressed: (){}, 
+                icon: Icon(Icons.add_circle_sharp, color: Colors.grey.shade700,)
+              ),
+              const SizedBox(width: 20,)
+            ],
+          ),
+          shoppingItems.isNotEmpty?
             AnimationLimiter(
               child: ListView.builder(
-                itemCount: tasks.length,
+                itemCount: shoppingItems.length,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (BuildContext context, int index) {
@@ -46,11 +59,11 @@ class _PendingTasksPanelState extends State<PendingTasksPanel> {
                     child: SlideAnimation(
                       verticalOffset: 50.0,
                       child: FadeInAnimation(
-                        child: PendingTaskTile(
-                          key: Key(tasks[index]), //Damit die Checkboxen richtig gerendert werden wenn eine Task beendet wird! 
+                        child: ShoppingListItem(
+                          key: Key(shoppingItems[index]), //Damit die Checkboxen richtig gerendert werden wenn eine Task beendet wird! 
                           listIndex: index,
-                          onTaskFinished: removeTaskFromList,
-                          taskName: tasks[index],
+                          onItemBought: removeTaskFromList,
+                          itemName: shoppingItems[index],
                         ),
                       ),
                     ),
@@ -62,7 +75,7 @@ class _PendingTasksPanelState extends State<PendingTasksPanel> {
               height: 75,
               child: Center(
                 child: Text(
-                  "Du hast keine ausstehenden Aufgaben.",
+                  "Keine Dinge mehr auf der Einkaufsliste.",
                   style: TextStyle(
                     fontStyle: FontStyle.italic
                   ),
