@@ -24,6 +24,9 @@ class PendingTaskTile extends StatelessWidget {
         title: Text(
           taskName,
         ),
+        subtitle: const Text(
+          "Von SP, fällig um 14.00 Uhr"
+        ),
         trailing: PopupMenuButton(
           icon: Icon(Icons.more_vert, color: Colors.grey.shade700,), 
           itemBuilder: (context) => [
