@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projecthomestrategies/widgets/appbar.dart/customappbar.dart';
+import 'package:projecthomestrategies/widgets/appbar/customappbar.dart';
 import 'package:projecthomestrategies/widgets/drawermenu/drawer.dart';
 
 class BaseScaffold extends StatelessWidget {
