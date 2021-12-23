@@ -4,17 +4,19 @@ import 'package:projecthomestrategies/widgets/drawermenu/drawer.dart';
 
 class BaseScaffold extends StatelessWidget {
   final String pageTitle;
+  final bool showActions;
+  final bool showMenuDrawer;
   final Widget body;
   final _scaffoldKey = GlobalKey<ScaffoldState>();  
 
-  BaseScaffold({Key? key, required this.body, required this.pageTitle}) : super(key: key);
+  BaseScaffold({Key? key, required this.pageTitle, required this.body, this.showActions = true, this.showMenuDrawer = true,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: CustomAppBar(title: pageTitle, scaffoldKey: _scaffoldKey,),
-      endDrawer: const MenuDrawer(),
+      appBar: CustomAppBar(title: pageTitle, scaffoldKey: _scaffoldKey, showActions: showActions,),
+      endDrawer: showMenuDrawer? const MenuDrawer(): null,
       body: body,
     );
   }

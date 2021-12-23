@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:badges/badges.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
+import 'package:projecthomestrategies/widgets/notifications/notificationdialog.dart';
 
 class NotificationButton extends StatelessWidget {
   const NotificationButton({ Key? key }) : super(key: key);
@@ -21,7 +22,13 @@ class NotificationButton extends StatelessWidget {
       ),
       child: IconButton(
         splashRadius: Global.splashRadius,
-        onPressed: (){}, 
+        onPressed: () => Navigator.push(
+          context, 
+          MaterialPageRoute(
+            builder: (context) => const NotificationDialog(),
+            fullscreenDialog: true,
+          )
+        ), 
         icon: const Icon(
           Icons.notifications_none, 
           color: Colors.white,
