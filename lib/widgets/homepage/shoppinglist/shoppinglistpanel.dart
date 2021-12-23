@@ -3,6 +3,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/widgets/homepage/basiclistcontainer.dart';
 import 'package:projecthomestrategies/widgets/homepage/panelheading.dart';
+import 'package:projecthomestrategies/widgets/homepage/shoppinglist/shoppinglistadditemmodal.dart';
 import 'package:projecthomestrategies/widgets/homepage/shoppinglist/shoppinglistitem.dart';
 
 class ShoppinglistPanel extends StatefulWidget {
@@ -27,6 +28,24 @@ class _ShoppinglistPanelState extends State<ShoppinglistPanel> {
     });
   }
 
+  void addItemToList() async {
+    //String can be null due to abort of adding process
+    String? newItem = await showDialog(
+      context: context, 
+      builder: (BuildContext context){
+        return AddShoppingItemModal();
+      },
+    );
+    
+    if(newItem != null){
+      if(newItem.isNotEmpty){
+        setState(() {
+          shoppingItems.add(newItem);
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return HomepageListContainer(
@@ -40,7 +59,7 @@ class _ShoppinglistPanelState extends State<ShoppinglistPanel> {
               const Spacer(),
               IconButton(
                 splashRadius: Global.splashRadius,
-                onPressed: (){}, 
+                onPressed: addItemToList, 
                 icon: Icon(Icons.add_circle_sharp, color: Colors.grey.shade700,)
               ),
               const SizedBox(width: 20,)
