@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:projecthomestrategies/widgets/homepage/panelheading.dart';
 
 class BillRetrospect extends StatelessWidget {
   final List<charts.Series<dynamic, DateTime>> seriesList;
@@ -22,6 +23,14 @@ class BillRetrospect extends StatelessWidget {
       TimeSeriesSales(DateTime(2017, 10, 10), 75),
       TimeSeriesSales(DateTime(2017, 10, 18), 54),
       TimeSeriesSales(DateTime(2017, 11, 2), 78),
+      TimeSeriesSales(DateTime(2017, 11, 7), 78),
+      TimeSeriesSales(DateTime(2017, 11, 13), 5),
+      TimeSeriesSales(DateTime(2017, 11, 24), 25),
+      TimeSeriesSales(DateTime(2017, 12, 3), 34),
+      TimeSeriesSales(DateTime(2017, 12, 10), 23),
+      TimeSeriesSales(DateTime(2017, 12, 18), 92),
+      TimeSeriesSales(DateTime(2017, 12, 23), 34),
+      TimeSeriesSales(DateTime(2018, 1, 2), 78),
     ];
 
     return [
@@ -39,14 +48,22 @@ class BillRetrospect extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(8.0),
-      height: 200,
-      child: charts.TimeSeriesChart(
-        seriesList,
-        animate: true,
-        // Optionally pass in a [DateTimeFactory] used by the chart. The factory
-        // should create the same type of [DateTime] as the data provided. If none
-        // specified, the default creates local date time.
-        // dateTimeFactory: const charts.LocalDateTimeFactory(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const PanelHeading(heading: "14-tage Rückblick"),
+          SizedBox(
+            height: 200,
+            child: charts.TimeSeriesChart(
+              seriesList,
+              animate: true,
+              // Optionally pass in a [DateTimeFactory] used by the chart. The factory
+              // should create the same type of [DateTime] as the data provided. If none
+              // specified, the default creates local date time.
+              // dateTimeFactory: const charts.LocalDateTimeFactory(),
+            ),
+          ),
+        ],
       ),
     );
   }
