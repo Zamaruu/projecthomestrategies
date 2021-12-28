@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:badges/badges.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
-import 'package:projecthomestrategies/widgets/notifications/notificationdialog.dart';
+import 'package:projecthomestrategies/pages/homepage/notificationdialog.dart';
 
 class NotificationButton extends StatelessWidget {
   const NotificationButton({ Key? key }) : super(key: key);

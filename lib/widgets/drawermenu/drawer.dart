@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/widgets/drawermenu/draweravatar.dart';
 import 'package:projecthomestrategies/widgets/drawermenu/drawertile.dart';
 import 'package:projecthomestrategies/widgets/drawermenu/personalinfo.dart';
@@ -27,10 +28,11 @@ class MenuDrawer extends StatelessWidget {
                 ],
               ),
             ),
+            DrawerTile(icon: FontAwesomeIcons.home, drawerTitle: "Startseite", onClick: () => Global.navigateWithOutSamePush(context, "/homepage")),
             DrawerTile(icon: FontAwesomeIcons.table, drawerTitle: "Haushaltsplan", onClick: (){}),
             DrawerTile(icon: FontAwesomeIcons.listOl, drawerTitle: "Einkaufsliste", onClick: (){}),
             DrawerTile(icon: FontAwesomeIcons.utensils, drawerTitle: "Rezepte", onClick: (){}),
-            DrawerTile(icon: FontAwesomeIcons.wallet, drawerTitle: "Rechnungen & Ausgaben", onClick: (){}),
+            DrawerTile(icon: FontAwesomeIcons.wallet, drawerTitle: "Rechnungen & Ausgaben", onClick: () => Global.navigateWithOutSamePush(context, "/bills")),
             DrawerTile(icon: FontAwesomeIcons.check, drawerTitle: "Aufgabenlisten", onClick: (){}),
             DrawerTile(icon: FontAwesomeIcons.users, drawerTitle: "Mein Haushalt", onClick: (){}),
             const Spacer(),

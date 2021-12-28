@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:projecthomestrategies/pages/homepage/homepage.dart';
 import 'package:projecthomestrategies/utils/colortheme.dart';
+import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -28,9 +29,11 @@ class AppConfigLoader extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Home Strategies',
       theme: context.watch<AppTheme>().customTheme,
-      home: const Homepage(),
+      initialRoute: '/homepage',
+      routes: Global.appRoutes,
+      //home: const HomePage(),
     );
   }
 }

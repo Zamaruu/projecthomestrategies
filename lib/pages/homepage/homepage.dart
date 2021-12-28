@@ -4,8 +4,8 @@ import 'package:projecthomestrategies/widgets/homepage/shoppinglist/shoppinglist
 import 'package:projecthomestrategies/widgets/homepage/tasks/pendingtaskspanel.dart';
 
 
-class Homepage extends StatelessWidget {
-  const Homepage({ Key? key }) : super(key: key);
+class HomePage extends StatelessWidget {
+  const HomePage({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

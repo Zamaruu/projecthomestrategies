@@ -18,7 +18,7 @@ class DrawerTile extends StatelessWidget {
         child: FaIcon(icon, size: 22,),
       ),
       title: Text(drawerTitle),
-      onTap: () => onClick,
+      onTap: () => onClick(),
     );
   }
 }
