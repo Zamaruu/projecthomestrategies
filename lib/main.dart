@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:projecthomestrategies/pages/homepage/homepage.dart';
 import 'package:projecthomestrategies/utils/colortheme.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
@@ -30,6 +31,12 @@ class AppConfigLoader extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Home Strategies',
+      localizationsDelegates: const [
+         GlobalMaterialLocalizations.delegate
+       ],
+      supportedLocales: const [
+         Locale('de'),
+       ],
       theme: context.watch<AppTheme>().customTheme,
       initialRoute: '/homepage',
       routes: Global.appRoutes,

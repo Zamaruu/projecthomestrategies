@@ -15,6 +15,7 @@ class AppTheme extends ChangeNotifier{
   final _standardTheme = ThemeData(
     textTheme: GoogleFonts.nunitoTextTheme(),
     primaryColor: const Color(0xFF047769),
+    colorScheme: const ColorScheme.light(primary:  Color(0xFF047769), secondary: Color(0xFF047769)),
     appBarTheme: const AppBarTheme(
       backgroundColor: Color(0xFF047769),
     ),

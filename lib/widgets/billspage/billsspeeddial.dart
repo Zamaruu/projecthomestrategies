@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:projecthomestrategies/widgets/billspage/addbillmodal.dart';
 
 class BillsSpeedDial extends StatelessWidget {
   const BillsSpeedDial({ Key? key }) : super(key: key);
@@ -26,10 +27,8 @@ class BillsSpeedDial extends StatelessWidget {
       childPadding: const EdgeInsets.all(5),
       spaceBetweenChildren: 4,
       renderOverlay: true,
-      // overlayColor: Colors.black,
-      // overlayOpacity: 0.5,
-      onOpen: () => debugPrint('OPENING DIAL'),
-      onClose: () => debugPrint('DIAL CLOSED'),
+      overlayColor: Colors.grey,
+      overlayOpacity: 0.5,
       useRotationAnimation: true,
       tooltip: 'Rechnungsmenü',
       foregroundColor: Colors.white,
@@ -41,7 +40,12 @@ class BillsSpeedDial extends StatelessWidget {
         customSpeedDialChild(
           label: "Neue Rechnung",
           icon: Icons.add,
-          onTap: (){}
+          onTap: () => showDialog(
+            context: context, 
+            builder: (BuildContext context){
+              return AddBillModal();
+            }
+          ),
         ),
         customSpeedDialChild(
           label: "Kategorien",
