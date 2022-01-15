@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:projecthomestrategies/pages/authpages/signinpage.dart';
+import 'package:projecthomestrategies/pages/authpages/signuppage.dart';
 import 'package:projecthomestrategies/pages/billspage/billspage.dart';
 import 'package:projecthomestrategies/pages/homepage/homepage.dart';
 import 'package:intl/intl.dart';
@@ -9,6 +11,8 @@ class Global {
   static Map<String, Widget Function(BuildContext)> appRoutes = {
     "/homepage": (context) => const HomePage(),
     "/bills": (context) => BillsPage(),
+    "/signin": (context) => const SignInPage(),
+    "/signup": (context) => const SignUpPage(),
   };
 
   static void navigateWithOutSamePush(BuildContext context, String nav){

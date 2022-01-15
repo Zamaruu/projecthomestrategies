@@ -38,7 +38,7 @@ class AppConfigLoader extends StatelessWidget {
          Locale('de'),
        ],
       theme: context.watch<AppTheme>().customTheme,
-      initialRoute: '/homepage',
+      initialRoute: '/signin',
       routes: Global.appRoutes,
       //home: const HomePage(),
     );
