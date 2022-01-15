@@ -11,7 +11,7 @@ class SubmitFAB extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      onPressed: () => onPressed,
+      onPressed: () => onPressed(),
       child: FaIcon(icon, color: Colors.white, size: 25,),
       tooltip: tooltip,
     );
