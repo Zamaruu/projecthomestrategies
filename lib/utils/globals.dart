@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projecthomestrategies/pages/authpages/authenticationhandler.dart';
 import 'package:projecthomestrategies/pages/authpages/signinpage.dart';
 import 'package:projecthomestrategies/pages/authpages/signuppage.dart';
 import 'package:projecthomestrategies/pages/billspage/billspage.dart';
@@ -6,13 +7,19 @@ import 'package:projecthomestrategies/pages/homepage/homepage.dart';
 import 'package:intl/intl.dart';
 
 class Global {
-  static double splashRadius = 20;
+  static const double splashRadius = 20;
+  static const String baseApiUrl = "http://10.0.2.2:5000/api";
+  static const Map<String, String> baseApiHeader = {
+    "Accept": "application/json",
+    "content-type": "application/json"
+  };
 
   static Map<String, Widget Function(BuildContext)> appRoutes = {
     "/homepage": (context) => const HomePage(),
     "/bills": (context) => BillsPage(),
     "/signin": (context) => const SignInPage(),
     "/signup": (context) => const SignUpPage(),
+    "/auth": (context) => const AuthenticationHander(),
   };
 
   static void navigateWithOutSamePush(BuildContext context, String nav){

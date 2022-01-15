@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:projecthomestrategies/bloc/authentication_state.dart';
 import 'package:projecthomestrategies/pages/homepage/homepage.dart';
 import 'package:projecthomestrategies/utils/colortheme.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const HomeStrategies());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class HomeStrategies extends StatelessWidget {
+  const HomeStrategies({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     debugPaintSizeEnabled = false;
-    return ChangeNotifierProvider(
-      create: (context) => AppTheme(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AppTheme(),),
+        ChangeNotifierProvider(create: (context) => AuthenticationState(),)
+      ], 
       child: const AppConfigLoader(),
     );
   }
@@ -38,7 +42,7 @@ class AppConfigLoader extends StatelessWidget {
          Locale('de'),
        ],
       theme: context.watch<AppTheme>().customTheme,
-      initialRoute: '/signin',
+      initialRoute: '/auth',
       routes: Global.appRoutes,
       //home: const HomePage(),
     );

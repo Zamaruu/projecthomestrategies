@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:projecthomestrategies/bloc/authentication_state.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/widgets/drawermenu/draweravatar.dart';
 import 'package:projecthomestrategies/widgets/drawermenu/drawertile.dart';
 import 'package:projecthomestrategies/widgets/drawermenu/personalinfo.dart';
+import 'package:provider/provider.dart';
 
 class MenuDrawer extends StatelessWidget {
   final double _padding = 20.0;
@@ -40,10 +42,9 @@ class MenuDrawer extends StatelessWidget {
             DrawerTile(
               icon: FontAwesomeIcons.signOutAlt, 
               drawerTitle: "Abmelden", 
-              onClick: () => Navigator.of(context).pushNamedAndRemoveUntil(
-                "/signin",
-                (Route<dynamic> route) => false
-              ), 
+              onClick: (){
+                context.read<AuthenticationState>().signOut();
+              }
             ),
           ],
         ),
