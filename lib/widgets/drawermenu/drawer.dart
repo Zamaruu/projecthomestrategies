@@ -37,7 +37,14 @@ class MenuDrawer extends StatelessWidget {
             DrawerTile(icon: FontAwesomeIcons.users, drawerTitle: "Mein Haushalt", onClick: (){}),
             const Spacer(),
             DrawerTile(icon: FontAwesomeIcons.userCog, drawerTitle: "Mein Konto", onClick: (){}),
-            DrawerTile(icon: FontAwesomeIcons.signOutAlt, drawerTitle: "Abmelden", onClick: (){}),
+            DrawerTile(
+              icon: FontAwesomeIcons.signOutAlt, 
+              drawerTitle: "Abmelden", 
+              onClick: () => Navigator.of(context).pushNamedAndRemoveUntil(
+                "/signin",
+                (Route<dynamic> route) => false
+              ), 
+            ),
           ],
         ),
       ),

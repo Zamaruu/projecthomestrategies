@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:projecthomestrategies/pages/authpages/signuppage.dart';
+import 'package:projecthomestrategies/pages/homepage/homepage.dart';
 import 'package:projecthomestrategies/widgets/auth/submitfab.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/textinputfield.dart';
 
@@ -76,7 +77,15 @@ class _SignInPageState extends State<SignInPage> {
                   padding: const EdgeInsets.only(left: 40.0),
                   child: TextButton(onPressed: () => navigateToRegisterPage(context), child: const Text("Noch kein Konto?")),
                 ),
-                SubmitFAB(key: const Key("SignInSubmit"), onPressed: (){}, tooltip: "Anmelden", icon: Icons.arrow_forward),
+                SubmitFAB(
+                  key: const Key("SignInSubmit"), 
+                  onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
+                    "/homepage",
+                    (Route<dynamic> route) => false
+                  ), 
+                  tooltip: "Anmelden", 
+                  icon: Icons.arrow_forward,
+                ),
               ],
             ),
           )

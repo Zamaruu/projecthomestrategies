@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.zamaruu.projecthomestrategies">
    <application
-        android:label="projecthomestrategies"
+        android:label="Home\nStrategies"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
