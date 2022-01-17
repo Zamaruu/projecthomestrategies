@@ -25,7 +25,7 @@ class AuthenticationHander extends StatelessWidget {
         else{
           return Consumer<AuthenticationState>(
             builder: (BuildContext context, AuthenticationState authState, _){
-              if(snapshot.data != null){
+              if(snapshot.data != null && authState.status == Status.uninitialized){
                 authState.signInWithSavedCredentials(snapshot.data!);
               }
               switch(authState.status){
