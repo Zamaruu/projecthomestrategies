@@ -45,6 +45,7 @@ dependencies:
   flutter_speed_dial: ^5.0.0+1
   intl: ^0.17.0
   flutter_keyboard_visibility: ^5.1.1
+  flutter_secure_storage: ^5.0.2
 
 dev_dependencies:
   flutter_test:

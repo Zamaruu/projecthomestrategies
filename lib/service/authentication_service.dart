@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:projecthomestrategies/bloc/user_model.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 
 class AuthenticationService {
@@ -9,10 +10,8 @@ class AuthenticationService {
     url = Global.baseApiUrl;
   }
 
-  Future<String?> signInWithEmailAndPassword(String email, String password) async {
-    var rawCredentials = "$email:$password";
-    var bytes = utf8.encode(rawCredentials);
-    var credentials = base64.encode(bytes);
+  Future<Map<String, dynamic>> signInWithEmailAndPassword(String email, String password) async {
+    var credentials = Global.encodeCredentials(email, password);
     
     try {
       final rawUri = url + "/Auth/signin/$credentials";
@@ -24,17 +23,36 @@ class AuthenticationService {
         headers: Global.baseApiHeader,
       );
 
-      if(response.statusCode == 200){
-        print(jsonDecode(response.body));
-        return jsonDecode(response.body);  
+      if(response.statusCode == 200 || response.statusCode == 307){
+        if(response.body.isEmpty){
+          return <String, dynamic>{
+            "code": 500,
+            "token": null,
+          }; 
+        }
+
+        //getting auth token
+        var body = jsonDecode(response.body);
+
+        return <String, dynamic>{
+          "code": response.statusCode,
+          "token": body["token"],
+          "user": UserModel.fromJson(body["user"]),
+        };  
       }
       else{
-        print(response.statusCode);
-        return response.statusCode.toString();
+        return <String, dynamic>{
+          "code": response.statusCode,
+          "token": null
+        }; 
       }
       
     } catch (e) {
       rethrow;
+      return <String, dynamic>{
+        "code": 500,
+        "token": null
+      }; 
     }
   }
 }

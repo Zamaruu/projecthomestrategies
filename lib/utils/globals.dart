@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/pages/authpages/authenticationhandler.dart';
 import 'package:projecthomestrategies/pages/authpages/signinpage.dart';
@@ -37,5 +39,11 @@ class Global {
 
   static String datetimeToDeString(DateTime date, {String format = "dd.MM.yyyy"}){
     return DateFormat(format).format(date);
+  }
+
+  static String encodeCredentials(String email, String password){
+    var rawCredentials = "$email:$password";
+    var bytes = utf8.encode(rawCredentials);
+    return base64.encode(bytes);
   }
 }
