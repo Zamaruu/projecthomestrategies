@@ -10,8 +10,15 @@ class AuthenticationService {
     url = Global.baseApiUrl;
   }
 
-  Future<Map<String, dynamic>> signInWithEmailAndPassword(String email, String password) async {
-    var credentials = Global.encodeCredentials(email, password);
+  Future<Map<String, dynamic>> signInWithEmailAndPassword({String? email, String? password, String? encodedCredentials}) async {
+    String credentials = "";
+
+    if(encodedCredentials != null){
+      credentials = encodedCredentials;
+    }
+    else{
+      credentials = Global.encodeCredentials(email!, password!);
+    }
     
     try {
       final rawUri = url + "/Auth/signin/$credentials";

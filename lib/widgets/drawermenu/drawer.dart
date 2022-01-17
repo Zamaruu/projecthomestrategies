@@ -42,8 +42,8 @@ class MenuDrawer extends StatelessWidget {
             DrawerTile(
               icon: FontAwesomeIcons.signOutAlt, 
               drawerTitle: "Abmelden", 
-              onClick: (){
-                context.read<AuthenticationState>().signOut();
+              onClick: () async {
+                await context.read<AuthenticationState>().signOut();
               }
             ),
           ],

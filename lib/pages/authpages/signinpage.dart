@@ -5,6 +5,7 @@ import 'package:projecthomestrategies/bloc/authentication_state.dart';
 import 'package:projecthomestrategies/pages/authpages/signuppage.dart';
 import 'package:projecthomestrategies/pages/homepage/homepage.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
+import 'package:projecthomestrategies/utils/securestoragehandler.dart';
 import 'package:projecthomestrategies/widgets/auth/authenticationresponse.dart';
 import 'package:projecthomestrategies/widgets/auth/staysignedincheckbox.dart';
 import 'package:projecthomestrategies/widgets/auth/submitfab.dart';
@@ -45,7 +46,7 @@ class _SignInPageState extends State<SignInPage> {
     if(emailController.text.isNotEmpty && passwordController.text.isNotEmpty){
       if(AuthenticationResponse.empty().validateEmail(emailController.text.trim())){
         if(staySignedIn){
-          safeCredentials(
+          SecureStorageHandler().safeCredentials(
             Global.encodeCredentials(
               emailController.text.trim(), 
               passwordController.text.trim(),
@@ -53,7 +54,7 @@ class _SignInPageState extends State<SignInPage> {
           );
         }
 
-        return await authState.signIn(emailController.text.trim(), passwordController.text.trim());
+        return await authState.signIn(email: emailController.text.trim(), password: passwordController.text.trim());
       }
       else{
         return 601;
@@ -64,14 +65,10 @@ class _SignInPageState extends State<SignInPage> {
     }
   }
 
-  Future safeCredentials(String credentials) async {
-    const _storage = FlutterSecureStorage();
-    final creds = await _storage.read(key: "credentials"); 
-
-    //Noch nichts gespeichert
-    if(creds == null){
-      _storage.write(key: "credentials", value: credentials);
-    }
+  void setSignedIn(bool newValue){
+    setState(() {
+      staySignedIn = newValue;
+    });
   }
 
   @override
@@ -110,7 +107,7 @@ class _SignInPageState extends State<SignInPage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            StaySignedInCheckBox(staySignedIn: staySignedIn),
+                            StaySignedInCheckBox(staySignedIn: staySignedIn, setSignedIn: setSignedIn,),
                             const Text("Angemeldet bleiben?"),
                           ],
                         )
