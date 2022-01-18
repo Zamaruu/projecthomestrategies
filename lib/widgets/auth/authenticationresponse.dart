@@ -20,12 +20,6 @@ class AuthenticationResponse {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  bool validateEmail(String email) {
-    return RegExp(
-            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-        .hasMatch(email);
-  }
-
   Color getSnackbarColorFromStatusCode(int code) {
     if (code >= 200 && code <= 299) {
       return Theme.of(context).primaryColor;
@@ -43,7 +37,7 @@ class AuthenticationResponse {
       case 200:
         return "Login war erfolgreich";
       case 201:
-        return "";
+        return "Konto erfolgreich erstellt";
       case 307:
         return "Anfrage temporär umgeleitet aber erfolgreich";
       case 400:
@@ -54,6 +48,8 @@ class AuthenticationResponse {
         return "";
       case 403:
         return "";
+      case 409:
+        return "Es existiert bereits ein Benutzer mit dieser E-Mail!";
       case 503:
         return "Der Server ist momentan unerreichbar! Probiere es später erneut.";
       case 600:

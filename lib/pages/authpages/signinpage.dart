@@ -47,8 +47,7 @@ class _SignInPageState extends State<SignInPage> {
 
   Future<int> tryLogin(AuthenticationState authState) async {
     if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
-      if (AuthenticationResponse.empty()
-          .validateEmail(emailController.text.trim())) {
+      if (Global.validateEmail(emailController.text.trim())) {
         setState(() {
           isLoading = true;
         });
@@ -164,6 +163,7 @@ class _SignInPageState extends State<SignInPage> {
                             ),
                             SubmitFAB(
                               key: const Key("SignInSubmit"),
+                              tag: "SignIn",
                               onPressed: () => handleSignIn(auth, context),
                               tooltip: "Anmelden",
                               icon: Icons.arrow_forward,

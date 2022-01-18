@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:projecthomestrategies/bloc/signup_model.dart';
 import 'package:projecthomestrategies/bloc/user_model.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 
@@ -12,8 +13,11 @@ class AuthenticationService {
     url = Global.baseApiUrl;
   }
 
-  Future<Map<String, dynamic>> signInWithEmailAndPassword(
-      {String? email, String? password, String? encodedCredentials}) async {
+  Future<Map<String, dynamic>> signInWithEmailAndPassword({
+    String? email,
+    String? password,
+    String? encodedCredentials,
+  }) async {
     String credentials = "";
 
     if (encodedCredentials != null) {
@@ -58,5 +62,29 @@ class AuthenticationService {
     } on Exception catch (e) {
       return <String, dynamic>{"code": 500, "token": null};
     }
+  }
+
+  Future<int> signUpWithEmailAndPassword(SignupModel signupModel) async {
+    try {
+      final rawUri = url + "/Auth/signup/basic";
+
+      final uri = Uri.parse(rawUri);
+
+      var response = await http
+          .post(
+            uri,
+            headers: Global.baseApiHeader,
+            body: jsonEncode(signupModel.toJson()),
+          )
+          .timeout(Global.timeoutDuration);
+
+      return response.statusCode;
+    } on TimeoutException catch (e) {
+      return 500;
+    } on Exception catch (e) {
+      return 500;
+    }
+
+    return 400;
   }
 }

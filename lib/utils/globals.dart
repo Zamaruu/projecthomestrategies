@@ -49,4 +49,10 @@ class Global {
     var bytes = utf8.encode(rawCredentials);
     return base64.encode(bytes);
   }
+
+  static bool validateEmail(String email) {
+    return RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(email);
+  }
 }
