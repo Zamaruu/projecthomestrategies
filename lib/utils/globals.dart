@@ -7,10 +7,12 @@ import 'package:projecthomestrategies/pages/authpages/signuppage.dart';
 import 'package:projecthomestrategies/pages/billspage/billspage.dart';
 import 'package:projecthomestrategies/pages/homepage/homepage.dart';
 import 'package:intl/intl.dart';
+import 'package:projecthomestrategies/pages/household/householdpage.dart';
 
 class Global {
   static const double splashRadius = 20;
   static const String baseApiUrl = "http://10.0.2.2:5000/api";
+  static const Duration timeoutDuration = Duration(milliseconds: 7500);
   static const Map<String, String> baseApiHeader = {
     "Accept": "application/json",
     "content-type": "application/json"
@@ -21,27 +23,28 @@ class Global {
     "/bills": (context) => BillsPage(),
     "/signin": (context) => const SignInPage(),
     "/signup": (context) => const SignUpPage(),
+    "/household": (context) => HouseholdPage(),
     "/auth": (context) => const AuthenticationHander(),
   };
 
-  static void navigateWithOutSamePush(BuildContext context, String nav){
+  static void navigateWithOutSamePush(BuildContext context, String nav) {
     Route route = ModalRoute.of(context) as Route;
     final routeName = route.settings.name;
-    
+
     if (routeName != null && routeName != nav) {
       Navigator.pop(context);
       Navigator.of(context).pushNamed(nav);
-    }
-    else{
+    } else {
       Navigator.pop(context);
     }
   }
 
-  static String datetimeToDeString(DateTime date, {String format = "dd.MM.yyyy"}){
+  static String datetimeToDeString(DateTime date,
+      {String format = "dd.MM.yyyy"}) {
     return DateFormat(format).format(date);
   }
 
-  static String encodeCredentials(String email, String password){
+  static String encodeCredentials(String email, String password) {
     var rawCredentials = "$email:$password";
     var bytes = utf8.encode(rawCredentials);
     return base64.encode(bytes);

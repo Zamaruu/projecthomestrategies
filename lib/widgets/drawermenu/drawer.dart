@@ -36,7 +36,7 @@ class MenuDrawer extends StatelessWidget {
             DrawerTile(icon: FontAwesomeIcons.utensils, drawerTitle: "Rezepte", onClick: (){}),
             DrawerTile(icon: FontAwesomeIcons.wallet, drawerTitle: "Rechnungen & Ausgaben", onClick: () => Global.navigateWithOutSamePush(context, "/bills")),
             DrawerTile(icon: FontAwesomeIcons.check, drawerTitle: "Aufgabenlisten", onClick: (){}),
-            DrawerTile(icon: FontAwesomeIcons.users, drawerTitle: "Mein Haushalt", onClick: (){}),
+            DrawerTile(icon: FontAwesomeIcons.users, drawerTitle: "Mein Haushalt", onClick: () => Global.navigateWithOutSamePush(context, "/household")),
             const Spacer(),
             DrawerTile(icon: FontAwesomeIcons.userCog, drawerTitle: "Mein Konto", onClick: (){}),
             DrawerTile(

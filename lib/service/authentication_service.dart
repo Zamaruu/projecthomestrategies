@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:projecthomestrategies/bloc/user_model.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
@@ -6,36 +8,38 @@ import 'package:projecthomestrategies/utils/globals.dart';
 class AuthenticationService {
   late String url;
 
-  AuthenticationService(){
+  AuthenticationService() {
     url = Global.baseApiUrl;
   }
 
-  Future<Map<String, dynamic>> signInWithEmailAndPassword({String? email, String? password, String? encodedCredentials}) async {
+  Future<Map<String, dynamic>> signInWithEmailAndPassword(
+      {String? email, String? password, String? encodedCredentials}) async {
     String credentials = "";
 
-    if(encodedCredentials != null){
+    if (encodedCredentials != null) {
       credentials = encodedCredentials;
-    }
-    else{
+    } else {
       credentials = Global.encodeCredentials(email!, password!);
     }
-    
+
     try {
       final rawUri = url + "/Auth/signin/$credentials";
 
       final uri = Uri.parse(rawUri);
 
-      var response = await http.post(
-        uri,
-        headers: Global.baseApiHeader,
-      );
+      var response = await http
+          .post(
+            uri,
+            headers: Global.baseApiHeader,
+          )
+          .timeout(Global.timeoutDuration);
 
-      if(response.statusCode == 200 || response.statusCode == 307){
-        if(response.body.isEmpty){
+      if (response.statusCode == 200 || response.statusCode == 307) {
+        if (response.body.isEmpty) {
           return <String, dynamic>{
             "code": 500,
             "token": null,
-          }; 
+          };
         }
 
         //getting auth token
@@ -45,21 +49,14 @@ class AuthenticationService {
           "code": response.statusCode,
           "token": body["token"],
           "user": UserModel.fromJson(body["user"]),
-        };  
+        };
+      } else {
+        return <String, dynamic>{"code": response.statusCode, "token": null};
       }
-      else{
-        return <String, dynamic>{
-          "code": response.statusCode,
-          "token": null
-        }; 
-      }
-      
-    } catch (e) {
-      rethrow;
-      return <String, dynamic>{
-        "code": 500,
-        "token": null
-      }; 
+    } on TimeoutException catch (e) {
+      return <String, dynamic>{"code": 503, "token": null};
+    } on Exception catch (e) {
+      return <String, dynamic>{"code": 500, "token": null};
     }
   }
 }

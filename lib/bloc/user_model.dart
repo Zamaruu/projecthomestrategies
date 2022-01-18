@@ -1,3 +1,5 @@
+import 'package:projecthomestrategies/bloc/household_model.dart';
+
 class UserModel {
   int? userId;
   String? firstname;
@@ -6,7 +8,7 @@ class UserModel {
   String? password;
   int? userColor;
   int? type;
-  dynamic? household;
+  HouseholdModel? household;
 
   UserModel(
       {this.userId,
@@ -26,7 +28,7 @@ class UserModel {
     password = json['password'];
     userColor = json['userColor'];
     type = json['type'];
-    household = json['household'];
+    household = HouseholdModel.fromJson(json['household']);
   }
 
   Map<String, dynamic> toJson() {
@@ -38,7 +40,7 @@ class UserModel {
     data['password'] = password;
     data['userColor'] = userColor;
     data['type'] = type;
-    data['household'] = household;
+    data['household'] = household!.toJson();
     return data;
   }
 }

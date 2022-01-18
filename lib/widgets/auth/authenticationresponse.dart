@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class AuthenticationResponse {
-late BuildContext context;
-late int statusCode;
+  late BuildContext context;
+  late int statusCode;
 
   AuthenticationResponse.empty();
 
   AuthenticationResponse(this.context, this.statusCode);
 
-  void showSnackbar(){
+  void showSnackbar() {
     var color = getSnackbarColorFromStatusCode(statusCode);
     var response = getSnackbarResponseTextFromStatusCode(statusCode);
 
@@ -20,21 +20,20 @@ late int statusCode;
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  bool validateEmail(String email){
-    return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
+  bool validateEmail(String email) {
+    return RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(email);
   }
 
-  Color getSnackbarColorFromStatusCode(int code){
-    if(code >= 200 && code <= 299){
+  Color getSnackbarColorFromStatusCode(int code) {
+    if (code >= 200 && code <= 299) {
       return Theme.of(context).primaryColor;
-    }
-    else if(code >= 300 && code <= 399){
+    } else if (code >= 300 && code <= 399) {
       return Colors.lightGreen;
-    }
-    else if(code >= 400 && code <= 499){
+    } else if (code >= 400 && code <= 499) {
       return Colors.red;
-    }
-    else{
+    } else {
       return Colors.grey;
     }
   }
@@ -50,11 +49,13 @@ late int statusCode;
       case 400:
         return "Anfrage ungültig!";
       case 401:
-        return "";
+        return "Die übergebenen Anmeldedaten sind ungültig";
       case 402:
         return "";
       case 403:
         return "";
+      case 503:
+        return "Der Server ist momentan unerreichbar! Probiere es später erneut.";
       case 600:
         return "Anmeldedaten nicht korrekt ausgefüllt!";
       case 601:
@@ -64,4 +65,3 @@ late int statusCode;
     }
   }
 }
-
