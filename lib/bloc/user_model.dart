@@ -28,7 +28,9 @@ class UserModel {
     password = json['password'];
     userColor = json['userColor'];
     type = json['type'];
-    household = HouseholdModel.fromJson(json['household']);
+    household = json["household"] != null
+        ? HouseholdModel.fromJson(json['household'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
