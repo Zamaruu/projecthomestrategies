@@ -1,10 +1,25 @@
 import 'package:flutter/material.dart';
 
 class DrawerAvatar extends StatelessWidget {
+  late String? firstLetter;
+  late String? lastLetter;
   final double _avatarRadius = 125.0;
   final double _fontSize = 45.0;
 
-  const DrawerAvatar({ Key? key }) : super(key: key);
+  DrawerAvatar({Key? key, this.firstLetter, this.lastLetter})
+      : super(key: key) {
+    if (firstLetter == null) {
+      firstLetter = "";
+    } else {
+      firstLetter = firstLetter!.toUpperCase();
+    }
+
+    if (lastLetter == null) {
+      lastLetter = "";
+    } else {
+      lastLetter = lastLetter!.toUpperCase();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +32,8 @@ class DrawerAvatar extends StatelessWidget {
       ),
       alignment: Alignment.center,
       child: Text(
-        "MD",
-        style: TextStyle(
-          fontSize: _fontSize,
-          color: Colors.white
-        ),  
+        "$firstLetter$lastLetter",
+        style: TextStyle(fontSize: _fontSize, color: Colors.white),
       ),
     );
   }
