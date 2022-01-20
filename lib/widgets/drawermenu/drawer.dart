@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:projecthomestrategies/bloc/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/user_model.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
-import 'package:projecthomestrategies/widgets/drawermenu/draweravatar.dart';
+import 'package:projecthomestrategies/widgets/globalwidgets/draweravatar.dart';
 import 'package:projecthomestrategies/widgets/drawermenu/drawertile.dart';
 import 'package:projecthomestrategies/widgets/drawermenu/personalinfo.dart';
 import 'package:provider/provider.dart';
@@ -21,14 +21,14 @@ class MenuDrawer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Selector<AuthenticationState, UserModel>(
-              selector: (context, model) => model.sessionUser!,
+              selector: (context, model) => model.sessionUser,
               builder: (context, user, _) {
                 return Padding(
                   padding: EdgeInsets.only(top: _padding, left: _padding),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      DrawerAvatar(
+                      UserAvatar(
                         firstLetter: user.firstname![0],
                         lastLetter: user.surname![0],
                       ),

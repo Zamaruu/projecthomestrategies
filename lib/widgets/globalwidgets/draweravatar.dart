@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 
-class DrawerAvatar extends StatelessWidget {
+class UserAvatar extends StatelessWidget {
   late String? firstLetter;
   late String? lastLetter;
-  final double _avatarRadius = 125.0;
-  final double _fontSize = 45.0;
+  final double avatarRadius;
+  final double fontSize;
 
-  DrawerAvatar({Key? key, this.firstLetter, this.lastLetter})
-      : super(key: key) {
+  UserAvatar({
+    Key? key,
+    this.firstLetter,
+    this.lastLetter,
+    this.avatarRadius = 125.0,
+    this.fontSize = 45.0,
+  }) : super(key: key) {
     if (firstLetter == null) {
       firstLetter = "";
     } else {
@@ -24,8 +29,8 @@ class DrawerAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: _avatarRadius,
-      width: _avatarRadius,
+      height: avatarRadius,
+      width: avatarRadius,
       decoration: const BoxDecoration(
         shape: BoxShape.circle,
         color: Colors.blue,
@@ -33,7 +38,7 @@ class DrawerAvatar extends StatelessWidget {
       alignment: Alignment.center,
       child: Text(
         "$firstLetter$lastLetter",
-        style: TextStyle(fontSize: _fontSize, color: Colors.white),
+        style: TextStyle(fontSize: fontSize, color: Colors.white),
       ),
     );
   }

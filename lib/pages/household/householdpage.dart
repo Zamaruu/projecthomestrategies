@@ -5,22 +5,20 @@ import 'package:projecthomestrategies/pages/household/createhousehold.dart';
 import 'package:projecthomestrategies/widgets/basescaffold/basescaffold.dart';
 import 'package:provider/provider.dart';
 
-
-
-
 class HouseholdPage extends StatelessWidget {
   late HouseholdModel? household;
 
   HouseholdPage({Key? key}) : super(key: key);
 
-  Widget checkIfUserHasHousehold(BuildContext context){
-    household = context.read<AuthenticationState>().sessionUser!.household;
+  Widget checkIfUserHasHousehold(BuildContext context) {
+    household = context.read<AuthenticationState>().sessionUser.household;
 
-    if(household == null){
+    if (household == null) {
       return const CreateHouseholdPage();
-    }
-    else{
-      return HouseholdManagement(householdModel: household!,);
+    } else {
+      return HouseholdManagement(
+        householdModel: household!,
+      );
     }
   }
 
@@ -33,12 +31,13 @@ class HouseholdPage extends StatelessWidget {
 class HouseholdManagement extends StatelessWidget {
   final HouseholdModel householdModel;
 
-  const HouseholdManagement({ Key? key, required this.householdModel }) : super(key: key);
+  const HouseholdManagement({Key? key, required this.householdModel})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BaseScaffold(
-      pageTitle: householdModel.householdName!, 
+      pageTitle: householdModel.householdName!,
       body: Container(),
     );
   }

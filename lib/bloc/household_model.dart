@@ -1,7 +1,9 @@
+import 'package:projecthomestrategies/bloc/user_model.dart';
+
 class HouseholdModel {
   int? householdId;
   String? householdName;
-  dynamic householdMember;
+  List<UserModel>? householdMember;
   dynamic householdBills;
 
   HouseholdModel(
@@ -21,8 +23,19 @@ class HouseholdModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['householdId'] = householdId;
     data['householdName'] = householdName;
-    data['householdMember'] = householdMember;
-    data['householdBills'] = householdBills;
+    if (householdMember != null) {
+      data['householdMember'] =
+          householdMember!.map((v) => v.toJson()).toList();
+    }
+    if (householdBills != null) {
+      data['householdBills'] = householdBills!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+
+  Map<String, dynamic> toCreateJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['householdName'] = householdName;
     return data;
   }
 }

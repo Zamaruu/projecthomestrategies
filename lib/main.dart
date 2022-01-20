@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:projecthomestrategies/bloc/authentication_state.dart';
-import 'package:projecthomestrategies/pages/homepage/homepage.dart';
 import 'package:projecthomestrategies/utils/colortheme.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:provider/provider.dart';
@@ -19,9 +18,13 @@ class HomeStrategies extends StatelessWidget {
     debugPaintSizeEnabled = false;
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => AppTheme(),),
-        ChangeNotifierProvider(create: (context) => AuthenticationState(),)
-      ], 
+        ChangeNotifierProvider(
+          create: (context) => AppTheme(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AuthenticationState(),
+        )
+      ],
       child: const AppConfigLoader(),
     );
   }
@@ -35,12 +38,10 @@ class AppConfigLoader extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Home Strategies',
-      localizationsDelegates: const [
-         GlobalMaterialLocalizations.delegate
-       ],
+      localizationsDelegates: const [GlobalMaterialLocalizations.delegate],
       supportedLocales: const [
-         Locale('de'),
-       ],
+        Locale('de'),
+      ],
       theme: context.watch<AppTheme>().customTheme,
       initialRoute: '/auth',
       routes: Global.appRoutes,

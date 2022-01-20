@@ -6,7 +6,7 @@ enum ColorThemes {
   purple,
 }
 
-class AppTheme extends ChangeNotifier{
+class AppTheme extends ChangeNotifier {
   //Constant variables
   late ThemeData customTheme;
   late ColorThemes currentTheme;
@@ -15,7 +15,8 @@ class AppTheme extends ChangeNotifier{
   final _standardTheme = ThemeData(
     textTheme: GoogleFonts.nunitoTextTheme(),
     primaryColor: const Color(0xFF047769),
-    colorScheme: const ColorScheme.light(primary:  Color(0xFF047769), secondary: Color(0xFF047769)),
+    colorScheme: const ColorScheme.light(
+        primary: Color(0xFF047769), secondary: Color(0xFF047769)),
     appBarTheme: const AppBarTheme(
       backgroundColor: Color(0xFF047769),
     ),
@@ -30,13 +31,13 @@ class AppTheme extends ChangeNotifier{
   );
 
   //Constructor
-  AppTheme(){
+  AppTheme() {
     currentTheme = ColorThemes.standard;
     customTheme = _standardTheme;
   }
 
   //Methods
-  void changeTheme(ColorThemes theme){
+  void changeTheme(ColorThemes theme) {
     switch (theme) {
       case ColorThemes.standard:
         customTheme = _standardTheme;
@@ -47,9 +48,9 @@ class AppTheme extends ChangeNotifier{
         customTheme = _purpleTheme;
         currentTheme = ColorThemes.purple;
         notifyListeners();
-        break; 
+        break;
       default:
-        print("Theme not availabe!");
+        debugPrint("Theme not availabe!");
         customTheme = _standardTheme;
         currentTheme = ColorThemes.standard;
         notifyListeners();

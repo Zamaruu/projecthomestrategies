@@ -13,7 +13,7 @@ class Global {
   static const double splashRadius = 20;
   static const String baseApiUrl = "http://10.0.2.2:5000/api";
   static const Duration timeoutDuration = Duration(milliseconds: 7500);
-  static const Map<String, String> baseApiHeader = {
+  static Map<String, String> baseApiHeader = {
     "Accept": "application/json",
     "content-type": "application/json"
   };
@@ -54,5 +54,11 @@ class Global {
     return RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(email);
+  }
+
+  static Map<String, String> getHeaderWithAuthentication(String token) {
+    var header = baseApiHeader;
+    header["Authorization"] = "Bearer $token";
+    return header;
   }
 }

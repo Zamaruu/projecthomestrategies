@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:projecthomestrategies/bloc/signup_model.dart';
 import 'package:projecthomestrategies/bloc/user_model.dart';

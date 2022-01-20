@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/bill_model.dart';
 import 'package:projecthomestrategies/widgets/basescaffold/basescaffold.dart';
-import 'package:projecthomestrategies/widgets/billspage/billingtile.dart';
 import 'package:projecthomestrategies/widgets/billspage/billingtimesection.dart';
 import 'package:projecthomestrategies/widgets/billspage/billsspeeddial.dart';
 import 'package:projecthomestrategies/widgets/billspage/thirtydayretro.dart';
 import 'dart:math';
 
+// ignore: must_be_immutable
 class BillsPage extends StatelessWidget {
   late List<BillModel> bills;
-  
-  BillsPage({ Key? key }) : super(key: key){
-    bills = List.generate(4, (index) => BillModel(
-      index, 
-      Random().nextInt(100).toDouble(), 
-      DateTime.now().toLocal(), 
-      "Maximilian Ditz", 
-      "Lebensmittel",
-    ));
+
+  BillsPage({Key? key}) : super(key: key) {
+    bills = List.generate(
+        4,
+        (index) => BillModel(
+              index,
+              Random().nextInt(100).toDouble(),
+              DateTime.now().toLocal(),
+              "Maximilian Ditz",
+              "Lebensmittel",
+            ));
   }
 
   @override

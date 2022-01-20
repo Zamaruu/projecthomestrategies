@@ -21,25 +21,27 @@ class AuthenticationHander extends StatelessWidget {
             child: Text(snapshot.error.toString()),
           );
         } else {
-          return Consumer<AuthenticationState>(builder:
-              (BuildContext context, AuthenticationState authState, _) {
-            if (snapshot.data != null &&
-                authState.status == Status.uninitialized) {
-              authState.signInWithSavedCredentials(snapshot.data!);
-            }
-            switch (authState.status) {
-              case Status.uninitialized:
-                return const SignInPage();
-              case Status.unauthenticated:
-                return const SignInPage();
-              case Status.authenticating:
-                return const HomePage();
-              case Status.authenticated:
-                return const HomePage();
-              default:
-                return const Scaffold();
-            }
-          });
+          return Selector<AuthenticationState, Status>(
+              selector: (context, model) => model.status,
+              builder: (BuildContext context, Status status, _) {
+                if (snapshot.data != null && status == Status.uninitialized) {
+                  context
+                      .read<AuthenticationState>()
+                      .signInWithSavedCredentials(snapshot.data!);
+                }
+                switch (status) {
+                  case Status.uninitialized:
+                    return const SignInPage();
+                  case Status.unauthenticated:
+                    return const SignInPage();
+                  case Status.authenticating:
+                    return const HomePage();
+                  case Status.authenticated:
+                    return const HomePage();
+                  default:
+                    return const Scaffold();
+                }
+              });
         }
       },
     );

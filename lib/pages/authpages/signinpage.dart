@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:projecthomestrategies/bloc/authentication_state.dart';
 import 'package:projecthomestrategies/pages/authpages/signuppage.dart';
-import 'package:projecthomestrategies/pages/homepage/homepage.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/utils/securestoragehandler.dart';
-import 'package:projecthomestrategies/widgets/auth/authenticationloadingbuilder.dart';
+import 'package:projecthomestrategies/widgets/globalwidgets/somesrategiesloadingbuilder.dart';
 import 'package:projecthomestrategies/widgets/auth/authenticationresponse.dart';
 import 'package:projecthomestrategies/widgets/auth/staysignedincheckbox.dart';
 import 'package:projecthomestrategies/widgets/auth/submitfab.dart';
@@ -78,7 +76,9 @@ class _SignInPageState extends State<SignInPage> {
       );
     }
 
-    AuthenticationResponse(ctx, response).showSnackbar();
+    if (response != 200) {
+      AuthenticationResponse(ctx, response).showSnackbar();
+    }
   }
 
   void setSignedIn(bool newValue) {
@@ -89,7 +89,7 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
-    return AuthenticationLoadingBuilder(
+    return HomeStrategiesLoadingBuilder(
       isLoading: isLoading,
       child: Consumer<AuthenticationState>(
         builder: (context, auth, _) {

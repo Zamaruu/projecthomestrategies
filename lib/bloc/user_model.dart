@@ -42,7 +42,9 @@ class UserModel {
     data['password'] = password;
     data['userColor'] = userColor;
     data['type'] = type;
-    data['household'] = household!.toJson();
+    if (household != null) {
+      data['household'] = household!.toJson();
+    }
     return data;
   }
 }

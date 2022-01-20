@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/signup_model.dart';
 import 'package:projecthomestrategies/service/authentication_service.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
-import 'package:projecthomestrategies/widgets/auth/authenticationloadingbuilder.dart';
+import 'package:projecthomestrategies/widgets/globalwidgets/somesrategiesloadingbuilder.dart';
 import 'package:projecthomestrategies/widgets/auth/authenticationresponse.dart';
 import 'package:projecthomestrategies/widgets/auth/submitfab.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/textinputfield.dart';
@@ -89,7 +89,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return AuthenticationLoadingBuilder(
+    return HomeStrategiesLoadingBuilder(
       isLoading: isLoading,
       child: KeyboardVisibilityBuilder(
         builder: (context, isKeyboardVisible) {
