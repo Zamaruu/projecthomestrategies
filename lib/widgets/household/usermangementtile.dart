@@ -3,6 +3,7 @@ import 'package:projecthomestrategies/bloc/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/user_model.dart';
 import 'package:projecthomestrategies/service/household_service.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
+import 'package:projecthomestrategies/widgets/globalwidgets/confirmationdialog.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/usertile.dart';
 import 'package:provider/provider.dart';
 
@@ -29,6 +30,24 @@ class _UserManagementTileState extends State<UserManagementTile> {
   void initState() {
     super.initState();
     isLoading = false;
+  }
+
+  Future<bool> confirmRemovalOfPerson(BuildContext ctx) async {
+    var result = await showDialog<bool>(
+      context: ctx,
+      builder: (context) {
+        return ConfirmationDialog(
+          title: "Mitglied entfernen?",
+          content:
+              "Willst du ${widget.user.firstname} ${widget.user.surname} wirklich aus dem Haushalt entfernen?",
+          confirmText: "Entfernen",
+        );
+      },
+    );
+    if (result != null) {
+      return result;
+    }
+    return false;
   }
 
   Future<void> handleRemovePerson(BuildContext ctx) async {
@@ -59,7 +78,12 @@ class _UserManagementTileState extends State<UserManagementTile> {
       splashRadius: Global.splashRadius,
       visualDensity: VisualDensity.compact,
       tooltip: "Benutzer entfernen",
-      onPressed: () => handleRemovePerson(ctx),
+      onPressed: () async {
+        var confirmation = await confirmRemovalOfPerson(ctx);
+        if (confirmation) {
+          handleRemovePerson(ctx);
+        }
+      },
       icon: const Icon(Icons.person_remove),
     );
   }
