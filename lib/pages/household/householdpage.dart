@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/household_model.dart';
 import 'package:projecthomestrategies/pages/household/createhousehold.dart';
+import 'package:projecthomestrategies/pages/household/householdmanagementpage.dart';
 import 'package:projecthomestrategies/widgets/basescaffold/basescaffold.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class HouseholdPage extends StatelessWidget {
   late HouseholdModel? household;
 
@@ -16,7 +18,7 @@ class HouseholdPage extends StatelessWidget {
     if (household == null) {
       return const CreateHouseholdPage();
     } else {
-      return HouseholdManagement(
+      return HouseholdDataLoader(
         householdModel: household!,
       );
     }
@@ -25,20 +27,5 @@ class HouseholdPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return checkIfUserHasHousehold(context);
-  }
-}
-
-class HouseholdManagement extends StatelessWidget {
-  final HouseholdModel householdModel;
-
-  const HouseholdManagement({Key? key, required this.householdModel})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return BaseScaffold(
-      pageTitle: householdModel.householdName!,
-      body: Container(),
-    );
   }
 }
