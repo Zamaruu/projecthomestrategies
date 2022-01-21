@@ -38,7 +38,7 @@ class HouseholdService {
       } else {
         return ApiResponseModel.error(
           response.statusCode,
-          response.reasonPhrase,
+          response.body.isNotEmpty ? response.body : response.reasonPhrase,
         );
       }
     } on TimeoutException catch (e) {

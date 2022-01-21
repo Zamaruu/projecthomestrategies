@@ -4,6 +4,7 @@ import 'package:projecthomestrategies/bloc/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/household_model.dart';
 import 'package:projecthomestrategies/bloc/user_model.dart';
 import 'package:projecthomestrategies/pages/household/addpersontohousehold.dart';
+import 'package:projecthomestrategies/service/apiresponsehandler_service.dart';
 import 'package:projecthomestrategies/service/household_service.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/widgets/basescaffold/basescaffold.dart';
@@ -99,7 +100,10 @@ class _HouseholdManagementState extends State<HouseholdManagement> {
         });
       } else {
         debugPrint(response.toString());
-        //TODO response message implementieren
+        ApiResponseHandlerService.fromResponseModel(
+          context: ctx,
+          response: response,
+        ).showSnackbar();
       }
     }
   }
@@ -115,17 +119,23 @@ class _HouseholdManagementState extends State<HouseholdManagement> {
     if (response != null) {
       if (response.statusCode == 200) {
         addPersonToHousehold(response.object as UserModel, ctx);
+      } else {
+        debugPrint(response.toString());
+        ApiResponseHandlerService.fromResponseModel(
+          context: ctx,
+          response: response,
+        ).showSnackbar();
       }
-    } else {
-      // TODO implement response handling
-      debugPrint(response.toString());
     }
   }
 
   Widget buildMemberListElement(int index) {
     var buildUser = widget.householdModel.householdMember![index];
     if (buildUser.email == householdAdmin.email) {
-      return UserTile(user: buildUser);
+      return UserTile(
+        user: buildUser,
+        trailing: const Text("Admin"),
+      );
     } else {
       return UserManagementTile(
         user: buildUser,

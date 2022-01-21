@@ -66,7 +66,7 @@ class MenuDrawer extends StatelessWidget {
                 onClick: () {}),
             DrawerTile(
                 icon: FontAwesomeIcons.wallet,
-                drawerTitle: "Rechnungen & Ausgaben",
+                drawerTitle: "Rechnungen & Ausgaben [Beta]",
                 onClick: () =>
                     Global.navigateWithOutSamePush(context, "/bills")),
             DrawerTile(
@@ -75,7 +75,7 @@ class MenuDrawer extends StatelessWidget {
                 onClick: () {}),
             DrawerTile(
                 icon: FontAwesomeIcons.users,
-                drawerTitle: "Mein Haushalt",
+                drawerTitle: "Mein Haushalt [Beta]",
                 onClick: () =>
                     Global.navigateWithOutSamePush(context, "/household")),
             const Spacer(),
