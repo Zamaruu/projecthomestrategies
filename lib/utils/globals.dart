@@ -21,7 +21,7 @@ class Global {
 
   static Map<String, Widget Function(BuildContext)> appRoutes = {
     "/homepage": (context) => const HomePage(),
-    "/bills": (context) => BillsPage(),
+    "/bills": (context) => const MountBillProvider(),
     "/signin": (context) => const SignInPage(),
     "/signup": (context) => const SignUpPage(),
     "/household": (context) => HouseholdPage(),

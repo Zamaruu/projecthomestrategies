@@ -8,9 +8,9 @@ class ErrorPageHandler extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Fehlerbehandlung"),
-      ),
+      // appBar: AppBar(
+      //   title: const Text("Fehlerbehandlung"),
+      // ),
       body: Center(
         child: Text(
           error,

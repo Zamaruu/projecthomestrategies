@@ -5,16 +5,16 @@ import 'package:projecthomestrategies/utils/globals.dart';
 class BillingTile extends StatelessWidget {
   final BillModel bill;
 
-  const BillingTile({ Key? key, required this.bill }) : super(key: key);
+  const BillingTile({Key? key, required this.bill}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0.0),
       child: ListTile(
-        onTap: (){},
+        onTap: () {},
         leading: Text(
-          "${bill.billSum.toStringAsFixed(2)} €",
+          "${bill.amount!.toStringAsFixed(2)} €",
           style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -24,8 +24,7 @@ class BillingTile extends StatelessWidget {
           "Bezahlt für ${bill.category}",
         ),
         subtitle: Text(
-          "bezahlt am ${Global.datetimeToDeString(bill.billDate)} von ${bill.person}"
-        ),
+            "bezahlt am ${Global.datetimeToDeString(bill.date!)} von ${bill.buyer!.email!}"),
       ),
     );
   }

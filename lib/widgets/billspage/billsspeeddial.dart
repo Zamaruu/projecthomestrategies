@@ -1,12 +1,17 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
+import 'package:projecthomestrategies/pages/billspage/billcategorydialog.dart';
 import 'package:projecthomestrategies/widgets/billspage/addbillmodal.dart';
+import 'package:provider/provider.dart';
 
 class BillsSpeedDial extends StatelessWidget {
-  const BillsSpeedDial({ Key? key }) : super(key: key);
+  const BillsSpeedDial({Key? key}) : super(key: key);
 
-  SpeedDialChild customSpeedDialChild({required String label, required IconData icon, required Function onTap}){
+  SpeedDialChild customSpeedDialChild(
+      {required String label,
+      required IconData icon,
+      required Function onTap}) {
     return SpeedDialChild(
       child: Icon(icon),
       backgroundColor: Colors.grey.shade700,
@@ -21,7 +26,7 @@ class BillsSpeedDial extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SpeedDial(
-      icon: Icons.add,
+      icon: Icons.menu,
       activeIcon: Icons.close,
       spacing: 3,
       childPadding: const EdgeInsets.all(5),
@@ -41,21 +46,32 @@ class BillsSpeedDial extends StatelessWidget {
           label: "Neue Rechnung",
           icon: Icons.add,
           onTap: () => showDialog(
-            context: context, 
-            builder: (BuildContext context){
+            context: context,
+            builder: (BuildContext context) {
               return AddBillModal();
-            }
+            },
           ),
         ),
         customSpeedDialChild(
           label: "Kategorien",
           icon: Icons.list_alt_rounded,
-          onTap: (){}
+          onTap: () {
+            var household =
+                context.read<AuthenticationState>().sessionUser.household;
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                fullscreenDialog: true,
+                builder: (context) => BillCategoriesDialog(
+                  householdModel: household!,
+                ),
+              ),
+            );
+          },
         ),
         customSpeedDialChild(
           label: "Kostenanalyse",
           icon: Icons.analytics,
-          onTap: (){}
+          onTap: () {},
         ),
       ],
     );

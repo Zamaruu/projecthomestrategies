@@ -25,13 +25,14 @@ class BillingTimeSection extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
             return BillingTile(
-                bill: BillModel(
-              index,
-              bills[index].billSum,
-              bills[index].billDate,
-              bills[index].person,
-              bills[index].category,
-            ));
+              bill: BillModel(
+                billId: index,
+                amount: bills[index].amount,
+                date: bills[index].date,
+                buyer: bills[index].buyer,
+                category: bills[index].category,
+              ),
+            );
           },
         ),
       ],
