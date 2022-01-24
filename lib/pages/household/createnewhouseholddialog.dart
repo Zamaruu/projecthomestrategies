@@ -101,6 +101,7 @@ class _CreateHouseholdDialogState extends State<CreateHouseholdDialog> {
       HouseholdModel newHousehold = HouseholdModel(
         householdName: householdNameController.text.trim(),
         householdMember: householdMember,
+        adminId: widget.sessionUser.userId,
       );
 
       toggleLoading(true);

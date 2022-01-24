@@ -11,7 +11,8 @@ import 'package:projecthomestrategies/pages/household/householdpage.dart';
 
 class Global {
   static const double splashRadius = 20;
-  static const String baseApiUrl = "http://10.0.2.2:5000/api";
+  static const String baseApiUrl = "http://192.168.0.71:5000/api";
+  // static const String baseApiUrl = "http://10.0.2.2:5000/api";
   static const Duration timeoutDuration = Duration(milliseconds: 7500);
   static Map<String, String> baseApiHeader = {
     "Accept": "application/json",
