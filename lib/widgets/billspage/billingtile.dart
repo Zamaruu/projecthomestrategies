@@ -21,10 +21,10 @@ class BillingTile extends StatelessWidget {
           ),
         ),
         title: Text(
-          "Bezahlt für ${bill.category}",
+          "Bezahlt für ${bill.category!.billCategoryName!}",
         ),
         subtitle: Text(
-            "bezahlt am ${Global.datetimeToDeString(bill.date!)} von ${bill.buyer!.email!}"),
+            "am ${Global.datetimeToDeString(bill.date!)} von ${bill.buyer!.email!}"),
       ),
     );
   }

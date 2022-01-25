@@ -5,6 +5,7 @@ class HomeStrategiesLoadingBuilder extends StatelessWidget {
   final bool isLoading;
   final bool isDialog;
   final Widget child;
+  final double height;
   late List<Widget> progressStack;
 
   HomeStrategiesLoadingBuilder({
@@ -12,6 +13,7 @@ class HomeStrategiesLoadingBuilder extends StatelessWidget {
     required this.child,
     required this.isLoading,
     this.isDialog = false,
+    this.height = 150,
   }) : super(key: key) {
     progressStack = <Widget>[];
     progressStack.add(child);
@@ -19,7 +21,11 @@ class HomeStrategiesLoadingBuilder extends StatelessWidget {
     if (isLoading && !isDialog) {
       progressStack.add(const LoadingProcess());
     } else if (isLoading && isDialog) {
-      progressStack.add(const DialogLoadingProgress());
+      progressStack.add(
+        DialogLoadingProgress(
+          height: height,
+        ),
+      );
     }
   }
 
@@ -32,12 +38,14 @@ class HomeStrategiesLoadingBuilder extends StatelessWidget {
 }
 
 class DialogLoadingProgress extends StatelessWidget {
-  const DialogLoadingProgress({Key? key}) : super(key: key);
+  final double height;
+  const DialogLoadingProgress({Key? key, required this.height})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 150,
+      height: height,
       color: Colors.white,
       alignment: Alignment.center,
       child: CircularProgressIndicator(

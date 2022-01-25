@@ -30,7 +30,12 @@ class BillingState with ChangeNotifier {
   }
 
   void addBillCategory(BillCategoryModel newCategory) {
-    _billCategories.add(newCategory);
+    _billCategories = [..._billCategories, newCategory];
+    notifyListeners();
+  }
+
+  void addBill(BillModel newBill) {
+    _bills = [..._bills, newBill];
     notifyListeners();
   }
 }

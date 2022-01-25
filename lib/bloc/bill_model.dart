@@ -4,7 +4,7 @@ import 'package:projecthomestrategies/bloc/user_model.dart';
 
 class BillModel {
   int? billId;
-  int? amount;
+  double? amount;
   DateTime? date;
   UserModel? buyer;
   HouseholdModel? household;
@@ -21,7 +21,7 @@ class BillModel {
   BillModel.fromJson(Map<String, dynamic> json) {
     billId = json['billId'];
     amount = json['amount'];
-    date = json['date'];
+    date = DateTime.parse(json['date']);
     buyer = json['buyer'] != null ? UserModel.fromJson(json['buyer']) : null;
     household = json['household'] != null
         ? HouseholdModel.fromJson(json['household'])
@@ -35,7 +35,23 @@ class BillModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['billId'] = billId;
     data['amount'] = amount;
-    data['date'] = date;
+    data['date'] = date.toString();
+    if (buyer != null) {
+      data['buyer'] = buyer!.toJson();
+    }
+    if (household != null) {
+      data['household'] = household!.toJson();
+    }
+    if (category != null) {
+      data['category'] = category!.toJson();
+    }
+    return data;
+  }
+
+  Map<String, dynamic> toCreateJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['amount'] = amount;
+    data['date'] = date.toString();
     if (buyer != null) {
       data['buyer'] = buyer!.toJson();
     }
