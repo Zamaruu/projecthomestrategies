@@ -49,12 +49,7 @@ class BillsSpeedDial extends StatelessWidget {
         customSpeedDialChild(
           label: "Neue Rechnung",
           icon: Icons.add,
-          onTap: () => showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AddBillModal();
-            },
-          ),
+          onTap: () {},
         ),
         customSpeedDialChild(
           label: "Kategorien",

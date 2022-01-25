@@ -8,13 +8,7 @@ import 'package:projecthomestrategies/pages/billspage/billinganalysis.dart';
 import 'package:projecthomestrategies/pages/billspage/billsummary.dart';
 import 'package:projecthomestrategies/service/billing_service.dart';
 import 'package:projecthomestrategies/widgets/basescaffold/basescaffold.dart';
-import 'package:projecthomestrategies/widgets/billspage/billingtimesection.dart';
-import 'package:projecthomestrategies/widgets/billspage/billsspeeddial.dart';
-import 'package:projecthomestrategies/widgets/billspage/thirtydayretro.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/errorpage.dart';
-import 'package:projecthomestrategies/widgets/globalwidgets/loadingprocessor.dart';
-import 'dart:math';
-
 import 'package:provider/provider.dart';
 
 class MountBillProvider extends StatelessWidget {
@@ -37,7 +31,7 @@ class BillContentBuilder extends StatelessWidget {
     return Consumer<BillingState>(
       builder: (context, state, _) {
         if (!state.isEmpty()) {
-          return BillsPage();
+          return const BillsPage();
         } else {
           return Consumer<AuthenticationState>(
             builder: (context, auth, child) {
@@ -63,7 +57,7 @@ class BillContentBuilder extends StatelessWidget {
                       categories as List<BillCategoryModel>,
                       bills as List<BillModel>,
                     );
-                    return BillsPage();
+                    return const BillsPage();
                   }
                 },
               );
@@ -92,13 +86,13 @@ class _BillsPageState extends State<BillsPage> {
     super.initState();
   }
 
-  List<String> pageTitles = <String>[
+  final List<String> pageTitles = <String>[
     "Rechnungen",
     "Kategorien",
     "Analyse",
   ];
 
-  List<Widget> pages = <Widget>[
+  final List<Widget> _pages = <Widget>[
     const BillsSummary(),
     const BillCategoriesDialog(),
     const BillingsAnalysis(),
@@ -108,7 +102,7 @@ class _BillsPageState extends State<BillsPage> {
   Widget build(BuildContext context) {
     return BaseScaffold(
       pageTitle: pageTitles.elementAt(pageIndex),
-      body: pages.elementAt(pageIndex),
+      body: _pages.elementAt(pageIndex),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: pageIndex,
         onTap: (index) {
