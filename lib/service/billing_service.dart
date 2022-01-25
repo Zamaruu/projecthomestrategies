@@ -80,9 +80,13 @@ class BillingService {
           .timeout(Global.timeoutDuration);
 
       if (response.statusCode == 200) {
+        var jsonBody = jsonDecode(response.body);
+
         return ApiResponseModel.success(
           response.statusCode,
-          jsonDecode(response.body),
+          List<BillCategoryModel>.from(
+            jsonBody.map((model) => BillCategoryModel.fromJson(model)),
+          ),
         );
       } else {
         return ApiResponseModel.error(

@@ -19,10 +19,13 @@ class BillingState with ChangeNotifier {
 
   void setInitialData(
     List<BillCategoryModel> billCategories,
-    List<BillModel> bills,
-  ) {
+    List<BillModel> bills, {
+    bool notify = false,
+  }) {
     _billCategories = billCategories;
     _bills = bills;
-    notifyListeners();
+    if (notify) {
+      notifyListeners();
+    }
   }
 }

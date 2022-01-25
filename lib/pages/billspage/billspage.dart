@@ -38,10 +38,11 @@ class BillContentBuilder extends StatelessWidget {
         } else {
           return Consumer<AuthenticationState>(
             builder: (context, auth, child) {
-              return FutureBuilder(
+              return FutureBuilder<Map<String, List>>(
                 future: BillingService(auth.token).getBillsAndCategories(
                     auth.sessionUser.household!.householdId!),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                builder: (BuildContext context,
+                    AsyncSnapshot<Map<String, List>> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(
                       child: CircularProgressIndicator(
@@ -49,16 +50,16 @@ class BillContentBuilder extends StatelessWidget {
                       ),
                     );
                   }
-                  if (snapshot.hasError || snapshot.data!.hasError!) {
-                    var error = snapshot.hasError
-                        ? snapshot.error.toString
-                        : snapshot.data!.message;
-                    return ErrorPageHandler(error: error as String);
+                  if (snapshot.hasError) {
+                    return ErrorPageHandler(error: snapshot.error.toString());
                   } else {
-                    var bills = snapshot.data!["bills"];
-                    var categories = snapshot.data!["categories"];
+                    var bills = snapshot.data!["bills"]!;
+                    var categories = snapshot.data!["categories"]!;
 
-                    state.setInitialData(categories, bills);
+                    state.setInitialData(
+                      categories as List<BillCategoryModel>,
+                      bills as List<BillModel>,
+                    );
                     return BillsPage();
                   }
                 },

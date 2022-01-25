@@ -91,12 +91,7 @@ class _BillCategoriesDialogState extends State<BillCategoriesDialog> {
           } else {
             var response = snapshot.data!;
             if (response.statusCode == 200) {
-              List<BillCategoryModel> categories = List<BillCategoryModel>.from(
-                response.object.map(
-                  (model) => BillCategoryModel.fromJson(model),
-                ),
-              );
-              billCategories = categories;
+              billCategories = response.object as List<BillCategoryModel>;
               return BillCategoryList(billCategories: billCategories);
             } else {
               return ErrorPageHandler(error: response.message!);
