@@ -28,4 +28,9 @@ class BillingState with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  void addBillCategory(BillCategoryModel newCategory) {
+    _billCategories.add(newCategory);
+    notifyListeners();
+  }
 }

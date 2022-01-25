@@ -3,6 +3,9 @@ import 'package:projecthomestrategies/bloc/bill_model.dart';
 import 'package:projecthomestrategies/bloc/billcategory_model.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/provider/billing_state.dart';
+import 'package:projecthomestrategies/pages/billspage/billcategorydialog.dart';
+import 'package:projecthomestrategies/pages/billspage/billinganalysis.dart';
+import 'package:projecthomestrategies/pages/billspage/billsummary.dart';
 import 'package:projecthomestrategies/service/billing_service.dart';
 import 'package:projecthomestrategies/widgets/basescaffold/basescaffold.dart';
 import 'package:projecthomestrategies/widgets/billspage/billingtimesection.dart';
@@ -73,22 +76,59 @@ class BillContentBuilder extends StatelessWidget {
 }
 
 // ignore: must_be_immutable
-class BillsPage extends StatelessWidget {
-  late List<BillModel> bills;
+class BillsPage extends StatefulWidget {
+  const BillsPage({Key? key}) : super(key: key);
 
-  BillsPage({Key? key}) : super(key: key);
+  @override
+  State<BillsPage> createState() => _BillsPageState();
+}
+
+class _BillsPageState extends State<BillsPage> {
+  late int pageIndex;
+
+  @override
+  void initState() {
+    pageIndex = 0;
+    super.initState();
+  }
+
+  List<String> pageTitles = <String>[
+    "Rechnungen",
+    "Kategorien",
+    "Analyse",
+  ];
+
+  List<Widget> pages = <Widget>[
+    const BillsSummary(),
+    const BillCategoriesDialog(),
+    const BillingsAnalysis(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return BaseScaffold(
-      pageTitle: "Rechnungen",
-      fab: const BillsSpeedDial(),
-      body: ListView(
-        children: [
-          BillRetrospect.withSampleData(),
-          // BillingTimeSection(label: "Diese Woche", bills: bills),
-          // BillingTimeSection(label: "Letzte Woche", bills: bills),
-          // BillingTimeSection(label: "Vorherige", bills: bills),
+      pageTitle: pageTitles.elementAt(pageIndex),
+      body: pages.elementAt(pageIndex),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: pageIndex,
+        onTap: (index) {
+          setState(() {
+            pageIndex = index;
+          });
+        },
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.euro),
+            label: "Rechnungen",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list_alt_rounded),
+            label: "Kategorien",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.analytics),
+            label: "Analyse",
+          ),
         ],
       ),
     );

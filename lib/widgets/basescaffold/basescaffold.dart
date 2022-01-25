@@ -8,18 +8,32 @@ class BaseScaffold extends StatelessWidget {
   final bool showMenuDrawer;
   final Widget body;
   final Widget? fab;
-  final _scaffoldKey = GlobalKey<ScaffoldState>();  
+  final Widget? bottomNavigationBar;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  BaseScaffold({Key? key, required this.pageTitle, required this.body, this.showActions = true, this.showMenuDrawer = true, this.fab,}) : super(key: key);
+  BaseScaffold({
+    Key? key,
+    required this.pageTitle,
+    required this.body,
+    this.showActions = true,
+    this.showMenuDrawer = true,
+    this.fab,
+    this.bottomNavigationBar,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: CustomAppBar(title: pageTitle, scaffoldKey: _scaffoldKey, showActions: showActions,),
-      endDrawer: showMenuDrawer? const MenuDrawer(): null,
+      appBar: CustomAppBar(
+        title: pageTitle,
+        scaffoldKey: _scaffoldKey,
+        showActions: showActions,
+      ),
+      endDrawer: showMenuDrawer ? const MenuDrawer() : null,
       body: body,
       floatingActionButton: fab,
+      bottomNavigationBar: bottomNavigationBar,
     );
   }
 }
