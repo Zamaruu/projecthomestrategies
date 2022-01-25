@@ -41,9 +41,11 @@ class BillContentBuilder extends StatelessWidget {
                 builder: (BuildContext context,
                     AsyncSnapshot<Map<String, List>> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                      child: CircularProgressIndicator(
-                        color: Theme.of(context).primaryColor,
+                    return Scaffold(
+                      body: Center(
+                        child: CircularProgressIndicator(
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
                     );
                   }
