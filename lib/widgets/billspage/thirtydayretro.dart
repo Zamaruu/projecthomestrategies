@@ -153,6 +153,7 @@ class BillRetrospect extends StatelessWidget {
             child: charts.TimeSeriesChart(
               seriesList,
               animate: true,
+              defaultRenderer: charts.LineRendererConfig(includePoints: true),
               domainAxis: domainAxisStyle,
               primaryMeasureAxis: primaryAxisStyle,
               selectionModels: [
