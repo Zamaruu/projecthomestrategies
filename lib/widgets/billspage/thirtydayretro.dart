@@ -7,10 +7,10 @@ import 'package:projecthomestrategies/widgets/homepage/panelheading.dart';
 /// Sample time series data type.
 class TimeSeriesSales {
   final DateTime time;
-  final double sales;
-  final BillModel bill;
+  late double sales;
+  final List<BillModel> bills;
 
-  TimeSeriesSales(this.time, this.sales, this.bill);
+  TimeSeriesSales(this.time, this.sales, this.bills);
 }
 
 // ignore: must_be_immutable
@@ -43,18 +43,48 @@ class BillRetrospect extends StatelessWidget {
     seriesList = _createData();
   }
 
-  /// Creates a [TimeSeriesChart] with sample data and no transition.
+  List<DateTime> getDoubleDates(List<BillModel> bills) {
+    var temp = <DateTime>[];
+    var doubles = <DateTime>[];
 
+    for (var bill in bills) {
+      if (!temp.contains(bill.date)) {
+        temp.add(bill.date!);
+      } else {
+        doubles.add(bill.date!);
+      }
+    }
+
+    return doubles;
+  }
+
+  /// Creates a [TimeSeriesChart] with sample data and no transition.
   /// Create one series with sample hard coded data.
   List<charts.Series<TimeSeriesSales, DateTime>> _createData() {
-    final data = List.generate(
-      bills.length,
-      (index) => TimeSeriesSales(
-        bills[index].date!,
-        bills[index].amount!,
-        bills[index],
-      ),
-    );
+    var doubleDates = getDoubleDates(bills);
+
+    var data = <TimeSeriesSales>[];
+    for (var bill in bills) {
+      if (doubleDates.contains(bill.date)) {
+        var index = data.indexWhere((element) => element.time == bill.date);
+        if (index == -1) {
+          data.add(TimeSeriesSales(
+            bill.date!,
+            bill.amount!,
+            [bill],
+          ));
+        } else {
+          data[index].sales += bill.amount!;
+          data[index].bills.add(bill);
+        }
+      } else {
+        data.add(TimeSeriesSales(
+          bill.date!,
+          bill.amount!,
+          [bill],
+        ));
+      }
+    }
 
     return [
       charts.Series<TimeSeriesSales, DateTime>(
@@ -102,14 +132,9 @@ class BillRetrospect extends StatelessWidget {
   List<BillModel> getBillsFromChartPoint(
     List<charts.SeriesDatum<DateTime>> pointObjects,
   ) {
-    List<BillModel> bills = <BillModel>[];
-
-    for (var chartPoint in pointObjects) {
-      var tsObject = chartPoint.datum as TimeSeriesSales;
-      bills.add(tsObject.bill);
-    }
-
-    return bills;
+    var chartPoint = pointObjects.first;
+    var tsObject = chartPoint.datum as TimeSeriesSales;
+    return tsObject.bills;
   }
 
   @override
