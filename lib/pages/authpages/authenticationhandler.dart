@@ -9,11 +9,23 @@ import 'package:provider/provider.dart';
 class AuthenticationHander extends StatelessWidget {
   const AuthenticationHander({Key? key}) : super(key: key);
 
+  Future<void> tryLoginWithSafedCredentials(BuildContext ctx) async {
+    var credentials = await SecureStorageHandler().getLoggedInUserCredentials();
+
+    if (credentials != null) {
+      await ctx
+          .read<AuthenticationState>()
+          .signInWithSavedCredentials(credentials);
+    } else {
+      return;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<String?>(
-      future: SecureStorageHandler().getLoggedInUserCredentials(),
-      builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
+    return FutureBuilder(
+      future: tryLoginWithSafedCredentials(context),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const LoadingProcess();
         } else if (snapshot.hasError) {
@@ -24,11 +36,6 @@ class AuthenticationHander extends StatelessWidget {
           return Selector<AuthenticationState, Status>(
               selector: (context, model) => model.status,
               builder: (BuildContext context, Status status, _) {
-                if (snapshot.data != null && status == Status.uninitialized) {
-                  context
-                      .read<AuthenticationState>()
-                      .signInWithSavedCredentials(snapshot.data!);
-                }
                 switch (status) {
                   case Status.uninitialized:
                     return const SignInPage();
