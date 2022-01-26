@@ -82,7 +82,7 @@ class AuthenticationService {
           )
           .timeout(Global.timeoutDuration);
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         return ApiResponseModel.success(response.statusCode, null);
       } else {
         return ApiResponseModel.error(response.statusCode, response.body);

@@ -60,8 +60,6 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Future handleSignUp(BuildContext ctx) async {
-    int signUpResponse;
-
     setState(() {
       isLoading = true;
     });
@@ -80,10 +78,10 @@ class _SignUpPageState extends State<SignUpPage> {
         isLoading = false;
       });
 
-      if (result.statusCode == 200) {
-        return AuthenticationResponse(ctx, result.statusCode).showSnackbar();
+      if (result.statusCode == 201) {
+        AuthenticationResponse(ctx, result.statusCode).showSnackbar();
       } else {
-        return AuthenticationResponse.response(context, result);
+        AuthenticationResponse.response(ctx, result).showSnackbar();
       }
     } else {
       AuthenticationResponse(ctx, 600).showSnackbar();

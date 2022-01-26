@@ -8,9 +8,13 @@ class AuthenticationResponse {
 
   AuthenticationResponse.empty();
 
-  AuthenticationResponse(this.context, this.statusCode);
+  AuthenticationResponse(this.context, this.statusCode, {this.responseModel});
 
-  AuthenticationResponse.response(this.context, this.responseModel);
+  AuthenticationResponse.response(
+    this.context,
+    this.responseModel, {
+    this.statusCode,
+  });
 
   void showSnackbar() {
     var color = getSnackbarColorFromStatusCode();
