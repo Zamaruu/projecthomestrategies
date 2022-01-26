@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:projecthomestrategies/bloc/apiresponse_model.dart';
+import 'package:projecthomestrategies/bloc/authentication_model.dart';
 import 'package:projecthomestrategies/bloc/signup_model.dart';
 import 'package:projecthomestrategies/bloc/user_model.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
@@ -12,7 +14,7 @@ class AuthenticationService {
     url = Global.baseApiUrl;
   }
 
-  Future<Map<String, dynamic>> signInWithEmailAndPassword({
+  Future<ApiResponseModel> signInWithEmailAndPassword({
     String? email,
     String? password,
     String? encodedCredentials,
@@ -39,31 +41,34 @@ class AuthenticationService {
 
       if (response.statusCode == 200 || response.statusCode == 307) {
         if (response.body.isEmpty) {
-          return <String, dynamic>{
-            "code": 500,
-            "token": null,
-          };
+          return ApiResponseModel.error(
+            response.statusCode,
+            "Die Antwort des Servers ist Fehelerhaft",
+          );
         }
 
         //getting auth token
         var body = jsonDecode(response.body);
 
-        return <String, dynamic>{
-          "code": response.statusCode,
-          "token": body["token"],
-          "user": UserModel.fromJson(body["user"]),
-        };
+        return ApiResponseModel.success(
+          response.statusCode,
+          AuthenticationModel(
+            token: body["token"],
+            user: UserModel.fromJson(body["user"]),
+          ),
+        );
       } else {
-        return <String, dynamic>{"code": response.statusCode, "token": null};
+        return ApiResponseModel.error(response.statusCode, response.body);
       }
     } on TimeoutException catch (e) {
-      return <String, dynamic>{"code": 503, "token": null};
+      return ApiResponseModel.error(408, e.toString());
     } on Exception catch (e) {
-      return <String, dynamic>{"code": 500, "token": null};
+      return ApiResponseModel.error(500, e.toString());
     }
   }
 
-  Future<int> signUpWithEmailAndPassword(SignupModel signupModel) async {
+  Future<ApiResponseModel> signUpWithEmailAndPassword(
+      SignupModel signupModel) async {
     try {
       final rawUri = url + "/Auth/signup/basic";
 
@@ -77,13 +82,15 @@ class AuthenticationService {
           )
           .timeout(Global.timeoutDuration);
 
-      return response.statusCode;
+      if (response.statusCode == 200) {
+        return ApiResponseModel.success(response.statusCode, null);
+      } else {
+        return ApiResponseModel.error(response.statusCode, response.body);
+      }
     } on TimeoutException catch (e) {
-      return 500;
+      return ApiResponseModel.error(408, e.toString());
     } on Exception catch (e) {
-      return 500;
+      return ApiResponseModel.error(500, e.toString());
     }
-
-    return 400;
   }
 }

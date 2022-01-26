@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:projecthomestrategies/bloc/apiresponse_model.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/pages/authpages/signuppage.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
@@ -43,7 +44,7 @@ class _SignInPageState extends State<SignInPage> {
     // Navigator.of(ctx).pushNamed("/signup");
   }
 
-  Future<int> tryLogin(AuthenticationState authState) async {
+  Future<ApiResponseModel> tryLogin(AuthenticationState authState) async {
     if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
       if (Global.validateEmail(emailController.text.trim())) {
         setState(() {
@@ -54,10 +55,16 @@ class _SignInPageState extends State<SignInPage> {
             email: emailController.text.trim(),
             password: passwordController.text.trim());
       } else {
-        return 601;
+        return ApiResponseModel.error(
+          601,
+          "E-Mail ist nicht im korrekten Format!",
+        );
       }
     } else {
-      return 600;
+      return ApiResponseModel.error(
+        600,
+        "Es müssen alle Felder ausgefüllt sein!",
+      );
     }
   }
 
@@ -67,7 +74,7 @@ class _SignInPageState extends State<SignInPage> {
       isLoading = false;
     });
 
-    if (staySignedIn && response == 200) {
+    if (staySignedIn && response.statusCode == 200) {
       await SecureStorageHandler().safeCredentials(
         Global.encodeCredentials(
           emailController.text.trim(),
@@ -76,8 +83,8 @@ class _SignInPageState extends State<SignInPage> {
       );
     }
 
-    if (response != 200) {
-      AuthenticationResponse(ctx, response).showSnackbar();
+    if (response.statusCode != 200) {
+      AuthenticationResponse.response(context, response).showSnackbar();
     }
   }
 

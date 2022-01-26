@@ -65,25 +65,29 @@ class _SignUpPageState extends State<SignUpPage> {
     setState(() {
       isLoading = true;
     });
-    if (handleValidation() != 200) {
-      signUpResponse = 600;
+    if (handleValidation() == 200) {
+      SignupModel signupModel = SignupModel(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+        firstname: firstnameController.text.trim(),
+        surname: surnameController.text.trim(),
+      );
+
+      var result =
+          await AuthenticationService().signUpWithEmailAndPassword(signupModel);
+
+      setState(() {
+        isLoading = false;
+      });
+
+      if (result.statusCode == 200) {
+        return AuthenticationResponse(ctx, result.statusCode).showSnackbar();
+      } else {
+        return AuthenticationResponse.response(context, result);
+      }
+    } else {
+      AuthenticationResponse(ctx, 600).showSnackbar();
     }
-
-    SignupModel signupModel = SignupModel(
-      email: emailController.text.trim(),
-      password: passwordController.text.trim(),
-      firstname: firstnameController.text.trim(),
-      surname: surnameController.text.trim(),
-    );
-
-    signUpResponse =
-        await AuthenticationService().signUpWithEmailAndPassword(signupModel);
-
-    setState(() {
-      isLoading = false;
-    });
-
-    AuthenticationResponse(ctx, signUpResponse).showSnackbar();
     //Navigator.of(ctx).pop();
   }
 

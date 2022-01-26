@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:projecthomestrategies/bloc/apiresponse_model.dart';
 
 class AuthenticationResponse {
   late BuildContext context;
-  late int statusCode;
+  late int? statusCode;
+  late ApiResponseModel? responseModel;
 
   AuthenticationResponse.empty();
 
   AuthenticationResponse(this.context, this.statusCode);
 
+  AuthenticationResponse.response(this.context, this.responseModel);
+
   void showSnackbar() {
-    var color = getSnackbarColorFromStatusCode(statusCode);
-    var response = getSnackbarResponseTextFromStatusCode(statusCode);
+    var color = getSnackbarColorFromStatusCode();
+    var response = getSnackbarResponseTextFromStatusCode();
 
     var snackBar = SnackBar(
       backgroundColor: color,
@@ -20,7 +24,14 @@ class AuthenticationResponse {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  Color getSnackbarColorFromStatusCode(int code) {
+  Color getSnackbarColorFromStatusCode() {
+    int code;
+    if (responseModel != null) {
+      code = responseModel!.statusCode;
+    } else {
+      code = statusCode!;
+    }
+
     if (code >= 200 && code <= 299) {
       return Theme.of(context).primaryColor;
     } else if (code >= 300 && code <= 399) {
@@ -32,8 +43,15 @@ class AuthenticationResponse {
     }
   }
 
-  String getSnackbarResponseTextFromStatusCode(int statusCode) {
-    switch (statusCode) {
+  String getSnackbarResponseTextFromStatusCode() {
+    int code;
+    if (responseModel != null) {
+      return responseModel!.message!;
+    } else {
+      code = statusCode!;
+    }
+
+    switch (code) {
       case 200:
         return "Login war erfolgreich";
       case 201:

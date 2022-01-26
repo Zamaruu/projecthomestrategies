@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:projecthomestrategies/bloc/apiresponse_model.dart';
+import 'package:projecthomestrategies/bloc/authentication_model.dart';
 import 'package:projecthomestrategies/bloc/household_model.dart';
 import 'package:projecthomestrategies/bloc/user_model.dart';
 import 'package:projecthomestrategies/service/authentication_service.dart';
@@ -14,9 +16,9 @@ class AuthenticationState with ChangeNotifier {
   Status get status => _status;
 
   //Authentication methods
-  Future<int> signIn(
+  Future<ApiResponseModel> signIn(
       {String? email, String? password, String? encodedCredentials}) async {
-    Map<String, dynamic> response;
+    ApiResponseModel response;
 
     if (encodedCredentials != null) {
       response = await AuthenticationService()
@@ -26,26 +28,28 @@ class AuthenticationState with ChangeNotifier {
           .signInWithEmailAndPassword(email: email, password: password);
     }
 
-    if (response["code"] == 200 || response["code"] == 307) {
+    if (response.statusCode == 200 || response.statusCode == 307) {
       try {
         _status = Status.authenticated;
 
-        token = response["token"];
-        sessionUser = response["user"];
+        AuthenticationModel auth = response.object as AuthenticationModel;
+
+        token = auth.token;
+        sessionUser = auth.user;
 
         notifyListeners();
-        return response["code"];
+        return response;
       } catch (e) {
-        return 500;
+        return ApiResponseModel.error(500, e.toString());
       }
     }
 
     _status = Status.unauthenticated;
     notifyListeners();
-    return response["code"];
+    return response;
   }
 
-  Future<int> signInWithSavedCredentials(String credetials) async {
+  Future<ApiResponseModel> signInWithSavedCredentials(String credetials) async {
     return signIn(encodedCredentials: credetials);
   }
 
