@@ -29,12 +29,15 @@ class MenuDrawer extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       UserAvatar(
-                        firstLetter: user.firstname![0],
-                        lastLetter: user.surname![0],
+                        firstLetter:
+                            user.firstname != null ? user.firstname![0] : "",
+                        lastLetter:
+                            user.surname != null ? user.surname![0] : "",
                       ),
                       PersonalInfo(
-                        firstName: user.firstname!,
-                        lastName: user.surname!,
+                        firstName:
+                            user.firstname != null ? user.firstname! : "",
+                        lastName: user.surname != null ? user.surname! : "",
                         familyGroup: user.household != null
                             ? user.household!.householdName!
                             : "Kein Mitglied eines Haushalts",
