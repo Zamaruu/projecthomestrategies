@@ -7,13 +7,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final GlobalKey<ScaffoldState> scaffoldKey;
   final bool showActions;
+  final bool showNotifications;
 
-  const CustomAppBar(
-      {Key? key,
-      required this.title,
-      required this.scaffoldKey,
-      required this.showActions})
-      : preferredSize = const Size.fromHeight(kToolbarHeight),
+  const CustomAppBar({
+    Key? key,
+    required this.title,
+    required this.scaffoldKey,
+    required this.showActions,
+    this.showNotifications = false,
+  })  : preferredSize = const Size.fromHeight(kToolbarHeight),
         super(key: key);
 
   @override
@@ -27,7 +29,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: (() {
         if (showActions) {
           return [
-            const NotificationButton(),
+            if (showNotifications) const NotificationButton(),
             MenuDrawerButton(scaffoldKey: scaffoldKey),
           ];
         }

@@ -5,6 +5,7 @@ import 'package:projecthomestrategies/widgets/drawermenu/drawer.dart';
 class BaseScaffold extends StatelessWidget {
   final String pageTitle;
   final bool showActions;
+  final bool showNotification;
   final bool showMenuDrawer;
   final Widget body;
   final Widget? fab;
@@ -19,6 +20,7 @@ class BaseScaffold extends StatelessWidget {
     this.showMenuDrawer = true,
     this.fab,
     this.bottomNavigationBar,
+    this.showNotification = false,
   }) : super(key: key);
 
   @override
@@ -27,6 +29,7 @@ class BaseScaffold extends StatelessWidget {
       key: _scaffoldKey,
       appBar: CustomAppBar(
         title: pageTitle,
+        showNotifications: showNotification,
         scaffoldKey: _scaffoldKey,
         showActions: showActions,
       ),
