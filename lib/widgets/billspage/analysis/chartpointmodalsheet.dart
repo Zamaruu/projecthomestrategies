@@ -4,12 +4,17 @@ import 'package:projecthomestrategies/widgets/billspage/billingtile.dart';
 
 class ChartPointModalSheet extends StatelessWidget {
   final List<BillModel> bills;
+  late double totalAmount = 0;
 
-  const ChartPointModalSheet({Key? key, required this.bills}) : super(key: key);
+  ChartPointModalSheet({Key? key, required this.bills}) : super(key: key) {
+    for (var bill in bills) {
+      totalAmount += bill.amount!;
+    }
+  }
 
   Padding heading(DateTime date) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+      padding: const EdgeInsets.only(top: 8, left: 15),
       child: Text(
         "Rechnungen vom ${date.day}.${date.month}.${date.year}",
         style: const TextStyle(
@@ -19,8 +24,18 @@ class ChartPointModalSheet extends StatelessWidget {
     );
   }
 
+  Padding total() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 4, bottom: 4, left: 15),
+      child: Text(
+        "Total: ${totalAmount.toStringAsFixed(2)} €",
+        style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+
   List<Widget> children() {
-    var list = <Widget>[heading(bills.first.date!)];
+    var list = <Widget>[heading(bills.first.date!), total()];
 
     for (var bill in bills) {
       list.add(BillingTile(bill: bill));
