@@ -63,4 +63,9 @@ class BillModel {
     }
     return data;
   }
+
+  @override
+  String toString() {
+    return "Buyer: ${buyer!.email}\nAmount: $amount€\nDate: ${date.toString()}";
+  }
 }
