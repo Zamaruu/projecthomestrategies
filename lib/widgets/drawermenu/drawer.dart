@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/user_model.dart';
+import 'package:projecthomestrategies/main.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/draweravatar.dart';
 import 'package:projecthomestrategies/widgets/drawermenu/drawertile.dart';
@@ -107,6 +108,12 @@ class MenuDrawer extends StatelessWidget {
                   drawerTitle: "Abmelden",
                   onClick: () async {
                     await context.read<AuthenticationState>().signOut();
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                        builder: (context) => const HomeStrategies(),
+                      ),
+                      (route) => false,
+                    );
                   },
                 ),
               ],
