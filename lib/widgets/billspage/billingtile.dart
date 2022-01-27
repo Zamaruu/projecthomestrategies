@@ -7,6 +7,32 @@ class BillingTile extends StatelessWidget {
 
   const BillingTile({Key? key, required this.bill}) : super(key: key);
 
+  PopupMenuButton billMenu(BuildContext ctx) {
+    return PopupMenuButton<int>(
+      icon: Icon(
+        Icons.more_vert,
+        color: Colors.grey.shade700,
+      ),
+      itemBuilder: (context) => [
+        const PopupMenuItem(
+          child: Text("Ändern"),
+          value: 1,
+        ),
+        const PopupMenuItem(
+          child: Text("Löschen"),
+          value: 2,
+        ),
+      ],
+      onSelected: (value) {
+        if (value == 1) {
+          //editBillCategory(ctx);
+        } else if (value == 2) {
+          //deleteBillCategory(ctx);
+        }
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -24,7 +50,9 @@ class BillingTile extends StatelessWidget {
           "Bezahlt für ${bill.category!.billCategoryName!}",
         ),
         subtitle: Text(
-            "am ${Global.datetimeToDeString(bill.date!)} von ${bill.buyer!.email!}"),
+          "am ${Global.datetimeToDeString(bill.date!)} von ${bill.buyer!.email!}",
+        ),
+        trailing: billMenu(context),
       ),
     );
   }

@@ -65,4 +65,8 @@ class AuthenticationState with ChangeNotifier {
     sessionUser.household = household;
     notifyListeners();
   }
+
+  bool isUserPartOfHousehold() {
+    return sessionUser.household == null;
+  }
 }

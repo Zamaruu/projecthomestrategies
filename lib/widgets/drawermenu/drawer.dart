@@ -17,29 +17,33 @@ class MenuDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Selector<AuthenticationState, UserModel>(
-              selector: (context, model) => model.sessionUser,
-              builder: (context, user, _) {
-                return Padding(
+        child: Consumer<AuthenticationState>(
+          builder: (context, authState, _) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
                   padding: EdgeInsets.only(top: _padding, left: _padding),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       UserAvatar(
-                        firstLetter:
-                            user.firstname != null ? user.firstname![0] : "",
-                        lastLetter:
-                            user.surname != null ? user.surname![0] : "",
+                        firstLetter: authState.sessionUser.firstname != null
+                            ? authState.sessionUser.firstname![0]
+                            : "",
+                        lastLetter: authState.sessionUser.surname != null
+                            ? authState.sessionUser.surname![0]
+                            : "",
                       ),
                       PersonalInfo(
-                        firstName:
-                            user.firstname != null ? user.firstname! : "",
-                        lastName: user.surname != null ? user.surname! : "",
-                        familyGroup: user.household != null
-                            ? user.household!.householdName!
+                        firstName: authState.sessionUser.firstname != null
+                            ? authState.sessionUser.firstname!
+                            : "",
+                        lastName: authState.sessionUser.surname != null
+                            ? authState.sessionUser.surname!
+                            : "",
+                        familyGroup: !authState.isUserPartOfHousehold()
+                            ? authState.sessionUser.household!.householdName!
                             : "Kein Mitglied eines Haushalts",
                       ),
                       SizedBox(
@@ -47,52 +51,67 @@ class MenuDrawer extends StatelessWidget {
                       )
                     ],
                   ),
-                );
-              },
-            ),
-            DrawerTile(
-                icon: FontAwesomeIcons.home,
-                drawerTitle: "Startseite",
-                onClick: () =>
-                    Global.navigateWithOutSamePush(context, "/homepage")),
-            DrawerTile(
-                icon: FontAwesomeIcons.table,
-                drawerTitle: "Haushaltsplan",
-                onClick: () {}),
-            DrawerTile(
-                icon: FontAwesomeIcons.listOl,
-                drawerTitle: "Einkaufsliste",
-                onClick: () {}),
-            DrawerTile(
-                icon: FontAwesomeIcons.utensils,
-                drawerTitle: "Rezepte",
-                onClick: () {}),
-            DrawerTile(
-                icon: FontAwesomeIcons.wallet,
-                drawerTitle: "Rechnungen & Ausgaben [Beta]",
-                onClick: () =>
-                    Global.navigateWithOutSamePush(context, "/bills")),
-            DrawerTile(
-                icon: FontAwesomeIcons.check,
-                drawerTitle: "Aufgabenlisten",
-                onClick: () {}),
-            DrawerTile(
-                icon: FontAwesomeIcons.users,
-                drawerTitle: "Mein Haushalt [Beta]",
-                onClick: () =>
-                    Global.navigateWithOutSamePush(context, "/household")),
-            const Spacer(),
-            DrawerTile(
-                icon: FontAwesomeIcons.userCog,
-                drawerTitle: "Mein Konto",
-                onClick: () {}),
-            DrawerTile(
-                icon: FontAwesomeIcons.signOutAlt,
-                drawerTitle: "Abmelden",
-                onClick: () async {
-                  await context.read<AuthenticationState>().signOut();
-                }),
-          ],
+                ),
+                DrawerTile(
+                  icon: FontAwesomeIcons.home,
+                  drawerTitle: "Startseite",
+                  isDisabled: authState.isUserPartOfHousehold(),
+                  onClick: () =>
+                      Global.navigateWithOutSamePush(context, "/homepage"),
+                ),
+                DrawerTile(
+                  icon: FontAwesomeIcons.table,
+                  drawerTitle: "Haushaltsplan",
+                  isDisabled: authState.isUserPartOfHousehold(),
+                  onClick: () {},
+                ),
+                DrawerTile(
+                  icon: FontAwesomeIcons.listOl,
+                  drawerTitle: "Einkaufsliste",
+                  isDisabled: authState.isUserPartOfHousehold(),
+                  onClick: () {},
+                ),
+                DrawerTile(
+                  icon: FontAwesomeIcons.utensils,
+                  drawerTitle: "Rezepte",
+                  isDisabled: authState.isUserPartOfHousehold(),
+                  onClick: () {},
+                ),
+                DrawerTile(
+                  icon: FontAwesomeIcons.wallet,
+                  drawerTitle: "Rechnungen & Ausgaben [Beta]",
+                  isDisabled: authState.isUserPartOfHousehold(),
+                  onClick: () =>
+                      Global.navigateWithOutSamePush(context, "/bills"),
+                ),
+                DrawerTile(
+                  icon: FontAwesomeIcons.check,
+                  drawerTitle: "Aufgabenlisten",
+                  isDisabled: authState.isUserPartOfHousehold(),
+                  onClick: () {},
+                ),
+                DrawerTile(
+                  icon: FontAwesomeIcons.users,
+                  drawerTitle: "Mein Haushalt [Beta]",
+                  onClick: () =>
+                      Global.navigateWithOutSamePush(context, "/household"),
+                ),
+                const Spacer(),
+                DrawerTile(
+                  icon: FontAwesomeIcons.userCog,
+                  drawerTitle: "Mein Konto",
+                  onClick: () {},
+                ),
+                DrawerTile(
+                  icon: FontAwesomeIcons.signOutAlt,
+                  drawerTitle: "Abmelden",
+                  onClick: () async {
+                    await context.read<AuthenticationState>().signOut();
+                  },
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

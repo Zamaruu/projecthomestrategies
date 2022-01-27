@@ -37,7 +37,8 @@ class BillContentBuilder extends StatelessWidget {
             builder: (context, auth, child) {
               return FutureBuilder<Map<String, List>>(
                 future: BillingService(auth.token).getBillsAndCategories(
-                    auth.sessionUser.household!.householdId!),
+                  auth.sessionUser.household!.householdId!,
+                ),
                 builder: (BuildContext context,
                     AsyncSnapshot<Map<String, List>> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
