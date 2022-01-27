@@ -61,6 +61,17 @@ class BillingState with ChangeNotifier {
     }
   }
 
+  void removeBillCategory(BillCategoryModel category) {
+    int index = _billCategories
+        .indexWhere((bc) => bc.billCategoryId == category.billCategoryId);
+    if (index == -1) {
+      return;
+    } else {
+      _billCategories.removeAt(index);
+      notifyListeners();
+    }
+  }
+
   DateTime getOldestDate() {
     var dates = List.generate(_bills.length, (index) => _bills[index].date!);
     return dates
