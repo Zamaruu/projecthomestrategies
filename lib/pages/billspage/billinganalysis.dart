@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/provider/analysis_state.dart';
 import 'package:projecthomestrategies/bloc/provider/billing_state.dart';
 import 'package:projecthomestrategies/widgets/billspage/analysis/barchartcategorysummary.dart';
+import 'package:projecthomestrategies/widgets/billspage/analysis/piechartcategoeysummary.dart';
 import 'package:projecthomestrategies/widgets/billspage/analysis/resetanalysistimefilter.dart';
 import 'package:projecthomestrategies/widgets/billspage/analysis/setfilterdates.dart';
 import 'package:projecthomestrategies/widgets/billspage/analysis/thirtydayretro.dart';
@@ -66,6 +67,14 @@ class BillingsAnalysis extends StatelessWidget {
                             categoryModels: state.billCategories,
                           ),
                         ),
+                        const SizedBox(height: 30),
+                        SizedBox(
+                          height: 250,
+                          child: PieSummaryLabelChart(
+                            bills: state.bills,
+                            categoryModels: state.billCategories,
+                          ),
+                        )
                       ],
                     );
                   }),
