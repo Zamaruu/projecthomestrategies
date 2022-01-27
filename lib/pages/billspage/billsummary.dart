@@ -5,7 +5,7 @@ import 'package:projecthomestrategies/widgets/billspage/addbillmodal.dart';
 import 'package:projecthomestrategies/widgets/billspage/billingtile.dart';
 import 'package:projecthomestrategies/widgets/billspage/billingtimesection.dart';
 import 'package:projecthomestrategies/widgets/billspage/lastmonthsummary.dart';
-import 'package:projecthomestrategies/widgets/billspage/thirtydayretro.dart';
+import 'package:projecthomestrategies/widgets/billspage/analysis/thirtydayretro.dart';
 import 'package:provider/provider.dart';
 
 class BillsSummary extends StatelessWidget {

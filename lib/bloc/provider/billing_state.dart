@@ -38,4 +38,18 @@ class BillingState with ChangeNotifier {
     _bills = [..._bills, newBill];
     notifyListeners();
   }
+
+  DateTime getOldestDate() {
+    var dates = List.generate(_bills.length, (index) => _bills[index].date!);
+    return dates
+        .reduce((a, b) => a.isBefore(b) ? a : b)
+        .subtract(const Duration(minutes: 10));
+  }
+
+  DateTime getNewestDate() {
+    var dates = List.generate(_bills.length, (index) => _bills[index].date!);
+    return dates
+        .reduce((a, b) => a.isAfter(b) ? a : b)
+        .add(const Duration(minutes: 10));
+  }
 }
