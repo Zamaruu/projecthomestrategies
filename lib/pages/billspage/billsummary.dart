@@ -4,6 +4,7 @@ import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/provider/billing_state.dart';
 import 'package:projecthomestrategies/service/apiresponsehandler_service.dart';
 import 'package:projecthomestrategies/service/billing_service.dart';
+import 'package:projecthomestrategies/service/messenger_service.dart';
 import 'package:projecthomestrategies/widgets/billspage/addbillmodal.dart';
 import 'package:projecthomestrategies/widgets/billspage/billingtimesection.dart';
 import 'package:projecthomestrategies/widgets/billspage/lastmonthsummary.dart';
@@ -59,6 +60,30 @@ class BillsSummary extends StatelessWidget {
     }
   }
 
+  void createBill(BuildContext ctx) {
+    var categoriesExist = ctx.read<BillingState>().billCategories.isNotEmpty;
+    if (categoriesExist) {
+      showDialog(
+        context: ctx,
+        builder: (BuildContext context) {
+          var billCategories = ctx.read<BillingState>().billCategories;
+          var billState = ctx.read<BillingState>();
+          return AddBillModal(
+            billCategories: billCategories,
+            state: billState,
+          );
+        },
+      );
+    } else {
+      InAppMessengerService(
+        ctx,
+        message:
+            "Du musst erst Rechnungskategorien anlegen bevor du Rechnungen erstellen kannst.",
+        backgroundColor: Colors.orange,
+      ).showSnackbar();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,17 +116,7 @@ class BillsSummary extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => showDialog(
-          context: context,
-          builder: (BuildContext ctx) {
-            var billCategories = context.read<BillingState>().billCategories;
-            var billState = context.read<BillingState>();
-            return AddBillModal(
-              billCategories: billCategories,
-              state: billState,
-            );
-          },
-        ),
+        onPressed: () => createBill(context),
         tooltip: "Neue Rechnung erstellen",
         child: const Icon(
           Icons.add,
