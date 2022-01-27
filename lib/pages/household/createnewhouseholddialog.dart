@@ -4,6 +4,7 @@ import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/household_model.dart';
 import 'package:projecthomestrategies/bloc/user_model.dart';
 import 'package:projecthomestrategies/pages/household/addpersontohousehold.dart';
+import 'package:projecthomestrategies/pages/household/resignindialog.dart';
 import 'package:projecthomestrategies/service/household_service.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/primarybutton.dart';
@@ -115,9 +116,14 @@ class _CreateHouseholdDialogState extends State<CreateHouseholdDialog> {
           response.object as HouseholdModel,
         );
 
-        ctx
-            .read<AuthenticationState>()
-            .addHouseholdToSessionUser(response.object as HouseholdModel);
+        toggleLoading(false);
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const ReSignInDialog()),
+          (route) => false,
+        );
+        // ctx
+        //     .read<AuthenticationState>()
+        //     .addHouseholdToSessionUser(response.object as HouseholdModel);
       }
 
       debugPrint(response.toString());
