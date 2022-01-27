@@ -17,6 +17,16 @@ class BillingState with ChangeNotifier {
     return _billCategories.isEmpty && _bills.isEmpty;
   }
 
+  void setBills(List<BillModel> newBills) {
+    _bills = newBills;
+    notifyListeners();
+  }
+
+  void setBillCategories(List<BillCategoryModel> newCategories) {
+    _billCategories = newCategories;
+    notifyListeners();
+  }
+
   void setInitialData(
     List<BillCategoryModel> billCategories,
     List<BillModel> bills, {

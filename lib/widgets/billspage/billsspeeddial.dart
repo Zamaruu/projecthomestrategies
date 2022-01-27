@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/provider/billing_state.dart';
-import 'package:projecthomestrategies/pages/billspage/billcategorydialog.dart';
+import 'package:projecthomestrategies/pages/billspage/billcategories.dart';
 import 'package:projecthomestrategies/widgets/billspage/addbillmodal.dart';
 import 'package:provider/provider.dart';
 

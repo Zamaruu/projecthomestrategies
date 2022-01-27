@@ -2,15 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/apiresponse_model.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/billcategory_model.dart';
-import 'package:projecthomestrategies/bloc/household_model.dart';
 import 'package:projecthomestrategies/bloc/provider/billing_state.dart';
 import 'package:projecthomestrategies/service/apiresponsehandler_service.dart';
 import 'package:projecthomestrategies/service/billing_service.dart';
-import 'package:projecthomestrategies/widgets/billspage/billcategories/billcategorylist.dart';
+import 'package:projecthomestrategies/widgets/billspage/billcategories/billcategorytile.dart';
 import 'package:projecthomestrategies/widgets/billspage/billcategories/newbillcategorydialog.dart';
-import 'package:projecthomestrategies/widgets/globalwidgets/errorpage.dart';
-import 'package:projecthomestrategies/widgets/globalwidgets/loadingprocessor.dart';
-import 'package:projecthomestrategies/widgets/globalwidgets/somesrategiesloadingbuilder.dart';
 import 'package:provider/provider.dart';
 
 class BillCategoriesDialog extends StatefulWidget {
@@ -61,10 +57,49 @@ class _BillCategoriesDialogState extends State<BillCategoriesDialog> {
     }
   }
 
+  Future<void> refreshBillCategories(BuildContext ctx) async {
+    var token = ctx.read<AuthenticationState>().token;
+    var householdId =
+        ctx.read<AuthenticationState>().sessionUser.household!.householdId!;
+    var response =
+        await BillingService(token).getBillCategoriesForHousehold(householdId);
+
+    if (response.statusCode == 200) {
+      ctx
+          .read<BillingState>()
+          .setBillCategories(response.object as List<BillCategoryModel>);
+    } else {
+      ApiResponseHandlerService.fromResponseModel(
+        context: ctx,
+        response: response,
+      ).showSnackbar();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const BillCategoryList(),
+      body: Consumer<BillingState>(
+        builder: (context, state, _) {
+          if (state.billCategories.isEmpty) {
+            return const Center(
+              child: Text("Keine Kategorien"),
+            );
+          } else {
+            return RefreshIndicator(
+              onRefresh: () => refreshBillCategories(context),
+              child: ListView.builder(
+                itemCount: state.billCategories.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return BillCategoryTile(
+                    billCategory: state.billCategories[index],
+                  );
+                },
+              ),
+            );
+          }
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => createNewCategory(context),
         tooltip: "Neue Kategorie erstellen",

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/bill_model.dart';
+import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/provider/billing_state.dart';
+import 'package:projecthomestrategies/service/apiresponsehandler_service.dart';
+import 'package:projecthomestrategies/service/billing_service.dart';
 import 'package:projecthomestrategies/widgets/billspage/addbillmodal.dart';
-import 'package:projecthomestrategies/widgets/billspage/billingtile.dart';
 import 'package:projecthomestrategies/widgets/billspage/billingtimesection.dart';
 import 'package:projecthomestrategies/widgets/billspage/lastmonthsummary.dart';
-import 'package:projecthomestrategies/widgets/billspage/analysis/thirtydayretro.dart';
 import 'package:provider/provider.dart';
 
 class BillsSummary extends StatelessWidget {
@@ -41,6 +42,23 @@ class BillsSummary extends StatelessWidget {
     return bills;
   }
 
+  Future<void> refreshBills(BuildContext ctx) async {
+    var token = ctx.read<AuthenticationState>().token;
+    var householdId =
+        ctx.read<AuthenticationState>().sessionUser.household!.householdId!;
+    var response =
+        await BillingService(token).getBillsForHousehold(householdId);
+
+    if (response.statusCode == 200) {
+      ctx.read<BillingState>().setBills(response.object as List<BillModel>);
+    } else {
+      ApiResponseHandlerService.fromResponseModel(
+        context: ctx,
+        response: response,
+      ).showSnackbar();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,22 +70,22 @@ class BillsSummary extends StatelessWidget {
               child: Text("Keine Rechnungen vorhanden"),
             );
           } else {
-            return ListView(
-              shrinkWrap: true,
-              children: <Widget>[
-                // BillRetrospect(
-                //   bills: getLastThirtyDays(bills),
-                // ),
-                LastMonthSummary(bills: bills),
-                BillingTimeSection(
-                  label: "Letzten 7 Tage",
-                  bills: getLastSevendays(bills),
-                ),
-                BillingTimeSection(
-                  label: "Ältere Rechnungen",
-                  bills: getOtherBills(bills),
-                ),
-              ],
+            return RefreshIndicator(
+              onRefresh: () => refreshBills(context),
+              child: ListView(
+                shrinkWrap: true,
+                children: <Widget>[
+                  LastMonthSummary(bills: bills),
+                  BillingTimeSection(
+                    label: "Letzten 7 Tage",
+                    bills: getLastSevendays(bills),
+                  ),
+                  BillingTimeSection(
+                    label: "Ältere Rechnungen",
+                    bills: getOtherBills(bills),
+                  ),
+                ],
+              ),
             );
           }
         },

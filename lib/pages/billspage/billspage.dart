@@ -3,7 +3,7 @@ import 'package:projecthomestrategies/bloc/bill_model.dart';
 import 'package:projecthomestrategies/bloc/billcategory_model.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/provider/billing_state.dart';
-import 'package:projecthomestrategies/pages/billspage/billcategorydialog.dart';
+import 'package:projecthomestrategies/pages/billspage/billcategories.dart';
 import 'package:projecthomestrategies/pages/billspage/billinganalysis.dart';
 import 'package:projecthomestrategies/pages/billspage/billsummary.dart';
 import 'package:projecthomestrategies/service/billing_service.dart';
