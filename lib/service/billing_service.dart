@@ -101,6 +101,42 @@ class BillingService {
     }
   }
 
+  Future<ApiResponseModel> editBillingCategory(
+    BillCategoryModel category,
+  ) async {
+    try {
+      final rawUri = url + "/BillCategories/${category.billCategoryId}";
+
+      final uri = Uri.parse(rawUri);
+
+      var response = await http
+          .put(
+            uri,
+            headers: header,
+            body: jsonEncode(category.toJson()),
+          )
+          .timeout(Global.timeoutDuration);
+
+      if (response.statusCode == 200) {
+        return ApiResponseModel.success(
+          response.statusCode,
+          BillCategoryModel.fromJson(jsonDecode(
+            response.body,
+          )),
+        );
+      } else {
+        return ApiResponseModel.error(
+          response.statusCode,
+          response.body.isNotEmpty ? response.body : response.reasonPhrase,
+        );
+      }
+    } on TimeoutException catch (e) {
+      return ApiResponseModel.error(408, e.message.toString());
+    } on Exception catch (e) {
+      return ApiResponseModel.error(500, e.toString());
+    }
+  }
+
   //Bills
   Future<ApiResponseModel> getBillsForHousehold(
     int householdId,

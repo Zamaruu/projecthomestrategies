@@ -39,6 +39,18 @@ class BillingState with ChangeNotifier {
     notifyListeners();
   }
 
+  void editBillCategory(BillCategoryModel category) {
+    int index = _billCategories
+        .indexWhere((bc) => bc.billCategoryId == category.billCategoryId);
+
+    if (index == -1) {
+      return;
+    } else {
+      _billCategories[index].billCategoryName = category.billCategoryName;
+      notifyListeners();
+    }
+  }
+
   DateTime getOldestDate() {
     var dates = List.generate(_bills.length, (index) => _bills[index].date!);
     return dates

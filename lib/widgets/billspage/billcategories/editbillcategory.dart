@@ -1,7 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/billcategory_model.dart';
-import 'package:projecthomestrategies/bloc/household_model.dart';
+import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/service/billing_service.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/cancelbutton.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/primarybutton.dart';
@@ -9,25 +9,26 @@ import 'package:projecthomestrategies/widgets/globalwidgets/somesrategiesloading
 import 'package:projecthomestrategies/widgets/globalwidgets/textinputfield.dart';
 import 'package:provider/provider.dart';
 
-class CreateBillCategoryDialog extends StatefulWidget {
-  final List<String> existingCategories;
+class EditCategoryDialog extends StatefulWidget {
+  final BillCategoryModel catgeory;
 
-  const CreateBillCategoryDialog({Key? key, required this.existingCategories})
+  const EditCategoryDialog({Key? key, required this.catgeory})
       : super(key: key);
 
   @override
-  State<CreateBillCategoryDialog> createState() =>
-      _CreateBillCategoryDialogState();
+  State<EditCategoryDialog> createState() => _EditCategoryDialogState();
 }
 
-class _CreateBillCategoryDialogState extends State<CreateBillCategoryDialog> {
+class _EditCategoryDialogState extends State<EditCategoryDialog> {
   late bool isLoading;
   late TextEditingController nameController;
 
   @override
   void initState() {
     isLoading = false;
-    nameController = TextEditingController();
+    nameController = TextEditingController(
+      text: widget.catgeory.billCategoryName,
+    );
     super.initState();
   }
 
@@ -42,27 +43,23 @@ class _CreateBillCategoryDialogState extends State<CreateBillCategoryDialog> {
 
     if (newCategory.isEmpty) {
       return false;
-    } else if (widget.existingCategories.contains(newCategory)) {
+    } else if (newCategory == widget.catgeory.billCategoryName) {
       return false;
     }
     return true;
   }
 
-  Future<void> createNewCategory(BuildContext ctx) async {
+  Future<void> handleEditCatgeory(BuildContext context) async {
     if (!newCategoryIsValid()) {
       return;
     }
     toggleLoading(true);
 
-    var name = nameController.text.trim();
-    var household = ctx.read<AuthenticationState>().sessionUser.household!;
-    BillCategoryModel newCategory = BillCategoryModel(
-      billCategoryName: name,
-      household: household,
-    );
+    widget.catgeory.billCategoryName = nameController.text.trim();
 
-    var token = ctx.read<AuthenticationState>().token;
-    var result = await BillingService(token).createBillingCategory(newCategory);
+    var token = context.read<AuthenticationState>().token;
+    var result =
+        await BillingService(token).editBillingCategory(widget.catgeory);
 
     toggleLoading(true);
     Navigator.pop(context, result);
@@ -71,7 +68,7 @@ class _CreateBillCategoryDialogState extends State<CreateBillCategoryDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("Neue Kategorie erstellen"),
+      title: const Text("Kategorie bearbeiten"),
       content: HomeStrategiesLoadingBuilder(
         isLoading: isLoading,
         isDialog: true,
@@ -85,9 +82,9 @@ class _CreateBillCategoryDialogState extends State<CreateBillCategoryDialog> {
       actions: [
         CancelButton(onCancel: () => Navigator.of(context).pop()),
         PrimaryButton(
-          onPressed: () => createNewCategory(context),
-          text: "Erstellen",
-          icon: Icons.add,
+          onPressed: () => handleEditCatgeory(context),
+          text: "Speichern",
+          icon: Icons.edit,
         ),
       ],
     );

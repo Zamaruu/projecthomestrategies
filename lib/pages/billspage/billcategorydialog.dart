@@ -64,12 +64,7 @@ class _BillCategoriesDialogState extends State<BillCategoriesDialog> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Selector<BillingState, List<BillCategoryModel>>(
-        selector: (context, model) => model.billCategories,
-        builder: (context, categories, _) {
-          return BillCategoryList(billCategories: categories);
-        },
-      ),
+      body: const BillCategoryList(),
       floatingActionButton: FloatingActionButton(
         onPressed: () => createNewCategory(context),
         tooltip: "Neue Kategorie erstellen",
