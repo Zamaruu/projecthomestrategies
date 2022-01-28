@@ -56,6 +56,9 @@ class _AddBillModalState extends State<AddBillModal> {
     } else if (double.tryParse(moneySumController.text.trim())! <= 0) {
       return false;
     }
+    if (selectedDate.isAfter(DateTime.now().toLocal())) {
+      return false;
+    }
     return true;
   }
 
