@@ -39,11 +39,6 @@ class BillingState with ChangeNotifier {
     }
   }
 
-  void addBillCategory(BillCategoryModel newCategory) {
-    _billCategories = [..._billCategories, newCategory];
-    notifyListeners();
-  }
-
   void addBill(BillModel newBill) {
     _bills = [..._bills, newBill];
     notifyListeners();
@@ -62,6 +57,23 @@ class BillingState with ChangeNotifier {
       _bills[index].date = bill.date;
       notifyListeners();
     }
+  }
+
+  void removeBill(BillModel bill) {
+    int index = _bills.indexWhere(
+      (b) => b.billId == bill.billId,
+    );
+    if (index == -1) {
+      return;
+    } else {
+      _bills.removeAt(index);
+      notifyListeners();
+    }
+  }
+
+  void addBillCategory(BillCategoryModel newCategory) {
+    _billCategories = [..._billCategories, newCategory];
+    notifyListeners();
   }
 
   void editBillCategory(BillCategoryModel category) {

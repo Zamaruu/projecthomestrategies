@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/apiresponse_model.dart';
 import 'package:projecthomestrategies/bloc/bill_model.dart';
+import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/provider/billing_state.dart';
+import 'package:projecthomestrategies/service/apiresponsehandler_service.dart';
+import 'package:projecthomestrategies/service/billing_service.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/widgets/billspage/editbilldialog.dart';
+import 'package:projecthomestrategies/widgets/globalwidgets/confirmationdialog.dart';
 import 'package:provider/provider.dart';
 
 class BillingTile extends StatelessWidget {
@@ -27,7 +31,48 @@ class BillingTile extends StatelessWidget {
         );
       },
     );
-    if (response != null) {}
+    if (response != null) {
+      ApiResponseHandlerService(
+        context: ctx,
+        response: response,
+      ).showSnackbar();
+    }
+  }
+
+  Future deleteBill(BuildContext ctx) async {
+    var response = await showDialog<bool>(
+      context: ctx,
+      builder: (context) {
+        return ConfirmationDialog(
+          title: "Rechnung löschen",
+          content:
+              "Wollen Sie die Rechnung vom ${Global.datetimeToDeString(bill.date!)} über ${bill.amount} € wirklich löschen?",
+          confirmText: "Löschen",
+          icon: Icons.delete,
+        );
+      },
+    );
+    if (response != null) {
+      if (response) {
+        var token = ctx.read<AuthenticationState>().token;
+        var response = await BillingService(token).deleteBill(bill.billId!);
+
+        if (response.statusCode == 200) {
+          ctx.read<BillingState>().removeBill(bill);
+        }
+
+        ApiResponseHandlerService.fromResponseModel(
+          context: ctx,
+          response: response,
+        ).showSnackbar();
+      }
+    }
+    // if (response != null) {
+    //   ApiResponseHandlerService(
+    //     context: ctx,
+    //     response: response,
+    //   ).showSnackbar();
+    // }
   }
 
   PopupMenuButton billMenu(BuildContext ctx) {
@@ -50,7 +95,7 @@ class BillingTile extends StatelessWidget {
         if (value == 1) {
           editBill(ctx);
         } else if (value == 2) {
-          //deleteBillCategory(ctx);
+          deleteBill(ctx);
         }
       },
     );

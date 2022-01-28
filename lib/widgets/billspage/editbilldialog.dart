@@ -115,11 +115,7 @@ class _EditBillModalState extends State<EditBillModal> {
       widget.state.addBill(response.object as BillModel);
       Navigator.pop(ctx);
     } else {
-      ApiResponseHandlerService(
-        context: ctx,
-        response: response,
-      ).showSnackbar();
-      //Navigator.pop(ctx);
+      Navigator.pop(ctx, response);
     }
   }
 
