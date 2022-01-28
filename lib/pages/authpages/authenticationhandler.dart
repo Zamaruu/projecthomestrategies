@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/pages/authpages/signinpage.dart';
 import 'package:projecthomestrategies/pages/homepage/homepage.dart';
+import 'package:projecthomestrategies/pages/homepage/initialloader.dart';
 import 'package:projecthomestrategies/utils/securestoragehandler.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/loadingprocessor.dart';
 import 'package:provider/provider.dart';
@@ -44,7 +45,7 @@ class AuthenticationHander extends StatelessWidget {
                   case Status.authenticating:
                     return const HomePage();
                   case Status.authenticated:
-                    return const HomePage();
+                    return const InitialLoader();
                   default:
                     return const Scaffold();
                 }
