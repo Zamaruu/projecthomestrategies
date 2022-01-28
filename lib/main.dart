@@ -6,6 +6,8 @@ import 'package:projecthomestrategies/utils/colortheme.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:provider/provider.dart';
 
+import 'bloc/provider/appcache_state.dart';
+
 void main() {
   runApp(const HomeStrategies());
 }
@@ -23,7 +25,15 @@ class HomeStrategies extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => AuthenticationState(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AppCacheState(
+            [],
+            [],
+            [],
+            [],
+          ),
+        ),
       ],
       child: const AppConfigLoader(),
     );
