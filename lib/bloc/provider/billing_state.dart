@@ -49,9 +49,25 @@ class BillingState with ChangeNotifier {
     notifyListeners();
   }
 
+  void editBill(BillModel bill) {
+    int index = _bills.indexWhere(
+      (b) => b.billId == bill.billId,
+    );
+
+    if (index == -1) {
+      return;
+    } else {
+      _bills[index].category = bill.category;
+      _bills[index].amount = bill.amount;
+      _bills[index].date = bill.date;
+      notifyListeners();
+    }
+  }
+
   void editBillCategory(BillCategoryModel category) {
-    int index = _billCategories
-        .indexWhere((bc) => bc.billCategoryId == category.billCategoryId);
+    int index = _billCategories.indexWhere(
+      (bc) => bc.billCategoryId == category.billCategoryId,
+    );
 
     if (index == -1) {
       return;

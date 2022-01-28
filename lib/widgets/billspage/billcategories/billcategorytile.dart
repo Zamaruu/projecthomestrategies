@@ -81,7 +81,7 @@ class BillCategoryTile extends StatelessWidget {
       ),
       itemBuilder: (context) => [
         const PopupMenuItem(
-          child: Text("Ändern"),
+          child: Text("Bearbeiten"),
           value: 1,
         ),
         const PopupMenuItem(

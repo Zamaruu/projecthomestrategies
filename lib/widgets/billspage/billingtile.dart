@@ -1,11 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:projecthomestrategies/bloc/apiresponse_model.dart';
 import 'package:projecthomestrategies/bloc/bill_model.dart';
+import 'package:projecthomestrategies/bloc/provider/billing_state.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
+import 'package:projecthomestrategies/widgets/billspage/editbilldialog.dart';
+import 'package:provider/provider.dart';
 
 class BillingTile extends StatelessWidget {
   final BillModel bill;
+  final bool showMenu;
 
-  const BillingTile({Key? key, required this.bill}) : super(key: key);
+  const BillingTile({
+    Key? key,
+    required this.bill,
+    this.showMenu = false,
+  }) : super(key: key);
+
+  Future editBill(BuildContext ctx) async {
+    var response = await showDialog<ApiResponseModel>(
+      context: ctx,
+      builder: (context) {
+        return EditBillModal(
+          billCategories: ctx.read<BillingState>().billCategories,
+          state: ctx.read<BillingState>(),
+          billToEdit: bill,
+        );
+      },
+    );
+    if (response != null) {}
+  }
 
   PopupMenuButton billMenu(BuildContext ctx) {
     return PopupMenuButton<int>(
@@ -15,7 +38,7 @@ class BillingTile extends StatelessWidget {
       ),
       itemBuilder: (context) => [
         const PopupMenuItem(
-          child: Text("Ändern"),
+          child: Text("Bearbeiten"),
           value: 1,
         ),
         const PopupMenuItem(
@@ -25,7 +48,7 @@ class BillingTile extends StatelessWidget {
       ],
       onSelected: (value) {
         if (value == 1) {
-          //editBillCategory(ctx);
+          editBill(ctx);
         } else if (value == 2) {
           //deleteBillCategory(ctx);
         }
@@ -52,7 +75,7 @@ class BillingTile extends StatelessWidget {
         subtitle: Text(
           "am ${Global.datetimeToDeString(bill.date!)} von ${bill.buyer!.email!}",
         ),
-        trailing: billMenu(context),
+        trailing: showMenu ? billMenu(context) : null,
       ),
     );
   }

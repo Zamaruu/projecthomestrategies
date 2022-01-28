@@ -87,10 +87,9 @@ class BillsSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Selector<BillingState, List<BillModel>>(
-        selector: (context, model) => model.bills,
-        builder: (context, bills, child) {
-          if (bills.isEmpty) {
+      body: Consumer<BillingState>(
+        builder: (context, model, child) {
+          if (model.bills.isEmpty) {
             return const Center(
               child: Text("Keine Rechnungen vorhanden"),
             );
@@ -100,14 +99,14 @@ class BillsSummary extends StatelessWidget {
               child: ListView(
                 shrinkWrap: true,
                 children: <Widget>[
-                  LastMonthSummary(bills: bills),
+                  LastMonthSummary(bills: model.bills),
                   BillingTimeSection(
                     label: "Letzten 7 Tage",
-                    bills: getLastSevendays(bills),
+                    bills: getLastSevendays(model.bills),
                   ),
                   BillingTimeSection(
                     label: "Ältere Rechnungen",
-                    bills: getOtherBills(bills),
+                    bills: getOtherBills(model.bills),
                   ),
                 ],
               ),

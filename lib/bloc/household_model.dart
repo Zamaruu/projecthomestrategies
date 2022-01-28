@@ -1,19 +1,20 @@
+import 'package:projecthomestrategies/bloc/bill_model.dart';
+import 'package:projecthomestrategies/bloc/billcategory_model.dart';
 import 'package:projecthomestrategies/bloc/user_model.dart';
 
 class HouseholdModel {
   int? householdId;
   String? householdName;
   List<UserModel>? householdMember;
-  dynamic householdBills;
   int? adminId;
   UserModel? householdCreator;
 
-  HouseholdModel(
-      {this.householdId,
-      this.householdName,
-      this.householdMember,
-      this.adminId,
-      this.householdBills});
+  HouseholdModel({
+    this.householdId,
+    this.householdName,
+    this.householdMember,
+    this.adminId,
+  });
 
   HouseholdModel.fromJson(Map<String, dynamic> json) {
     householdId = json['householdId'];
@@ -24,7 +25,6 @@ class HouseholdModel {
             json['householdMember'].map((model) => UserModel.fromJson(model)),
           )
         : null;
-    householdBills = json['householdBills'];
     householdCreator = json['householdCreator'] != null
         ? UserModel.fromJson(json['householdCreator'])
         : null;
@@ -38,9 +38,6 @@ class HouseholdModel {
     if (householdMember != null) {
       data['householdMember'] =
           householdMember!.map((v) => v.toJson()).toList();
-    }
-    if (householdBills != null) {
-      data['householdBills'] = householdBills!.map((v) => v.toJson()).toList();
     }
     if (householdCreator != null) {
       data['householdCreator'] = householdCreator!.toJson();

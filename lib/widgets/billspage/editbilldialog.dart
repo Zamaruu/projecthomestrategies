@@ -11,19 +11,23 @@ import 'package:projecthomestrategies/widgets/globalwidgets/primarybutton.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/somesrategiesloadingbuilder.dart';
 import 'package:provider/provider.dart';
 
-class AddBillModal extends StatefulWidget {
+class EditBillModal extends StatefulWidget {
   final List<BillCategoryModel> billCategories;
   final BillingState state;
+  final BillModel billToEdit;
 
-  const AddBillModal(
-      {Key? key, required this.billCategories, required this.state})
-      : super(key: key);
+  const EditBillModal({
+    Key? key,
+    required this.billCategories,
+    required this.state,
+    required this.billToEdit,
+  }) : super(key: key);
 
   @override
-  State<AddBillModal> createState() => _AddBillModalState();
+  State<EditBillModal> createState() => _EditBillModalState();
 }
 
-class _AddBillModalState extends State<AddBillModal> {
+class _EditBillModalState extends State<EditBillModal> {
   late bool isLoading;
   late TextEditingController moneySumController;
   late TextEditingController selectedDateController;
@@ -33,9 +37,15 @@ class _AddBillModalState extends State<AddBillModal> {
   @override
   void initState() {
     isLoading = false;
-    moneySumController = TextEditingController();
-    categorySelection = 0;
-    selectedDate = DateTime.now().toLocal();
+    moneySumController = TextEditingController(
+      text: widget.billToEdit.amount!.toStringAsFixed(2),
+    );
+    categorySelection = widget.billCategories.indexWhere(
+      (category) =>
+          category.billCategoryId ==
+          widget.billToEdit.category!.billCategoryId!,
+    );
+    selectedDate = widget.billToEdit.date!;
     selectedDateController = TextEditingController();
     selectedDateController.text = Global.datetimeToDeString(selectedDate);
     super.initState();
@@ -77,7 +87,7 @@ class _AddBillModalState extends State<AddBillModal> {
     }
   }
 
-  Future<void> _createNewBill(BuildContext ctx) async {
+  Future<void> _editBill(BuildContext ctx) async {
     if (!validateBillData()) {
       return;
     }
@@ -91,14 +101,15 @@ class _AddBillModalState extends State<AddBillModal> {
     var date = selectedDate;
 
     BillModel newBill = BillModel(
+      billId: widget.billToEdit.billId,
       amount: amount,
       category: category,
       date: date,
-      buyer: user,
+      buyer: widget.billToEdit.buyer,
       household: user.household!,
     );
 
-    var response = await BillingService(token).createNewBill(newBill);
+    var response = await BillingService(token).editBill(newBill);
     toggleLoading(false);
     if (response.statusCode == 200) {
       widget.state.addBill(response.object as BillModel);
@@ -108,13 +119,14 @@ class _AddBillModalState extends State<AddBillModal> {
         context: ctx,
         response: response,
       ).showSnackbar();
+      //Navigator.pop(ctx);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("Rechnung erstellen"),
+      title: const Text("Rechnung bearbeiten"),
       content: HomeStrategiesLoadingBuilder(
         isLoading: isLoading,
         isDialog: true,
@@ -169,9 +181,10 @@ class _AddBillModalState extends State<AddBillModal> {
       actions: [
         CancelButton(onCancel: () => Navigator.of(context).pop()),
         PrimaryButton(
-            onPressed: () => _createNewBill(context),
-            text: "Erstellen",
-            icon: Icons.add)
+          onPressed: () => _editBill(context),
+          text: "Bearbeiten",
+          icon: Icons.edit,
+        ),
       ],
     );
   }

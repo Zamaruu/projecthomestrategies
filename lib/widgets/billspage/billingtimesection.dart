@@ -26,6 +26,7 @@ class BillingTimeSection extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             return BillingTile(
               bill: bills[index],
+              showMenu: true,
             );
           },
         ),
