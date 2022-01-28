@@ -53,6 +53,8 @@ class _AddBillModalState extends State<AddBillModal> {
     }
     if (double.tryParse(moneySumController.text.trim()) == null) {
       return false;
+    } else if (double.tryParse(moneySumController.text.trim())! <= 0) {
+      return false;
     }
     return true;
   }

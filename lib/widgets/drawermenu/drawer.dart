@@ -94,8 +94,10 @@ class MenuDrawer extends StatelessWidget {
                 DrawerTile(
                   icon: FontAwesomeIcons.users,
                   drawerTitle: "Mein Haushalt [Beta]",
-                  onClick: () =>
-                      Global.navigateWithOutSamePush(context, "/household"),
+                  onClick: () => Global.navigateWithOutSamePush(
+                    context,
+                    "/household",
+                  ),
                 ),
                 const Spacer(),
                 DrawerTile(
