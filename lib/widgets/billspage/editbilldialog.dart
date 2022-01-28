@@ -100,19 +100,19 @@ class _EditBillModalState extends State<EditBillModal> {
     var category = widget.billCategories[categorySelection];
     var date = selectedDate;
 
-    BillModel newBill = BillModel(
+    BillModel changedBill = BillModel(
       billId: widget.billToEdit.billId,
       amount: amount,
-      category: category,
+      category: BillCategoryModel(billCategoryId: category.billCategoryId),
       date: date,
       buyer: widget.billToEdit.buyer,
       household: user.household!,
     );
 
-    var response = await BillingService(token).editBill(newBill);
+    var response = await BillingService(token).editBill(changedBill);
     toggleLoading(false);
     if (response.statusCode == 200) {
-      widget.state.addBill(response.object as BillModel);
+      widget.state.editBill(response.object as BillModel);
       Navigator.pop(ctx);
     } else {
       Navigator.pop(ctx, response);

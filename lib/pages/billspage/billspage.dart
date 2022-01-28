@@ -109,9 +109,11 @@ class _BillsPageState extends State<BillsPage> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: pageIndex,
         onTap: (index) {
-          setState(() {
-            pageIndex = index;
-          });
+          if (index != pageIndex) {
+            setState(() {
+              pageIndex = index;
+            });
+          }
         },
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
