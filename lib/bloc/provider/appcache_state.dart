@@ -37,4 +37,24 @@ class AppCacheState with ChangeNotifier {
     _openNotifications = open;
     _seenNotifications = seen;
   }
+
+  void setNotificationToSeen(NotificationModel notification) {
+    int index = _openNotifications.indexWhere(
+      (n) => n.notificationId == notification.notificationId,
+    );
+
+    if (index == -1) {
+      return;
+    } else {
+      var _notification = _openNotifications
+          .where(
+            (n) => n.notificationId == notification.notificationId,
+          )
+          .first;
+      _notification.seen = true;
+      _openNotifications.removeAt(index);
+      _seenNotifications = [..._seenNotifications, _notification];
+      notifyListeners();
+    }
+  }
 }

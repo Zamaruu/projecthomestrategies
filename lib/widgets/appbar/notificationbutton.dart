@@ -21,17 +21,16 @@ class NotificationButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Selector<AppCacheState, List<NotificationModel>>(
-      selector: (ctx, model) => model.openNotificaions,
-      builder: (ctx, notifications, _) {
+    return Consumer<AppCacheState>(
+      builder: (ctx, model, _) {
         return Badge(
-          showBadge: notifications.isNotEmpty,
+          showBadge: model.openNotificaions.isNotEmpty,
           position: const BadgePosition(
             top: 5,
             end: 5,
           ),
           badgeContent: Text(
-            "${notifications.length}",
+            "${model.openNotificaions.length}",
             style: const TextStyle(color: Colors.white),
           ),
           child: IconButton(
