@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/apiresponse_model.dart';
+import 'package:projecthomestrategies/utils/globals.dart';
 
 class ApiResponseHandlerService {
   final BuildContext context;
@@ -46,7 +47,9 @@ class ApiResponseHandlerService {
   }
 
   void showSnackbar() {
-    var text = response != null ? response!.message! : customMessage!;
+    var text = response != null
+        ? Global.removeQuotationMarksFromString(response!.message!)
+        : customMessage!;
     var color = getColorFromStatusCode();
 
     var snackBar = SnackBar(

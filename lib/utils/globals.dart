@@ -62,4 +62,8 @@ class Global {
     header["Authorization"] = "Bearer $token";
     return header;
   }
+
+  static String removeQuotationMarksFromString(String text) {
+    return text.replaceAll('"', "");
+  }
 }
