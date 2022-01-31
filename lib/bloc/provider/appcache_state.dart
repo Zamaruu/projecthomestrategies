@@ -57,4 +57,9 @@ class AppCacheState with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  void setOpenNotifications(List<NotificationModel> openNotfications) {
+    _openNotifications = openNotfications;
+    notifyListeners();
+  }
 }

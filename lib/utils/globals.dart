@@ -1,6 +1,7 @@
 import 'dart:convert';
-
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/pages/authpages/authenticationhandler.dart';
 import 'package:projecthomestrategies/pages/authpages/signinpage.dart';
 import 'package:projecthomestrategies/pages/authpages/signuppage.dart';
@@ -65,5 +66,9 @@ class Global {
 
   static String removeQuotationMarksFromString(String text) {
     return text.replaceAll('"', "");
+  }
+
+  static String getToken(BuildContext context) {
+    return context.read<AuthenticationState>().token;
   }
 }
