@@ -1,14 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:projecthomestrategies/app_config_loader.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/utils/colortheme.dart';
-import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:provider/provider.dart';
-
 import 'bloc/provider/appcache_state.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const HomeStrategies());
 }
 
@@ -36,26 +37,6 @@ class HomeStrategies extends StatelessWidget {
         ),
       ],
       child: const AppConfigLoader(),
-    );
-  }
-}
-
-class AppConfigLoader extends StatelessWidget {
-  const AppConfigLoader({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Home Strategies',
-      localizationsDelegates: const [GlobalMaterialLocalizations.delegate],
-      supportedLocales: const [
-        Locale('de'),
-      ],
-      theme: context.watch<AppTheme>().customTheme,
-      initialRoute: '/auth',
-      routes: Global.appRoutes,
-      //home: const HomePage(),
     );
   }
 }
