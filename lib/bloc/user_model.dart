@@ -6,19 +6,22 @@ class UserModel {
   String? surname;
   String? email;
   String? password;
+  String? fcmToken;
   int? userColor;
   int? type;
   HouseholdModel? household;
 
-  UserModel(
-      {this.userId,
-      this.firstname,
-      this.surname,
-      this.email,
-      this.password,
-      this.userColor,
-      this.type,
-      this.household});
+  UserModel({
+    this.userId,
+    this.firstname,
+    this.surname,
+    this.email,
+    this.password,
+    this.fcmToken,
+    this.userColor,
+    this.type,
+    this.household,
+  });
 
   UserModel.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
@@ -26,6 +29,7 @@ class UserModel {
     surname = json['surname'];
     email = json['email'];
     password = json['password'];
+    fcmToken = json['fcmToken'];
     userColor = json['userColor'];
     type = json['type'];
     household = json["household"] != null
@@ -40,6 +44,7 @@ class UserModel {
     data['surname'] = surname;
     data['email'] = email;
     data['password'] = password;
+    data['fcmToken'] = fcmToken;
     data['userColor'] = userColor;
     data['type'] = type;
     if (household != null) {

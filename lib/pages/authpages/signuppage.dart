@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/signup_model.dart';
 import 'package:projecthomestrategies/service/authentication_service.dart';
@@ -64,9 +65,12 @@ class _SignUpPageState extends State<SignUpPage> {
       isLoading = true;
     });
     if (handleValidation() == 200) {
+      var fcmToken = await FirebaseMessaging.instance.getToken();
+
       SignupModel signupModel = SignupModel(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
+        fcmToken: fcmToken,
         firstname: firstnameController.text.trim(),
         surname: surnameController.text.trim(),
       );
