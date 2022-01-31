@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "426775771145",
+    "project_id": "homestrategies-26745",
+    "storage_bucket": "homestrategies-26745.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:426775771145:android:fdff7b7c451740f0c4e0d8",
+        "android_client_info": {
+          "package_name": "de.zamaruu.projecthomestrategies"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "426775771145-778qhuegnp77ni7clfuers733qmi2eqv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.zamaruu.projecthomestrategies",
+            "certificate_hash": "2581eddbe1a0c01ed2403ecfe0a0417ec843d414"
+          }
+        },
+        {
+          "client_id": "426775771145-k4e1fj2itcb4f09lo2nbe5eo7s78jjub.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWlTAb6MB2fZSd1WvVIu56E79i1wsCMhw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "426775771145-k4e1fj2itcb4f09lo2nbe5eo7s78jjub.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

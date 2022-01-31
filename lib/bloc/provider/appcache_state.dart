@@ -62,4 +62,18 @@ class AppCacheState with ChangeNotifier {
     _openNotifications = openNotfications;
     notifyListeners();
   }
+
+  List<NotificationModel> sortNotifications(
+    List<NotificationModel> notifications,
+  ) {
+    notifications.sort((a, b) {
+      var adate = a.created!; //before -> var adate = a.expiry;
+      var bdate = b.created!; //before -> var bdate = b.expiry;
+      return bdate.compareTo(
+        adate,
+      ); //to get the order other way just switch `adate & bdate`
+    });
+
+    return notifications;
+  }
 }

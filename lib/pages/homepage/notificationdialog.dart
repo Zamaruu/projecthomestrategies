@@ -50,13 +50,17 @@ class NotificationDialog extends StatelessWidget {
                         children: [
                           if (state.openNotificaions.isNotEmpty)
                             NotificationListBuilder(
-                              notifications: state.openNotificaions,
+                              notifications: state.sortNotifications(
+                                state.openNotificaions,
+                              ),
                               heading:
                                   "Neue Benachrichtigungen (${state.openNotificaions.length})",
                             ),
                           if (state.seenNotificaions.isNotEmpty)
                             NotificationListBuilder(
-                              notifications: state.seenNotificaions,
+                              notifications: state.sortNotifications(
+                                state.seenNotificaions,
+                              ),
                               heading:
                                   "Ältere Benachrichtigungen (${state.seenNotificaions.length})",
                             ),
