@@ -4,6 +4,7 @@ enum NotificationType { created, edited, deleted, info }
 
 class NotificationModel {
   int? notificationId;
+  String? title;
   String? content;
   bool? seen;
   String? creatorName;
@@ -22,6 +23,7 @@ class NotificationModel {
 
   NotificationModel.fromJson(Map<String, dynamic> json) {
     notificationId = json['notificationId'];
+    title = json['title'];
     content = json['content'];
     seen = json['seen'];
     creatorName = json['creatorName'];
@@ -33,6 +35,7 @@ class NotificationModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['notificationId'] = notificationId;
+    data['title'] = title;
     data['content'] = content;
     data['seen'] = seen;
     data['creatorName'] = creatorName;

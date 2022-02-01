@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:projecthomestrategies/utils/colortheme.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
+import 'package:projecthomestrategies/utils/localnotificationbuilder.dart';
 import 'package:provider/provider.dart';
 
 class AppConfigLoader extends StatefulWidget {
@@ -26,9 +27,10 @@ class _AppConfigLoaderState extends State<AppConfigLoader> {
     _firebaseMessaging.getToken().then((value) {
       debugPrint(value);
     });
-    FirebaseMessaging.onMessage.listen((RemoteMessage event) {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       debugPrint("message recieved");
-      debugPrint(event.notification!.body);
+      debugPrint(message.notification!.body);
+      LocalNotificationBuilder().createLocalFcmNotification(message);
     });
     // FirebaseMessaging.onBackgroundMessage(
     //   (message) => onBackgroundHanlder(message),
