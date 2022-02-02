@@ -6,6 +6,20 @@ import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/utils/localnotificationbuilder.dart';
 import 'package:provider/provider.dart';
 
+Future<void> onBackgroundHanlder(
+  RemoteMessage message, {
+  GlobalKey<NavigatorState>? key,
+}) async {
+  var serviceHandler = NotificationServiceHandler(key!);
+  var route = serviceHandler.getRouteFromData(message.data["route"]);
+
+  debugPrint(route.toString());
+
+  if (route != null) {
+    serviceHandler.navigateBasedOnRoute(route);
+  }
+}
+
 class AppConfigLoader extends StatefulWidget {
   const AppConfigLoader({Key? key}) : super(key: key);
 
@@ -17,10 +31,6 @@ class _AppConfigLoaderState extends State<AppConfigLoader> {
   late FirebaseMessaging _firebaseMessaging;
   final GlobalKey<NavigatorState> navigatorKey =
       GlobalKey(debugLabel: "Main Navigator");
-
-  Future<void> onBackgroundHanlder(RemoteMessage message) async {
-    debugPrint(message.notification!.body);
-  }
 
   @override
   void initState() {
@@ -35,11 +45,20 @@ class _AppConfigLoaderState extends State<AppConfigLoader> {
       LocalNotificationBuilder(navigatorKey)
           .createLocalFcmNotification(message);
     });
-    // FirebaseMessaging.onBackgroundMessage(
-    //   (message) => onBackgroundHanlder(message),
-    // );
+    FirebaseMessaging.onBackgroundMessage(
+      (message) => onBackgroundHanlder(message, key: navigatorKey),
+    );
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       debugPrint('Message clicked!');
+
+      var serviceHandler = NotificationServiceHandler(navigatorKey);
+      var route = serviceHandler.getRouteFromData(message.data["route"]);
+
+      debugPrint(route.toString());
+
+      if (route != null) {
+        serviceHandler.navigateBasedOnRoute(route);
+      }
     });
     FirebaseMessaging.instance.requestPermission();
   }

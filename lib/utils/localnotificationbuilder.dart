@@ -52,37 +52,14 @@ class LocalNotificationBuilder {
       return;
     } else {
       var body = jsonDecode(args);
-      var route = getRouteFromData(body["route"]);
+      var route = NotificationServiceHandler.empty().getRouteFromData(
+        body["route"],
+      );
 
       if (route != null) {
-        navigateBasedOnRoute(route);
+        NotificationServiceHandler(_navigatorState).navigateBasedOnRoute(route);
       }
     }
-  }
-
-  void navigateBasedOnRoute(NotificationRoute route) {
-    switch (route) {
-      case NotificationRoute.notification:
-        debugPrint(route.toString());
-        Global.navigateWithNavigatorKey(_navigatorState, "/notifications");
-        break;
-      case NotificationRoute.bills:
-        debugPrint(route.toString());
-        Global.navigateWithNavigatorKey(_navigatorState, "/bills");
-        break;
-      default:
-        break;
-    }
-  }
-
-  static NotificationRoute? getRouteFromData(String source) {
-    var rawRoute = int.tryParse(source);
-
-    if (rawRoute != null) {
-      var route = NotificationRoute.values[rawRoute];
-      return route;
-    }
-    return null;
   }
 
   Future<void> createLocalFcmNotification(RemoteMessage fcmMessage) async {
@@ -110,5 +87,37 @@ class LocalNotificationBuilder {
       platformChannelSpecifics,
       payload: jsonEncode(fcmMessage.data),
     );
+  }
+}
+
+class NotificationServiceHandler {
+  late GlobalKey<NavigatorState> _navigatorState;
+
+  NotificationServiceHandler.empty();
+  NotificationServiceHandler(this._navigatorState);
+
+  void navigateBasedOnRoute(NotificationRoute route) {
+    switch (route) {
+      case NotificationRoute.notification:
+        debugPrint(route.toString());
+        Global.navigateWithNavigatorKey(_navigatorState, "/notifications");
+        break;
+      case NotificationRoute.bills:
+        debugPrint(route.toString());
+        Global.navigateWithNavigatorKey(_navigatorState, "/bills");
+        break;
+      default:
+        break;
+    }
+  }
+
+  NotificationRoute? getRouteFromData(String source) {
+    var rawRoute = int.tryParse(source);
+
+    if (rawRoute != null) {
+      var route = NotificationRoute.values[rawRoute];
+      return route;
+    }
+    return null;
   }
 }
