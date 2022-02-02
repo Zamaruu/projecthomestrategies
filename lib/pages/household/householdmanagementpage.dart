@@ -12,7 +12,7 @@ import 'package:projecthomestrategies/widgets/globalwidgets/errorpage.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/loadingprocessor.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/primarybutton.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/usertile.dart';
-import 'package:projecthomestrategies/widgets/household/usermangementtile.dart';
+import 'package:projecthomestrategies/widgets/pages/household/usermangementtile.dart';
 import 'package:provider/provider.dart';
 
 class HouseholdDataLoader extends StatelessWidget {

@@ -5,8 +5,8 @@ import 'package:projecthomestrategies/service/apiresponsehandler_service.dart';
 import 'package:projecthomestrategies/service/notification_service.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/widgets/basescaffold/basescaffold.dart';
-import 'package:projecthomestrategies/widgets/homepage/shoppinglist/shoppinglistpanel.dart';
-import 'package:projecthomestrategies/widgets/homepage/tasks/pendingtaskspanel.dart';
+import 'package:projecthomestrategies/widgets/pages/homepage/shoppinglist/shoppinglistpanel.dart';
+import 'package:projecthomestrategies/widgets/pages/homepage/tasks/pendingtaskspanel.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {

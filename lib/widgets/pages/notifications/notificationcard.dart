@@ -66,8 +66,11 @@ class _NotificationCardState extends State<NotificationCard> {
 
   Widget trailing(BuildContext ctx) {
     if (isLoading) {
-      return CircularProgressIndicator(
-        color: Theme.of(ctx).primaryColor,
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: CircularProgressIndicator(
+          color: Theme.of(ctx).primaryColor,
+        ),
       );
     }
     return IconButton(

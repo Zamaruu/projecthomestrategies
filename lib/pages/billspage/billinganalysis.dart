@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/provider/analysis_state.dart';
 import 'package:projecthomestrategies/bloc/provider/billing_state.dart';
-import 'package:projecthomestrategies/widgets/billspage/analysis/barchartcategorysummary.dart';
-import 'package:projecthomestrategies/widgets/billspage/analysis/piechartcategorysummary.dart';
-import 'package:projecthomestrategies/widgets/billspage/analysis/resetanalysistimefilter.dart';
-import 'package:projecthomestrategies/widgets/billspage/analysis/setfilterdates.dart';
-import 'package:projecthomestrategies/widgets/billspage/analysis/thirtydayretro.dart';
-import 'package:projecthomestrategies/widgets/homepage/panelheading.dart';
+import 'package:projecthomestrategies/widgets/pages/billspage/analysis/barchartcategorysummary.dart';
+import 'package:projecthomestrategies/widgets/pages/billspage/analysis/piechartcategorysummary.dart';
+import 'package:projecthomestrategies/widgets/pages/billspage/analysis/resetanalysistimefilter.dart';
+import 'package:projecthomestrategies/widgets/pages/billspage/analysis/setfilterdates.dart';
+import 'package:projecthomestrategies/widgets/pages/billspage/analysis/thirtydayretro.dart';
+import 'package:projecthomestrategies/widgets/pages/homepage/panelheading.dart';
 import 'package:provider/provider.dart';
 
 class BillingsAnalysis extends StatelessWidget {

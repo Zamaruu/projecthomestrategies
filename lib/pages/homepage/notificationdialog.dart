@@ -5,7 +5,7 @@ import 'package:projecthomestrategies/service/apiresponsehandler_service.dart';
 import 'package:projecthomestrategies/service/notification_service.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/widgets/basescaffold/basescaffold.dart';
-import 'package:projecthomestrategies/widgets/notifications/notificationlist.dart';
+import 'package:projecthomestrategies/widgets/pages/notifications/notificationlist.dart';
 import 'package:provider/provider.dart';
 
 class NotificationDialog extends StatelessWidget {

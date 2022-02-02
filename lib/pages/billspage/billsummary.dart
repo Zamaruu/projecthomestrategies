@@ -5,9 +5,9 @@ import 'package:projecthomestrategies/bloc/provider/billing_state.dart';
 import 'package:projecthomestrategies/service/apiresponsehandler_service.dart';
 import 'package:projecthomestrategies/service/billing_service.dart';
 import 'package:projecthomestrategies/service/messenger_service.dart';
-import 'package:projecthomestrategies/widgets/billspage/addbillmodal.dart';
-import 'package:projecthomestrategies/widgets/billspage/billingtimesection.dart';
-import 'package:projecthomestrategies/widgets/billspage/lastmonthsummary.dart';
+import 'package:projecthomestrategies/widgets/pages/billspage/addbillmodal.dart';
+import 'package:projecthomestrategies/widgets/pages/billspage/billingtimesection.dart';
+import 'package:projecthomestrategies/widgets/pages/billspage/lastmonthsummary.dart';
 import 'package:provider/provider.dart';
 
 class BillsSummary extends StatelessWidget {

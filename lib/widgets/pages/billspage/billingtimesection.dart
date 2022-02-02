@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/bill_model.dart';
-import 'package:projecthomestrategies/widgets/billspage/billingtile.dart';
-import 'package:projecthomestrategies/widgets/homepage/panelheading.dart';
+import 'package:projecthomestrategies/widgets/pages/billspage/billingtile.dart';
+import 'package:projecthomestrategies/widgets/pages/homepage/panelheading.dart';
 
 class BillingTimeSection extends StatelessWidget {
   final String label;

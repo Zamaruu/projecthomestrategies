@@ -5,8 +5,8 @@ import 'package:projecthomestrategies/bloc/billcategory_model.dart';
 import 'package:projecthomestrategies/bloc/provider/billing_state.dart';
 import 'package:projecthomestrategies/service/apiresponsehandler_service.dart';
 import 'package:projecthomestrategies/service/billing_service.dart';
-import 'package:projecthomestrategies/widgets/billspage/billcategories/billcategorytile.dart';
-import 'package:projecthomestrategies/widgets/billspage/billcategories/newbillcategorydialog.dart';
+import 'package:projecthomestrategies/widgets/pages/billspage/billcategories/billcategorytile.dart';
+import 'package:projecthomestrategies/widgets/pages/billspage/billcategories/newbillcategorydialog.dart';
 import 'package:provider/provider.dart';
 
 class BillCategoriesDialog extends StatefulWidget {
