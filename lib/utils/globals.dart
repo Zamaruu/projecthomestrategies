@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:projecthomestrategies/pages/homepage/notificationdialog.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
@@ -27,18 +28,32 @@ class Global {
     "/signup": (context) => const SignUpPage(),
     "/household": (context) => HouseholdPage(),
     "/auth": (context) => const AuthenticationHander(),
+    "/notifications": (context) => const NotificationDialog()
   };
 
-  static void navigateWithOutSamePush(BuildContext context, String nav) {
+  static void navigateWithOutSamePush(
+    BuildContext context,
+    String nav, {
+    bool shouldPop = true,
+  }) {
     Route route = ModalRoute.of(context) as Route;
     final routeName = route.settings.name;
 
     if (routeName != null && routeName != nav) {
-      Navigator.pop(context);
+      if (shouldPop) {
+        Navigator.pop(context);
+      }
       Navigator.of(context).pushNamed(nav);
     } else {
       Navigator.pop(context);
     }
+  }
+
+  static void navigateWithNavigatorKey(
+    GlobalKey<NavigatorState> key,
+    String nav,
+  ) {
+    key.currentState!.pushNamed(nav);
   }
 
   static String datetimeToDeString(DateTime date,

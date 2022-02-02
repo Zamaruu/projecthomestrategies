@@ -15,6 +15,8 @@ class AppConfigLoader extends StatefulWidget {
 
 class _AppConfigLoaderState extends State<AppConfigLoader> {
   late FirebaseMessaging _firebaseMessaging;
+  final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey(debugLabel: "Main Navigator");
 
   Future<void> onBackgroundHanlder(RemoteMessage message) async {
     debugPrint(message.notification!.body);
@@ -30,7 +32,8 @@ class _AppConfigLoaderState extends State<AppConfigLoader> {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       debugPrint("message recieved");
       debugPrint(message.notification!.body);
-      LocalNotificationBuilder().createLocalFcmNotification(message);
+      LocalNotificationBuilder(navigatorKey)
+          .createLocalFcmNotification(message);
     });
     // FirebaseMessaging.onBackgroundMessage(
     //   (message) => onBackgroundHanlder(message),
@@ -44,6 +47,7 @@ class _AppConfigLoaderState extends State<AppConfigLoader> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       title: 'Home Strategies',
       localizationsDelegates: const [GlobalMaterialLocalizations.delegate],

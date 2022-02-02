@@ -2,6 +2,8 @@ import 'package:projecthomestrategies/bloc/user_model.dart';
 
 enum NotificationType { created, edited, deleted, info }
 
+enum NotificationRoute { notification, bills }
+
 class NotificationModel {
   int? notificationId;
   String? title;
