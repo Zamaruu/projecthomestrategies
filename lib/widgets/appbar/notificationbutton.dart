@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
-import 'package:projecthomestrategies/bloc/notifcationmodel.dart';
+import 'package:projecthomestrategies/bloc/models/notifcationmodel.dart';
 import 'package:projecthomestrategies/bloc/provider/appcache_state.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/pages/homepage/notificationdialog.dart';

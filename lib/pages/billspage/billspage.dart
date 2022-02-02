@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:projecthomestrategies/bloc/bill_model.dart';
-import 'package:projecthomestrategies/bloc/billcategory_model.dart';
+import 'package:projecthomestrategies/bloc/models/bill_model.dart';
+import 'package:projecthomestrategies/bloc/models/billcategory_model.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/provider/billing_state.dart';
 import 'package:projecthomestrategies/pages/billspage/billcategories.dart';

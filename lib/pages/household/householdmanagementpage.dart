@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:projecthomestrategies/bloc/apiresponse_model.dart';
+import 'package:projecthomestrategies/bloc/models/apiresponse_model.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
-import 'package:projecthomestrategies/bloc/household_model.dart';
-import 'package:projecthomestrategies/bloc/user_model.dart';
+import 'package:projecthomestrategies/bloc/models/household_model.dart';
+import 'package:projecthomestrategies/bloc/models/user_model.dart';
 import 'package:projecthomestrategies/pages/household/addpersontohousehold.dart';
 import 'package:projecthomestrategies/service/apiresponsehandler_service.dart';
 import 'package:projecthomestrategies/service/household_service.dart';

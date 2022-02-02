@@ -1,6 +1,6 @@
-import 'package:projecthomestrategies/bloc/billcategory_model.dart';
-import 'package:projecthomestrategies/bloc/household_model.dart';
-import 'package:projecthomestrategies/bloc/user_model.dart';
+import 'package:projecthomestrategies/bloc/models/billcategory_model.dart';
+import 'package:projecthomestrategies/bloc/models/household_model.dart';
+import 'package:projecthomestrategies/bloc/models/user_model.dart';
 
 class BillModel {
   int? billId;

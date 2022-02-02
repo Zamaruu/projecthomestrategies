@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:projecthomestrategies/bloc/notifcationmodel.dart';
+import 'package:projecthomestrategies/bloc/models/notifcationmodel.dart';
 import 'package:projecthomestrategies/widgets/pages/homepage/panelheading.dart';
 import 'package:projecthomestrategies/widgets/pages/notifications/notificationcard.dart';
 

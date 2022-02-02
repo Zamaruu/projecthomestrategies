@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projecthomestrategies/bloc/notifcationmodel.dart';
+import 'package:projecthomestrategies/bloc/models/notifcationmodel.dart';
 import 'package:projecthomestrategies/bloc/provider/appcache_state.dart';
 import 'package:projecthomestrategies/service/apiresponsehandler_service.dart';
 import 'package:projecthomestrategies/service/notification_service.dart';

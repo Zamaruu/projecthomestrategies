@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:projecthomestrategies/bloc/bill_model.dart';
-import 'package:projecthomestrategies/bloc/billcategory_model.dart';
+import 'package:projecthomestrategies/bloc/models/bill_model.dart';
+import 'package:projecthomestrategies/bloc/models/billcategory_model.dart';
 
 class BillingState with ChangeNotifier {
   late List<BillCategoryModel> _billCategories;

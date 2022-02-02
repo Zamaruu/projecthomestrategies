@@ -1,4 +1,4 @@
-import 'package:projecthomestrategies/bloc/household_model.dart';
+import 'package:projecthomestrategies/bloc/models/household_model.dart';
 
 class UserModel {
   int? userId;

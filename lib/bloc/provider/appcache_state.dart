@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_final_fields
 
 import 'package:flutter/foundation.dart';
-import 'package:projecthomestrategies/bloc/bill_model.dart';
-import 'package:projecthomestrategies/bloc/billcategory_model.dart';
-import 'package:projecthomestrategies/bloc/notifcationmodel.dart';
+import 'package:projecthomestrategies/bloc/models/bill_model.dart';
+import 'package:projecthomestrategies/bloc/models/billcategory_model.dart';
+import 'package:projecthomestrategies/bloc/models/notifcationmodel.dart';
 
 class AppCacheState with ChangeNotifier {
   late List<NotificationModel> _openNotifications;

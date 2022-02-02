@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:projecthomestrategies/bloc/apiresponse_model.dart';
+import 'package:projecthomestrategies/bloc/models/apiresponse_model.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 
 class ApiResponseHandlerService {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
-import 'package:projecthomestrategies/bloc/household_model.dart';
+import 'package:projecthomestrategies/bloc/models/household_model.dart';
 import 'package:projecthomestrategies/pages/household/createhousehold.dart';
 import 'package:projecthomestrategies/pages/household/householdmanagementpage.dart';
 import 'package:projecthomestrategies/widgets/basescaffold/basescaffold.dart';

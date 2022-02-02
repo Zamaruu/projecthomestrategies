@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projecthomestrategies/bloc/bill_model.dart';
+import 'package:projecthomestrategies/bloc/models/bill_model.dart';
 
 // ignore: must_be_immutable
 class LastMonthSummary extends StatelessWidget {

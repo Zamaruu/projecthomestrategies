@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:projecthomestrategies/bloc/apiresponse_model.dart';
-import 'package:projecthomestrategies/bloc/notifcationmodel.dart';
+import 'package:projecthomestrategies/bloc/models/apiresponse_model.dart';
+import 'package:projecthomestrategies/bloc/models/notifcationmodel.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:http/http.dart' as http;
 

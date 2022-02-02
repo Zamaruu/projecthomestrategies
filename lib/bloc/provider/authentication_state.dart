@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:projecthomestrategies/bloc/apiresponse_model.dart';
-import 'package:projecthomestrategies/bloc/authentication_model.dart';
-import 'package:projecthomestrategies/bloc/household_model.dart';
-import 'package:projecthomestrategies/bloc/user_model.dart';
+import 'package:projecthomestrategies/bloc/models/apiresponse_model.dart';
+import 'package:projecthomestrategies/bloc/models/authentication_model.dart';
+import 'package:projecthomestrategies/bloc/models/household_model.dart';
+import 'package:projecthomestrategies/bloc/models/user_model.dart';
 import 'package:projecthomestrategies/service/authentication_service.dart';
 import 'package:projecthomestrategies/utils/securestoragehandler.dart';
 

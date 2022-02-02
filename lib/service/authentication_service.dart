@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:projecthomestrategies/bloc/apiresponse_model.dart';
-import 'package:projecthomestrategies/bloc/authentication_model.dart';
-import 'package:projecthomestrategies/bloc/signup_model.dart';
-import 'package:projecthomestrategies/bloc/user_model.dart';
+import 'package:projecthomestrategies/bloc/models/apiresponse_model.dart';
+import 'package:projecthomestrategies/bloc/models/authentication_model.dart';
+import 'package:projecthomestrategies/bloc/models/signup_model.dart';
+import 'package:projecthomestrategies/bloc/models/user_model.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 
 class AuthenticationService {

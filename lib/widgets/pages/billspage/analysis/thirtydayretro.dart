@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:projecthomestrategies/bloc/bill_model.dart';
+import 'package:projecthomestrategies/bloc/models/bill_model.dart';
 import 'package:projecthomestrategies/widgets/pages/billspage/analysis/chartpointmodalsheet.dart';
 import 'package:projecthomestrategies/widgets/pages/homepage/panelheading.dart';
 

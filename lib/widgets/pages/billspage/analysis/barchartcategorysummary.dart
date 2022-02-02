@@ -1,7 +1,7 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
-import 'package:projecthomestrategies/bloc/bill_model.dart';
-import 'package:projecthomestrategies/bloc/billcategory_model.dart';
+import 'package:projecthomestrategies/bloc/models/bill_model.dart';
+import 'package:projecthomestrategies/bloc/models/billcategory_model.dart';
 import 'package:projecthomestrategies/bloc/provider/analysis_state.dart';
 import 'package:provider/provider.dart';
 

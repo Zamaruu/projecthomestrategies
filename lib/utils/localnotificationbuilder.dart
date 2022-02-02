@@ -4,7 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:projecthomestrategies/bloc/notifcationmodel.dart';
+import 'package:projecthomestrategies/bloc/models/notifcationmodel.dart';
 import 'package:projecthomestrategies/pages/billspage/billspage.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 
