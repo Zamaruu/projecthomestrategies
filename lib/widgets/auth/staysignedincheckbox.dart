@@ -5,7 +5,9 @@ class StaySignedInCheckBox extends StatefulWidget {
   late bool staySignedIn;
   late Function setSignedIn;
 
-  StaySignedInCheckBox({ Key? key, required this.staySignedIn, required this.setSignedIn}) : super(key: key);
+  StaySignedInCheckBox(
+      {Key? key, required this.staySignedIn, required this.setSignedIn})
+      : super(key: key);
 
   @override
   _StaySignedInCheckBoxState createState() => _StaySignedInCheckBoxState();
@@ -14,10 +16,20 @@ class StaySignedInCheckBox extends StatefulWidget {
 class _StaySignedInCheckBoxState extends State<StaySignedInCheckBox> {
   @override
   Widget build(BuildContext context) {
-    return Checkbox(
-      activeColor: Theme.of(context).primaryColor,
-      value: widget.staySignedIn, 
-      onChanged: (newValue) => widget.setSignedIn(newValue)
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Checkbox(
+          activeColor: Theme.of(context).primaryColor,
+          value: widget.staySignedIn,
+          onChanged: (newValue) => widget.setSignedIn(newValue),
+        ),
+        GestureDetector(
+          onTap: () => widget.setSignedIn(!widget.staySignedIn),
+          child: const Text("Angemeldet bleiben?"),
+        ),
+      ],
     );
   }
 }

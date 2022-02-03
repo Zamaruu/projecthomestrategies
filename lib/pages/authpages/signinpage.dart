@@ -139,17 +139,10 @@ class _SignInPageState extends State<SignInPage> {
                               controller: passwordController,
                               helperText: "Passwort",
                               type: TextInputType.visiblePassword),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              StaySignedInCheckBox(
-                                staySignedIn: staySignedIn,
-                                setSignedIn: setSignedIn,
-                              ),
-                              const Text("Angemeldet bleiben?"),
-                            ],
-                          )
+                          StaySignedInCheckBox(
+                            staySignedIn: staySignedIn,
+                            setSignedIn: setSignedIn,
+                          ),
                         ],
                       ),
                     ),
