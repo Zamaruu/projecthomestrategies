@@ -83,6 +83,8 @@ class _SignUpPageState extends State<SignUpPage> {
       });
 
       if (result.statusCode == 201) {
+        //Navigator.pushNamedAndRemoveUntil(ctx, "/auth", (route) => false);
+        Navigator.pop(ctx);
         AuthenticationResponse(ctx, result.statusCode).showSnackbar();
       } else {
         AuthenticationResponse.response(ctx, result).showSnackbar();
