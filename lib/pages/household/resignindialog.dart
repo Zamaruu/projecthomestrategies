@@ -25,13 +25,18 @@ class ReSignInDialog extends StatelessWidget {
             PrimaryButton(
               onPressed: () {
                 context.read<AuthenticationState>().signOut();
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const HomeStrategies(),
-                  ),
+
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  "/auth",
                   (route) => false,
                 );
+                // Navigator.pushAndRemoveUntil(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => const HomeStrategies(),
+                //   ),
+                //   (route) => false,
+                // );
               },
               text: "Anmelden",
               icon: Icons.login,

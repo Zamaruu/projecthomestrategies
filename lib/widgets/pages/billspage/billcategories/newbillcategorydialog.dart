@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:projecthomestrategies/bloc/models/user_model.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/models/billcategory_model.dart';
 import 'package:projecthomestrategies/bloc/models/household_model.dart';
 import 'package:projecthomestrategies/service/billing_service.dart';
+import 'package:projecthomestrategies/service/messenger_service.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/cancelbutton.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/primarybutton.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/somesrategiesloadingbuilder.dart';
@@ -48,24 +50,35 @@ class _CreateBillCategoryDialogState extends State<CreateBillCategoryDialog> {
     return true;
   }
 
-  Future<void> createNewCategory(BuildContext ctx) async {
+  Future<void> createNewCategory(UserModel user, String token) async {
     if (!newCategoryIsValid()) {
       return;
     }
     toggleLoading(true);
 
-    var name = nameController.text.trim();
-    var household = ctx.read<AuthenticationState>().sessionUser.household!;
-    BillCategoryModel newCategory = BillCategoryModel(
-      billCategoryName: name,
-      household: household,
-    );
+    try {
+      var name = nameController.text.trim();
+      var household = user.household!;
+      BillCategoryModel newCategory = BillCategoryModel(
+        billCategoryName: name,
+        household: household,
+      );
 
-    var token = ctx.read<AuthenticationState>().token;
-    var result = await BillingService(token).createBillingCategory(newCategory);
+      var result =
+          await BillingService(token).createBillingCategory(newCategory);
 
-    toggleLoading(true);
-    Navigator.pop(context, result);
+      toggleLoading(false);
+      Navigator.pop(context, result);
+    } catch (e) {
+      print(e);
+      // toggleLoading(false);
+      // Navigator.pop(context);
+      // InAppMessengerService(
+      //   context,
+      //   message: e.toString(),
+      //   backgroundColor: Colors.orange,
+      // );
+    }
   }
 
   @override
@@ -84,10 +97,17 @@ class _CreateBillCategoryDialogState extends State<CreateBillCategoryDialog> {
       ),
       actions: [
         CancelButton(onCancel: () => Navigator.of(context).pop()),
-        PrimaryButton(
-          onPressed: () => createNewCategory(context),
-          text: "Erstellen",
-          icon: Icons.add,
+        Consumer<AuthenticationState>(
+          builder: (context, state, _) {
+            return PrimaryButton(
+              onPressed: () => createNewCategory(
+                state.sessionUser,
+                state.token,
+              ),
+              text: "Erstellen",
+              icon: Icons.add,
+            );
+          },
         ),
       ],
     );
