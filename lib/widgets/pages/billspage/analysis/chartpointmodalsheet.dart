@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/models/bill_model.dart';
 import 'package:projecthomestrategies/widgets/pages/billspage/billingtile.dart';
 
@@ -46,10 +47,15 @@ class ChartPointModalSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: children(),
+    return Scrollbar(
+      isAlwaysShown: true,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: children(),
+        ),
+      ),
     );
   }
 }

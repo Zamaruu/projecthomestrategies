@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:projecthomestrategies/bloc/models/bill_model.dart';
+import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/widgets/pages/billspage/analysis/chartpointmodalsheet.dart';
 import 'package:projecthomestrategies/widgets/pages/homepage/panelheading.dart';
 
@@ -46,6 +47,11 @@ class BillRetrospect extends StatelessWidget {
   List<DateTime> getDoubleDates(List<BillModel> bills) {
     var temp = <DateTime>[];
     var doubles = <DateTime>[];
+
+    //Cut time from datetime objects
+    for (var bill in bills) {
+      bill.date = Global.cutTimeFromDate(bill.date!);
+    }
 
     for (var bill in bills) {
       if (!temp.contains(bill.date)) {

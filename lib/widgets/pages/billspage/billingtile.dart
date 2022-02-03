@@ -13,11 +13,13 @@ import 'package:provider/provider.dart';
 class BillingTile extends StatelessWidget {
   final BillModel bill;
   final bool showMenu;
+  final Function? onTap;
 
   const BillingTile({
     Key? key,
     required this.bill,
     this.showMenu = false,
+    this.onTap,
   }) : super(key: key);
 
   Future editBill(BuildContext ctx) async {
@@ -106,7 +108,7 @@ class BillingTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 0.0),
       child: ListTile(
-        onTap: () {},
+        onTap: onTap != null ? () => onTap!() : null,
         leading: Text(
           "${bill.amount!.toStringAsFixed(2)} €",
           style: const TextStyle(

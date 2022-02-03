@@ -61,6 +61,10 @@ class Global {
     return DateFormat(format).format(date);
   }
 
+  static DateTime cutTimeFromDate(DateTime date) {
+    return DateTime.utc(date.year, date.month, date.day);
+  }
+
   static String encodeCredentials(String email, String password) {
     var rawCredentials = "$email:$password";
     var bytes = utf8.encode(rawCredentials);
