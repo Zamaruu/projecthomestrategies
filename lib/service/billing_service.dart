@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:projecthomestrategies/bloc/models/apiresponse_model.dart';
 import 'package:projecthomestrategies/bloc/models/bill_model.dart';
 import 'package:projecthomestrategies/bloc/models/billcategory_model.dart';
+import 'package:projecthomestrategies/bloc/models/household_model.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:http/http.dart' as http;
 
@@ -17,14 +18,23 @@ class BillingService {
     header = Global.getHeaderWithAuthentication(token);
   }
 
-  Future<Map<String, List>> getBillsAndCategories(int householdId) async {
-    var bills = await getBillsForHousehold(householdId);
-    var categories = await getBillCategoriesForHousehold(householdId);
+  Future<Map<String, List>> getBillsAndCategories(
+      HouseholdModel? household) async {
+    if (household == null) {
+      return <String, List>{
+        "bills": <BillModel>[],
+        "categories": <BillCategoryModel>[],
+      };
+    } else {
+      var householdId = household.householdId!;
+      var bills = await getBillsForHousehold(householdId);
+      var categories = await getBillCategoriesForHousehold(householdId);
 
-    return <String, List>{
-      "bills": bills.object,
-      "categories": categories.object,
-    };
+      return <String, List>{
+        "bills": bills.object,
+        "categories": categories.object,
+      };
+    }
   }
 
   //Bill Categories

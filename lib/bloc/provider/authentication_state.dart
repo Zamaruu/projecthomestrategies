@@ -69,4 +69,8 @@ class AuthenticationState with ChangeNotifier {
   bool isUserPartOfHousehold() {
     return sessionUser.household == null;
   }
+
+  HouseholdModel? getSessionHousehold() {
+    return sessionUser.household;
+  }
 }
