@@ -46,9 +46,10 @@ class AuthenticationHander extends StatelessWidget {
                 // case Status.authenticated:
                 //   return const InitialLoader();
                 default:
-                  return const ErrorPageHandler(
-                    error: "Es gab einen Fehler bei der Autehtifizierung!",
-                  );
+                  return const LoadingProcess();
+                // return const ErrorPageHandler(
+                //   error: "Es gab einen Fehler bei der Autehtifizierung!",
+                // );
               }
             },
           );
