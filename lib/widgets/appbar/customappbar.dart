@@ -8,6 +8,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
   final bool showActions;
   final bool showNotifications;
+  final Widget? trailling;
 
   const CustomAppBar({
     Key? key,
@@ -15,6 +16,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.scaffoldKey,
     required this.showActions,
     this.showNotifications = false,
+    this.trailling,
   })  : preferredSize = const Size.fromHeight(kToolbarHeight),
         super(key: key);
 
@@ -28,9 +30,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: Navigator.canPop(context) ? const NavigateBackButton() : null,
       actions: (() {
         if (showActions) {
-          return [
+          return <Widget>[
             if (showNotifications) const NotificationButton(),
             MenuDrawerButton(scaffoldKey: scaffoldKey),
+          ];
+        }
+        if (trailling != null) {
+          return <Widget>[
+            trailling!,
           ];
         }
       }()),

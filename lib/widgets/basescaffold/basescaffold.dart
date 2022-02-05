@@ -8,6 +8,7 @@ class BaseScaffold extends StatelessWidget {
   final bool showNotification;
   final bool showMenuDrawer;
   final Widget body;
+  final Widget? trailing;
   final Widget? fab;
   final Widget? bottomNavigationBar;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -21,6 +22,7 @@ class BaseScaffold extends StatelessWidget {
     this.fab,
     this.bottomNavigationBar,
     this.showNotification = false,
+    this.trailing,
   }) : super(key: key);
 
   @override
@@ -29,6 +31,7 @@ class BaseScaffold extends StatelessWidget {
       key: _scaffoldKey,
       appBar: CustomAppBar(
         title: pageTitle,
+        trailling: trailing,
         showNotifications: showNotification,
         scaffoldKey: _scaffoldKey,
         showActions: showActions,

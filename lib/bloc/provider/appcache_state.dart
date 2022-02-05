@@ -38,7 +38,8 @@ class AppCacheState with ChangeNotifier {
     _seenNotifications = seen;
   }
 
-  void setNotificationToSeen(NotificationModel notification) {
+  void setNotificationToSeen(NotificationModel notification,
+      {bool notify = true}) {
     int index = _openNotifications.indexWhere(
       (n) => n.notificationId == notification.notificationId,
     );
@@ -54,8 +55,22 @@ class AppCacheState with ChangeNotifier {
       _notification.seen = true;
       _openNotifications.removeAt(index);
       _seenNotifications = [..._seenNotifications, _notification];
-      notifyListeners();
+
+      if (notify) {
+        notifyListeners();
+      }
     }
+  }
+
+  void setAllOpenNotificationsToSeen() {
+    var open = _openNotifications;
+    _openNotifications = List<NotificationModel>.empty();
+
+    for (var notification in open) {
+      setNotificationToSeen(notification);
+    }
+
+    notifyListeners();
   }
 
   void setOpenNotifications(List<NotificationModel> openNotfications) {

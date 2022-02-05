@@ -6,6 +6,7 @@ import 'package:projecthomestrategies/service/notification_service.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/widgets/basescaffold/basescaffold.dart';
 import 'package:projecthomestrategies/widgets/pages/notifications/notificationlist.dart';
+import 'package:projecthomestrategies/widgets/pages/notifications/notificationoptions.dart';
 import 'package:provider/provider.dart';
 
 class NotificationDialog extends StatelessWidget {
@@ -34,6 +35,7 @@ class NotificationDialog extends StatelessWidget {
         return BaseScaffold(
           showActions: false,
           showMenuDrawer: false,
+          trailing: const NotificationOptions(),
           pageTitle: state.openNotificaions.isEmpty
               ? "Benachrichtigungen"
               : "${state.countOpenNotifications()} Benachrichtigungen",

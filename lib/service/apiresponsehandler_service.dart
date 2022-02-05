@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/models/apiresponse_model.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
@@ -32,7 +31,7 @@ class ApiResponseHandlerService {
   });
 
   //Methoden
-  Color getColorFromStatusCode() {
+  Color _getColorFromStatusCode() {
     var code = response != null ? response!.statusCode : statusCode!;
 
     if (code >= 200 && code <= 299) {
@@ -46,11 +45,27 @@ class ApiResponseHandlerService {
     }
   }
 
+  int _getStatusCode() {
+    if (response != null) {
+      return response!.statusCode;
+    } else {
+      return statusCode!;
+    }
+  }
+
+  String _getResponseText() {
+    if (_getStatusCode() == 408) {
+      return "Es konnte keine Verbindung zum Server hergestellt werden!";
+    } else {
+      return response != null
+          ? Global.removeQuotationMarksFromString(response!.message!)
+          : customMessage!;
+    }
+  }
+
   void showSnackbar() {
-    var text = response != null
-        ? Global.removeQuotationMarksFromString(response!.message!)
-        : customMessage!;
-    var color = getColorFromStatusCode();
+    var text = _getResponseText();
+    var color = _getColorFromStatusCode();
 
     var snackBar = SnackBar(
       content: Text(text),
