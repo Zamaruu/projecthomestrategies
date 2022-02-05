@@ -17,7 +17,11 @@ class AuthenticationState with ChangeNotifier {
 
   //Authentication methods
   Future<ApiResponseModel> signIn(
-      {String? email, String? password, String? encodedCredentials}) async {
+    BuildContext context, {
+    String? email,
+    String? password,
+    String? encodedCredentials,
+  }) async {
     ApiResponseModel response;
 
     if (encodedCredentials != null) {
@@ -37,6 +41,12 @@ class AuthenticationState with ChangeNotifier {
         token = auth.token;
         sessionUser = auth.user;
 
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          "/homepage",
+          (route) => false,
+        );
+
         notifyListeners();
         return response;
       } catch (e) {
@@ -49,8 +59,11 @@ class AuthenticationState with ChangeNotifier {
     return response;
   }
 
-  Future<ApiResponseModel> signInWithSavedCredentials(String credetials) async {
-    return signIn(encodedCredentials: credetials);
+  Future<ApiResponseModel> signInWithSavedCredentials(
+    String credetials,
+    BuildContext context,
+  ) async {
+    return signIn(context, encodedCredentials: credetials);
   }
 
   Future<void> signOut() async {

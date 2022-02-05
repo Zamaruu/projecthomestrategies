@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:projecthomestrategies/pages/homepage/initialloader.dart';
 import 'package:projecthomestrategies/pages/homepage/notificationdialog.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,6 @@ import 'package:projecthomestrategies/pages/authpages/authenticationhandler.dart
 import 'package:projecthomestrategies/pages/authpages/signinpage.dart';
 import 'package:projecthomestrategies/pages/authpages/signuppage.dart';
 import 'package:projecthomestrategies/pages/billspage/billspage.dart';
-import 'package:projecthomestrategies/pages/homepage/homepage.dart';
 import 'package:intl/intl.dart';
 import 'package:projecthomestrategies/pages/household/householdpage.dart';
 
@@ -22,7 +22,7 @@ class Global {
   };
 
   static Map<String, Widget Function(BuildContext)> appRoutes = {
-    "/homepage": (context) => const HomePage(),
+    "/homepage": (context) => const InitialLoader(),
     "/bills": (context) => const MountBillProvider(),
     "/signin": (context) => const SignInPage(),
     "/signup": (context) => const SignUpPage(),

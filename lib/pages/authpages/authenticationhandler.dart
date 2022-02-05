@@ -4,6 +4,7 @@ import 'package:projecthomestrategies/pages/authpages/signinpage.dart';
 import 'package:projecthomestrategies/pages/homepage/homepage.dart';
 import 'package:projecthomestrategies/pages/homepage/initialloader.dart';
 import 'package:projecthomestrategies/utils/securestoragehandler.dart';
+import 'package:projecthomestrategies/widgets/globalwidgets/errorpage.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/loadingprocessor.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +17,7 @@ class AuthenticationHander extends StatelessWidget {
     if (credentials != null) {
       await ctx
           .read<AuthenticationState>()
-          .signInWithSavedCredentials(credentials);
+          .signInWithSavedCredentials(credentials, ctx);
     } else {
       return;
     }
@@ -35,21 +36,22 @@ class AuthenticationHander extends StatelessWidget {
           );
         } else {
           return Selector<AuthenticationState, Status>(
-              selector: (context, model) => model.status,
-              builder: (BuildContext context, Status status, _) {
-                switch (status) {
-                  case Status.uninitialized:
-                    return const SignInPage();
-                  case Status.unauthenticated:
-                    return const SignInPage();
-                  case Status.authenticating:
-                    return const HomePage();
-                  case Status.authenticated:
-                    return const InitialLoader();
-                  default:
-                    return const Scaffold();
-                }
-              });
+            selector: (context, model) => model.status,
+            builder: (BuildContext context, Status status, _) {
+              switch (status) {
+                case Status.uninitialized:
+                  return const SignInPage();
+                case Status.unauthenticated:
+                  return const SignInPage();
+                // case Status.authenticated:
+                //   return const InitialLoader();
+                default:
+                  return const ErrorPageHandler(
+                    error: "Es gab einen Fehler bei der Autehtifizierung!",
+                  );
+              }
+            },
+          );
         }
       },
     );

@@ -44,7 +44,8 @@ class _SignInPageState extends State<SignInPage> {
     // Navigator.of(ctx).pushNamed("/signup");
   }
 
-  Future<ApiResponseModel> tryLogin(AuthenticationState authState) async {
+  Future<ApiResponseModel> tryLogin(
+      AuthenticationState authState, BuildContext ctx) async {
     if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
       if (Global.validateEmail(emailController.text.trim())) {
         setState(() {
@@ -52,8 +53,10 @@ class _SignInPageState extends State<SignInPage> {
         });
 
         return await authState.signIn(
-            email: emailController.text.trim(),
-            password: passwordController.text.trim());
+          ctx,
+          email: emailController.text.trim(),
+          password: passwordController.text.trim(),
+        );
       } else {
         return ApiResponseModel.error(
           601,
@@ -69,7 +72,7 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   Future handleSignIn(AuthenticationState auth, BuildContext ctx) async {
-    var response = await tryLogin(auth);
+    var response = await tryLogin(auth, ctx);
     setState(() {
       isLoading = false;
     });
