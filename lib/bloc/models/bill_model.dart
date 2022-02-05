@@ -6,6 +6,7 @@ class BillModel {
   int? billId;
   double? amount;
   DateTime? date;
+  DateTime? createdAt;
   UserModel? buyer;
   HouseholdModel? household;
   BillCategoryModel? category;
@@ -22,6 +23,7 @@ class BillModel {
     billId = json['billId'];
     amount = json['amount'];
     date = DateTime.parse(json['date']);
+    createdAt = DateTime.parse(json['createdAt']);
     buyer = json['buyer'] != null ? UserModel.fromJson(json['buyer']) : null;
     household = json['household'] != null
         ? HouseholdModel.fromJson(json['household'])
@@ -36,6 +38,7 @@ class BillModel {
     data['billId'] = billId;
     data['amount'] = amount;
     data['date'] = date.toString();
+    data['createdAt'] = createdAt.toString();
     if (buyer != null) {
       data['buyer'] = buyer!.toJson();
     }
@@ -52,6 +55,7 @@ class BillModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['amount'] = amount;
     data['date'] = date.toString();
+    data['createdAt'] = createdAt.toString();
     if (buyer != null) {
       data['buyer'] = buyer!.toJson();
     }

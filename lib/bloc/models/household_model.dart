@@ -5,6 +5,7 @@ class HouseholdModel {
   String? householdName;
   List<UserModel>? householdMember;
   int? adminId;
+  DateTime? createdAt;
   UserModel? householdCreator;
 
   HouseholdModel({
@@ -18,6 +19,7 @@ class HouseholdModel {
     householdId = json['householdId'];
     householdName = json['householdName'];
     adminId = json['adminId'];
+    createdAt = DateTime.parse(json['createdAt']);
     householdMember = json['householdMember'] != null
         ? List<UserModel>.from(
             json['householdMember'].map((model) => UserModel.fromJson(model)),
@@ -32,6 +34,7 @@ class HouseholdModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['householdId'] = householdId;
     data['householdName'] = householdName;
+    data['createdAt'] = createdAt.toString();
     data['adminId'] = adminId;
     if (householdMember != null) {
       data['householdMember'] =
@@ -47,6 +50,7 @@ class HouseholdModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['householdName'] = householdName;
     data['adminId'] = adminId;
+    data['createdAt'] = createdAt.toString();
     if (householdCreator != null) {
       data['householdCreator'] = householdCreator!.toJson();
     }

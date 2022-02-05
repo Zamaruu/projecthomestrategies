@@ -3,6 +3,7 @@ import 'package:projecthomestrategies/bloc/models/household_model.dart';
 class BillCategoryModel {
   int? billCategoryId;
   String? billCategoryName;
+  DateTime? createdAt;
   HouseholdModel? household;
 
   BillCategoryModel(
@@ -11,6 +12,7 @@ class BillCategoryModel {
   BillCategoryModel.fromJson(Map<String, dynamic> json) {
     billCategoryId = json['billCategoryId'];
     billCategoryName = json['billCategoryName'];
+    createdAt = DateTime.parse(json['createdAt']);
     household = json['household'] != null
         ? HouseholdModel.fromJson(json['household'])
         : null;
@@ -20,6 +22,7 @@ class BillCategoryModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['billCategoryId'] = billCategoryId;
     data['billCategoryName'] = billCategoryName;
+    data['createdAt'] = createdAt.toString();
     if (household != null) {
       data['household'] = household!.toJson();
     }
@@ -29,6 +32,7 @@ class BillCategoryModel {
   Map<String, dynamic> toCreateJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['billCategoryName'] = billCategoryName;
+    data['createdAt'] = createdAt.toString();
     if (household != null) {
       data['household'] = household!.toJson();
     }

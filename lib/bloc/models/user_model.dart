@@ -7,6 +7,7 @@ class UserModel {
   String? email;
   String? password;
   String? fcmToken;
+  DateTime? createdAt;
   int? userColor;
   int? type;
   HouseholdModel? household;
@@ -30,6 +31,7 @@ class UserModel {
     email = json['email'];
     password = json['password'];
     fcmToken = json['fcmToken'];
+    createdAt = DateTime.parse(json['createdAt']);
     userColor = json['userColor'];
     type = json['type'];
     household = json["household"] != null
@@ -44,6 +46,7 @@ class UserModel {
     data['surname'] = surname;
     data['email'] = email;
     data['password'] = password;
+    data['createdAt'] = createdAt.toString();
     data['fcmToken'] = fcmToken;
     data['userColor'] = userColor;
     data['type'] = type;

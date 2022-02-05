@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -7,9 +8,11 @@ import 'package:projecthomestrategies/utils/localnotificationbuilder.dart';
 import 'package:provider/provider.dart';
 
 Future<void> onBackgroundHanlder(
-  RemoteMessage message, {
+  RemoteMessage message,
   GlobalKey<NavigatorState>? key,
-}) async {
+) async {
+  await Firebase.initializeApp();
+
   var serviceHandler = NotificationServiceHandler(key!);
   var route = serviceHandler.getRouteFromData(message.data["route"]);
 
@@ -45,9 +48,9 @@ class _AppConfigLoaderState extends State<AppConfigLoader> {
       LocalNotificationBuilder(navigatorKey)
           .createLocalFcmNotification(message);
     });
-    FirebaseMessaging.onBackgroundMessage(
-      (message) => onBackgroundHanlder(message, key: navigatorKey),
-    );
+    // FirebaseMessaging.onBackgroundMessage(
+    //   onBackgroundHanlder,
+    // );
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       debugPrint('Message clicked!');
 
