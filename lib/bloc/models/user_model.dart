@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/models/household_model.dart';
 
 class UserModel {
@@ -7,6 +10,8 @@ class UserModel {
   String? email;
   String? password;
   String? fcmToken;
+  String? imageAsBase64;
+  Image? image;
   DateTime? createdAt;
   int? userColor;
   int? type;
@@ -31,6 +36,8 @@ class UserModel {
     email = json['email'];
     password = json['password'];
     fcmToken = json['fcmToken'];
+    imageAsBase64 = json['image'];
+    image = _imageFromBase64String(imageAsBase64!);
     createdAt = DateTime.parse(json['createdAt']);
     userColor = json['userColor'];
     type = json['type'];
@@ -46,6 +53,7 @@ class UserModel {
     data['surname'] = surname;
     data['email'] = email;
     data['password'] = password;
+    data['image'] = imageAsBase64;
     data['createdAt'] = createdAt.toString();
     data['fcmToken'] = fcmToken;
     data['userColor'] = userColor;
@@ -54,5 +62,13 @@ class UserModel {
       data['household'] = household!.toJson();
     }
     return data;
+  }
+
+  Image? _imageFromBase64String(String base64String) {
+    if (base64String.isEmpty) {
+      return null;
+    } else {
+      return Image.memory(base64Decode(base64String));
+    }
   }
 }
