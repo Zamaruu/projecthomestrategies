@@ -39,9 +39,9 @@ class UserModel {
     fcmToken = json['fcmToken'];
     imageAsBase64 = json['image'];
     image = _imageFromBase64String(imageAsBase64);
-    color = Color(userColor!);
     createdAt = DateTime.parse(json['createdAt']);
     userColor = json['userColor'];
+    color = Color(userColor!);
     type = json['type'];
     household = json["household"] != null
         ? HouseholdModel.fromJson(json['household'])

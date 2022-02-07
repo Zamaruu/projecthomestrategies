@@ -115,8 +115,20 @@ class _NotificationCardState extends State<NotificationCard> {
             fontWeight: widget.notification.seen! ? null : FontWeight.bold,
           ),
         ),
-        subtitle: Text(
-          "Am ${Global.datetimeToDeString(widget.notification.created!)} von ${widget.notification.creatorName!}",
+        subtitle: RichText(
+          text: TextSpan(
+            text:
+                'Am ${Global.datetimeToDeString(widget.notification.created!)} von',
+            style: DefaultTextStyle.of(context).style,
+            children: <TextSpan>[
+              TextSpan(
+                text: widget.notification.creatorName!,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
         ),
         trailing: widget.notification.seen! ? null : trailing(context),
       ),

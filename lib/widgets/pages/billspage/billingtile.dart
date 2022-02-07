@@ -119,9 +119,24 @@ class BillingTile extends StatelessWidget {
         title: Text(
           "Bezahlt für ${bill.category!.billCategoryName!}",
         ),
-        subtitle: Text(
-          "am ${Global.datetimeToDeString(bill.date!)} von ${bill.buyer!.email!}",
+        subtitle: RichText(
+          text: TextSpan(
+            text: 'am ${Global.datetimeToDeString(bill.date!)} von ',
+            style: DefaultTextStyle.of(context).style,
+            children: <TextSpan>[
+              TextSpan(
+                text: bill.buyer!.email!,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: bill.buyer!.color!,
+                ),
+              ),
+            ],
+          ),
         ),
+        // subtitle: Text(
+        //   "am ${Global.datetimeToDeString(bill.date!)} von ${bill.buyer!.email!}",
+        // ),
         trailing: showMenu ? billMenu(context) : null,
       ),
     );
