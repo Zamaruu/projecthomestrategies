@@ -30,6 +30,23 @@ class NotificationOptions extends StatelessWidget {
     }
   }
 
+  Future<void> deleteAllNotifications(BuildContext ctx) async {
+    var token = Global.getToken(ctx);
+
+    _loader(ctx);
+    var response = await NotificationService(token).deleteAllNotifications();
+    _dismissSnackbar(ctx);
+
+    if (response.statusCode == 200) {
+      ctx.read<AppCacheState>().deleteAllNotifications();
+    } else {
+      ApiResponseHandlerService.fromResponseModel(
+        context: ctx,
+        response: response,
+      ).showSnackbar();
+    }
+  }
+
   void _loader(BuildContext ctx) {
     final snackBar = SnackBar(
       backgroundColor: Theme.of(ctx).primaryColor,
@@ -84,15 +101,17 @@ class NotificationOptions extends StatelessWidget {
                 model.openNotificaions.map((e) => e.notificationId!).toList(),
               );
             } else {
-              //TODO implement delete all
+              deleteAllNotifications(context);
             }
           },
           itemBuilder: (context) => [
             PopupMenuItem(
+              enabled: model.openNotificaions.isNotEmpty,
               child: menuItem("Alle gesehen", Icons.visibility),
               value: 1,
             ),
             PopupMenuItem(
+              enabled: model.countNotifications() >= 1,
               child: menuItem("Alle löschen", Icons.delete),
               value: 2,
             )

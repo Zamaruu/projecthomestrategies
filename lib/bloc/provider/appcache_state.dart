@@ -22,12 +22,19 @@ class AppCacheState with ChangeNotifier {
     this._billCategories,
   );
 
+  //Notifications
   int countOpenNotifications() {
     return _openNotifications.length;
   }
 
   int countNotifications() {
     return _openNotifications.length + _seenNotifications.length;
+  }
+
+  void deleteAllNotifications() {
+    _openNotifications = <NotificationModel>[];
+    _seenNotifications = <NotificationModel>[];
+    notifyListeners();
   }
 
   void setInitialNotificationData(

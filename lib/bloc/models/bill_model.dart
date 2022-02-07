@@ -55,7 +55,6 @@ class BillModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['amount'] = amount;
     data['date'] = date.toString();
-    data['createdAt'] = createdAt.toString();
     if (buyer != null) {
       data['buyer'] = buyer!.toJson();
     }
