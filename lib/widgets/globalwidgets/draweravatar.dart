@@ -5,6 +5,7 @@ class UserAvatar extends StatelessWidget {
   late String? lastLetter;
   final double avatarRadius;
   final double fontSize;
+  final Color color;
 
   UserAvatar({
     Key? key,
@@ -12,6 +13,7 @@ class UserAvatar extends StatelessWidget {
     this.lastLetter,
     this.avatarRadius = 125.0,
     this.fontSize = 45.0,
+    this.color = Colors.blue,
   }) : super(key: key) {
     if (firstLetter == null) {
       firstLetter = "";
@@ -31,9 +33,9 @@ class UserAvatar extends StatelessWidget {
     return Container(
       height: avatarRadius,
       width: avatarRadius,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: Colors.blue,
+        color: color,
       ),
       alignment: Alignment.center,
       child: Text(
