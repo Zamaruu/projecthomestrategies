@@ -6,6 +6,7 @@ class UserAvatar extends StatelessWidget {
   final double avatarRadius;
   final double fontSize;
   final Color color;
+  final Image? image;
 
   UserAvatar({
     Key? key,
@@ -14,6 +15,7 @@ class UserAvatar extends StatelessWidget {
     this.avatarRadius = 125.0,
     this.fontSize = 45.0,
     this.color = Colors.blue,
+    this.image,
   }) : super(key: key) {
     if (firstLetter == null) {
       firstLetter = "";
@@ -30,18 +32,32 @@ class UserAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: avatarRadius,
-      width: avatarRadius,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: color,
-      ),
-      alignment: Alignment.center,
-      child: Text(
-        "$firstLetter$lastLetter",
-        style: TextStyle(fontSize: fontSize, color: Colors.white),
-      ),
-    );
+    if (image != null) {
+      return Container(
+        height: avatarRadius,
+        width: avatarRadius,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          image: DecorationImage(
+            image: image!.image,
+          ),
+        ),
+        alignment: Alignment.center,
+      );
+    } else {
+      return Container(
+        height: avatarRadius,
+        width: avatarRadius,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: color,
+        ),
+        alignment: Alignment.center,
+        child: Text(
+          "$firstLetter$lastLetter",
+          style: TextStyle(fontSize: fontSize, color: Colors.white),
+        ),
+      );
+    }
   }
 }
