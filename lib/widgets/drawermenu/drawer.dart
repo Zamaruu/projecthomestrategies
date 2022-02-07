@@ -103,7 +103,10 @@ class MenuDrawer extends StatelessWidget {
                 DrawerTile(
                   icon: FontAwesomeIcons.userCog,
                   drawerTitle: "Mein Konto",
-                  onClick: () {},
+                  onClick: () => Global.navigateWithOutSamePush(
+                    context,
+                    "/settings",
+                  ),
                 ),
                 DrawerTile(
                   icon: FontAwesomeIcons.signOutAlt,

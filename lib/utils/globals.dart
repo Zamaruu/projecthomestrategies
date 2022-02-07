@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:projecthomestrategies/pages/homepage/initialloader.dart';
 import 'package:projecthomestrategies/pages/homepage/notificationdialog.dart';
+import 'package:projecthomestrategies/pages/settings/settingspage.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
@@ -28,7 +29,8 @@ class Global {
     "/signup": (context) => const SignUpPage(),
     "/household": (context) => HouseholdPage(),
     "/auth": (context) => const AuthenticationHander(),
-    "/notifications": (context) => const NotificationDialog()
+    "/notifications": (context) => const NotificationDialog(),
+    "/settings": (context) => const SettingsPage(),
   };
 
   static void navigateWithOutSamePush(
