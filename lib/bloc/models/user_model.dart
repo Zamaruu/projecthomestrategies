@@ -14,6 +14,7 @@ class UserModel {
   Image? image;
   DateTime? createdAt;
   int? userColor;
+  Color? color;
   int? type;
   HouseholdModel? household;
 
@@ -37,7 +38,8 @@ class UserModel {
     password = json['password'];
     fcmToken = json['fcmToken'];
     imageAsBase64 = json['image'];
-    image = _imageFromBase64String(imageAsBase64!);
+    image = _imageFromBase64String(imageAsBase64);
+    color = Color(userColor!);
     createdAt = DateTime.parse(json['createdAt']);
     userColor = json['userColor'];
     type = json['type'];
@@ -64,11 +66,11 @@ class UserModel {
     return data;
   }
 
-  Image? _imageFromBase64String(String base64String) {
-    if (base64String.isEmpty) {
-      return null;
-    } else {
-      return Image.memory(base64Decode(base64String));
+  Image? _imageFromBase64String(String? base64String) {
+    if (base64String != null) {
+      if (base64String.isNotEmpty) {
+        return Image.memory(base64Decode(base64String));
+      }
     }
   }
 }

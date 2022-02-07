@@ -8,7 +8,14 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseScaffold(
       pageTitle: "Einstellungen",
-      body: Container(),
+      body: Center(
+        child: TextButton(
+          onPressed: () {
+            print(Colors.blue.value);
+          },
+          child: const Text("Farbe"),
+        ),
+      ),
     );
   }
 }
