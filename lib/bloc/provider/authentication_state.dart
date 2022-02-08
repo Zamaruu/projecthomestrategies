@@ -86,4 +86,9 @@ class AuthenticationState with ChangeNotifier {
   HouseholdModel? getSessionHousehold() {
     return sessionUser.household;
   }
+
+  void setUser(changedUser) {
+    sessionUser = changedUser;
+    notifyListeners();
+  }
 }

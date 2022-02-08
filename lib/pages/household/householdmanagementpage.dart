@@ -9,7 +9,7 @@ import 'package:projecthomestrategies/service/household_service.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/widgets/basescaffold/basescaffold.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/errorpage.dart';
-import 'package:projecthomestrategies/widgets/globalwidgets/loadingprocessor.dart';
+import 'package:projecthomestrategies/widgets/globalwidgets/loading/loadingprocessor.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/primarybutton.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/usertile.dart';
 import 'package:projecthomestrategies/widgets/pages/household/usermangementtile.dart';

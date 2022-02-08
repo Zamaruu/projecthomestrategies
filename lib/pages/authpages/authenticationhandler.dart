@@ -5,7 +5,7 @@ import 'package:projecthomestrategies/pages/homepage/homepage.dart';
 import 'package:projecthomestrategies/pages/homepage/initialloader.dart';
 import 'package:projecthomestrategies/utils/securestoragehandler.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/errorpage.dart';
-import 'package:projecthomestrategies/widgets/globalwidgets/loadingprocessor.dart';
+import 'package:projecthomestrategies/widgets/globalwidgets/loading/loadingprocessor.dart';
 import 'package:provider/provider.dart';
 
 class AuthenticationHander extends StatelessWidget {

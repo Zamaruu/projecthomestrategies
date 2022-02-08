@@ -8,7 +8,7 @@ import 'package:projecthomestrategies/pages/household/resignindialog.dart';
 import 'package:projecthomestrategies/service/household_service.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/primarybutton.dart';
-import 'package:projecthomestrategies/widgets/globalwidgets/somesrategiesloadingbuilder.dart';
+import 'package:projecthomestrategies/widgets/globalwidgets/loading/somesrategiesloadingbuilder.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/textinputfield.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/usertile.dart';
 import 'package:provider/provider.dart';

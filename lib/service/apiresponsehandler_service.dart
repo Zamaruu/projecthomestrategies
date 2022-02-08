@@ -39,8 +39,10 @@ class ApiResponseHandlerService {
     } else if (code >= 300 && code <= 399) {
       return Colors.lightGreen;
     } else if (code >= 400 && code <= 499) {
+      debugPrint(_getResponseText());
       return Colors.red;
     } else {
+      debugPrint(_getResponseText());
       return Colors.grey;
     }
   }

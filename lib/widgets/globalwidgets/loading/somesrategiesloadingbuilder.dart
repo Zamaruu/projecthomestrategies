@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projecthomestrategies/widgets/globalwidgets/loadingprocessor.dart';
+import 'package:projecthomestrategies/widgets/globalwidgets/loading/loadingprocessor.dart';
 
 class HomeStrategiesLoadingBuilder extends StatelessWidget {
   final bool isLoading;

@@ -5,7 +5,7 @@ import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/pages/authpages/signuppage.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/utils/securestoragehandler.dart';
-import 'package:projecthomestrategies/widgets/globalwidgets/somesrategiesloadingbuilder.dart';
+import 'package:projecthomestrategies/widgets/globalwidgets/loading/somesrategiesloadingbuilder.dart';
 import 'package:projecthomestrategies/widgets/auth/authenticationresponse.dart';
 import 'package:projecthomestrategies/widgets/auth/staysignedincheckbox.dart';
 import 'package:projecthomestrategies/widgets/auth/submitfab.dart';

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/models/signup_model.dart';
 import 'package:projecthomestrategies/service/authentication_service.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
-import 'package:projecthomestrategies/widgets/globalwidgets/somesrategiesloadingbuilder.dart';
+import 'package:projecthomestrategies/widgets/globalwidgets/loading/somesrategiesloadingbuilder.dart';
 import 'package:projecthomestrategies/widgets/auth/authenticationresponse.dart';
 import 'package:projecthomestrategies/widgets/auth/submitfab.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/textinputfield.dart';

@@ -8,7 +8,7 @@ import 'package:projecthomestrategies/service/billing_service.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/cancelbutton.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/primarybutton.dart';
-import 'package:projecthomestrategies/widgets/globalwidgets/somesrategiesloadingbuilder.dart';
+import 'package:projecthomestrategies/widgets/globalwidgets/loading/somesrategiesloadingbuilder.dart';
 import 'package:provider/provider.dart';
 
 class AddBillModal extends StatefulWidget {

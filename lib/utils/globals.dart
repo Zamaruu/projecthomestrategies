@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:projecthomestrategies/bloc/models/user_model.dart';
 import 'package:projecthomestrategies/pages/homepage/initialloader.dart';
 import 'package:projecthomestrategies/pages/homepage/notificationdialog.dart';
 import 'package:projecthomestrategies/pages/settings/settingspage.dart';
@@ -91,5 +92,9 @@ class Global {
 
   static String getToken(BuildContext context) {
     return context.read<AuthenticationState>().token;
+  }
+
+  static UserModel getCurrentUser(BuildContext context) {
+    return context.read<AuthenticationState>().sessionUser;
   }
 }

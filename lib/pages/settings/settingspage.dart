@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/widgets/basescaffold/basescaffold.dart';
+import 'package:projecthomestrategies/widgets/pages/settings/usersettings.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -8,13 +9,11 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseScaffold(
       pageTitle: "Einstellungen",
-      body: Center(
-        child: TextButton(
-          onPressed: () {
-            print(Colors.blue.value);
-          },
-          child: const Text("Farbe"),
-        ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: const [
+          UserSettings(),
+        ],
       ),
     );
   }

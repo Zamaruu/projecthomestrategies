@@ -5,7 +5,7 @@ import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/service/billing_service.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/cancelbutton.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/primarybutton.dart';
-import 'package:projecthomestrategies/widgets/globalwidgets/somesrategiesloadingbuilder.dart';
+import 'package:projecthomestrategies/widgets/globalwidgets/loading/somesrategiesloadingbuilder.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/textinputfield.dart';
 import 'package:provider/provider.dart';
 
