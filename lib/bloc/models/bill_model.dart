@@ -16,6 +16,7 @@ class BillModel {
       this.amount,
       this.date,
       this.buyer,
+      this.createdAt,
       this.household,
       this.category});
 

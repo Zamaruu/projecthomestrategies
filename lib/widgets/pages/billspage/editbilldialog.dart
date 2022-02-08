@@ -103,8 +103,9 @@ class _EditBillModalState extends State<EditBillModal> {
     BillModel changedBill = BillModel(
       billId: widget.billToEdit.billId,
       amount: amount,
-      category: BillCategoryModel(billCategoryId: category.billCategoryId),
+      category: category,
       date: date,
+      createdAt: widget.billToEdit.createdAt,
       buyer: widget.billToEdit.buyer,
       household: user.household!,
     );

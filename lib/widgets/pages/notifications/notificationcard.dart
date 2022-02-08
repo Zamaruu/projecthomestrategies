@@ -118,7 +118,7 @@ class _NotificationCardState extends State<NotificationCard> {
         subtitle: RichText(
           text: TextSpan(
             text:
-                'Am ${Global.datetimeToDeString(widget.notification.created!)} von',
+                'Am ${Global.datetimeToDeString(widget.notification.created!)} von ',
             style: DefaultTextStyle.of(context).style,
             children: <TextSpan>[
               TextSpan(
