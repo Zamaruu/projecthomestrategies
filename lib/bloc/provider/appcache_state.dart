@@ -98,4 +98,29 @@ class AppCacheState with ChangeNotifier {
 
     return notifications;
   }
+
+  // Bills
+  void setBills(List<BillModel> bills, {bool notify = true}) {
+    _bills = bills;
+
+    if (notify) {
+      notifyListeners();
+    }
+  }
+
+  void setBillCategories(List<BillCategoryModel> categories,
+      {bool notify = true}) {
+    _billCategories = categories;
+
+    if (notify) {
+      notifyListeners();
+    }
+  }
+
+  bool billingContentIsSet() {
+    if (_bills.isNotEmpty && _billCategories.isNotEmpty) {
+      return true;
+    }
+    return false;
+  }
 }

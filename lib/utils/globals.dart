@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:projecthomestrategies/bloc/models/user_model.dart';
+import 'package:projecthomestrategies/pages/billspage/billpagebuilder.dart';
 import 'package:projecthomestrategies/pages/homepage/initialloader.dart';
 import 'package:projecthomestrategies/pages/homepage/notificationdialog.dart';
 import 'package:projecthomestrategies/pages/settings/settingspage.dart';
@@ -10,7 +11,6 @@ import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/pages/authpages/authenticationhandler.dart';
 import 'package:projecthomestrategies/pages/authpages/signinpage.dart';
 import 'package:projecthomestrategies/pages/authpages/signuppage.dart';
-import 'package:projecthomestrategies/pages/billspage/billspage.dart';
 import 'package:intl/intl.dart';
 import 'package:projecthomestrategies/pages/household/householdpage.dart';
 
@@ -19,7 +19,7 @@ class Global {
   static const String baseApiUrl = kDebugMode
       //? "http://192.168.0.143:5000/api" //Local Ubuntu VM
       ? "http://192.168.0.71:5000/api" //Local Windows Docker
-      : "http://194.163.182.236:5002/homestrategiesapi/api";
+      : "http://194.163.182.236:5000/api";
   // static const String baseApiUrl = "http://10.0.2.2:5000/api";
   static const Duration timeoutDuration = Duration(milliseconds: 7500);
   static Map<String, String> baseApiHeader = {

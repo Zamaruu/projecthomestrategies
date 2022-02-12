@@ -1,68 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:projecthomestrategies/bloc/models/bill_model.dart';
-import 'package:projecthomestrategies/bloc/models/billcategory_model.dart';
-import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
-import 'package:projecthomestrategies/bloc/provider/billing_state.dart';
 import 'package:projecthomestrategies/pages/billspage/billcategories.dart';
 import 'package:projecthomestrategies/pages/billspage/billinganalysis.dart';
 import 'package:projecthomestrategies/pages/billspage/billsummary.dart';
-import 'package:projecthomestrategies/service/billing_service.dart';
 import 'package:projecthomestrategies/widgets/basescaffold/basescaffold.dart';
-import 'package:projecthomestrategies/widgets/globalwidgets/errorpage.dart';
-import 'package:provider/provider.dart';
-
-class MountBillProvider extends StatelessWidget {
-  const MountBillProvider({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => BillingState(<BillCategoryModel>[], <BillModel>[]),
-      child: const BillContentBuilder(),
-    );
-  }
-}
-
-class BillContentBuilder extends StatelessWidget {
-  const BillContentBuilder({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<AuthenticationState>(
-      builder: (context, auth, child) {
-        return FutureBuilder<Map<String, List>>(
-          future: BillingService(auth.token).getBillsAndCategories(
-            auth.getSessionHousehold(),
-          ),
-          builder: (BuildContext context,
-              AsyncSnapshot<Map<String, List>> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-              );
-            }
-            if (snapshot.hasError) {
-              return ErrorPageHandler(error: snapshot.error.toString());
-            } else {
-              var bills = snapshot.data!["bills"]!;
-              var categories = snapshot.data!["categories"]!;
-
-              context.read<BillingState>().setInitialData(
-                    categories as List<BillCategoryModel>,
-                    bills as List<BillModel>,
-                  );
-              return const BillsPage();
-            }
-          },
-        );
-      },
-    );
-  }
-}
 
 // ignore: must_be_immutable
 class BillsPage extends StatefulWidget {
