@@ -35,7 +35,9 @@ class MenuDrawer extends StatelessWidget {
                         lastLetter: authState.sessionUser.surname != null
                             ? authState.sessionUser.surname![0]
                             : "",
-                        color: authState.sessionUser.color!,
+                        color: authState.sessionUser.color != null
+                            ? authState.sessionUser.color!
+                            : Colors.blue,
                       ),
                       PersonalInfo(
                         firstName: authState.sessionUser.firstname != null

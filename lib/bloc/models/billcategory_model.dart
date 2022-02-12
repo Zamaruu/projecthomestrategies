@@ -32,7 +32,6 @@ class BillCategoryModel {
   Map<String, dynamic> toCreateJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['billCategoryName'] = billCategoryName;
-    data['createdAt'] = createdAt != null ? createdAt.toString() : "";
     if (household != null) {
       data['household'] = household!.toJson();
     }

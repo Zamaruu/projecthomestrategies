@@ -50,7 +50,6 @@ class HouseholdModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['householdName'] = householdName;
     data['adminId'] = adminId;
-    data['createdAt'] = createdAt.toString();
     if (householdCreator != null) {
       data['householdCreator'] = householdCreator!.toJson();
     }
