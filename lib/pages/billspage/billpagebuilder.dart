@@ -26,55 +26,43 @@ class BillContentBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppCacheState>(
-      builder: (context, cache, _) {
-        if (cache.billingContentIsSet()) {
-          context.read<BillingState>().setInitialData(
-                cache.billCategories,
-                cache.bills,
-              );
-          return const BillsPage();
-        } else {
-          return Consumer<AuthenticationState>(
-            builder: (context, auth, child) {
-              return FutureBuilder<Map<String, List>>(
-                future: BillingService(auth.token).getBillsAndCategories(
-                  auth.getSessionHousehold(),
+    return Consumer<AuthenticationState>(
+      builder: (context, auth, child) {
+        return FutureBuilder<Map<String, List>>(
+          future: BillingService(auth.token).getBillsAndCategories(
+            auth.getSessionHousehold(),
+          ),
+          builder: (
+            BuildContext context,
+            AsyncSnapshot<Map<String, List>> snapshot,
+          ) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(
+                    color: Theme.of(context).primaryColor,
+                  ),
                 ),
-                builder: (
-                  BuildContext context,
-                  AsyncSnapshot<Map<String, List>> snapshot,
-                ) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Scaffold(
-                      body: Center(
-                        child: CircularProgressIndicator(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                    );
-                  }
-                  if (snapshot.hasError) {
-                    return ErrorPageHandler(error: snapshot.error.toString());
-                  } else {
-                    var bills = snapshot.data!["bills"]! as List<BillModel>;
-                    var categories = snapshot.data!["categories"]!
-                        as List<BillCategoryModel>;
-
-                    cache.setBills(bills, notify: false);
-                    cache.setBillCategories(categories, notify: false);
-
-                    context.read<BillingState>().setInitialData(
-                          categories,
-                          bills,
-                        );
-                    return const BillsPage();
-                  }
-                },
               );
-            },
-          );
-        }
+            }
+            if (snapshot.hasError) {
+              return ErrorPageHandler(error: snapshot.error.toString());
+            } else {
+              var bills = snapshot.data!["bills"]! as List<BillModel>;
+              var categories =
+                  snapshot.data!["categories"]! as List<BillCategoryModel>;
+
+              // cache.setBills(bills, notify: false);
+              // cache.setBillCategories(categories, notify: false);
+
+              context.read<BillingState>().setInitialData(
+                    categories,
+                    bills,
+                  );
+              return const BillsPage();
+            }
+          },
+        );
       },
     );
   }
