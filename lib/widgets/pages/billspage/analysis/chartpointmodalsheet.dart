@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/models/bill_model.dart';
-import 'package:projecthomestrategies/widgets/pages/billspage/billingtile.dart';
+import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/billingtile.dart';
 
 class ChartPointModalSheet extends StatelessWidget {
   final List<BillModel> bills;
