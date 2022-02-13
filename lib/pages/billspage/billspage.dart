@@ -46,10 +46,7 @@ class _BillsPageState extends State<BillsPage>
     return BaseScaffold(
       pageTitle: pageTitles.elementAt(pageIndex),
       //body: _pages.elementAt(pageIndex),
-      body: TabBarView(
-        controller: _tabController,
-        children: _pages,
-      ),
+      body: BodyTabView(children: _pages, controller: _tabController),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           border: Border(
@@ -86,6 +83,22 @@ class _BillsPageState extends State<BillsPage>
           ],
         ),
       ),
+    );
+  }
+}
+
+class BodyTabView extends StatelessWidget {
+  final List<Widget> children;
+  final TabController controller;
+  const BodyTabView(
+      {Key? key, required this.children, required this.controller})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TabBarView(
+      controller: controller,
+      children: children,
     );
   }
 }

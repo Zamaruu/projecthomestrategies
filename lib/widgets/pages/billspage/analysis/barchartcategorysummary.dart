@@ -48,6 +48,7 @@ class HorizontalBarLabelChart extends StatelessWidget {
   List<charts.Series<OrdinalBills, String>> _createData(
     DateTime start,
     DateTime end,
+    BuildContext ctx,
   ) {
     var categories = getCategoriesAsStrings();
 
@@ -71,7 +72,9 @@ class HorizontalBarLabelChart extends StatelessWidget {
         // Set a label accessor to control the text of the bar label.
         labelAccessorFn: (OrdinalBills sales, _) =>
             '${sales.title}: ${sales.sales.toStringAsFixed(2)} €',
-      )
+        colorFn: (_, __) =>
+            charts.ColorUtil.fromDartColor(Theme.of(ctx).primaryColor),
+      ),
     ];
   }
 
@@ -87,7 +90,7 @@ class HorizontalBarLabelChart extends StatelessWidget {
     return Consumer<AnalysisState>(
       builder: (context, state, _) {
         return charts.BarChart(
-          _createData(state.startDate, state.endDate),
+          _createData(state.startDate, state.endDate, context),
           animate: true,
           vertical: false,
           // Set a bar label decorator.
@@ -97,8 +100,9 @@ class HorizontalBarLabelChart extends StatelessWidget {
           //          outsideLabelStyleSpec: new charts.TextStyleSpec(...)),
           barRendererDecorator: charts.BarLabelDecorator<String>(),
           // Hide domain axis.
-          domainAxis:
-              const charts.OrdinalAxisSpec(renderSpec: charts.NoneRenderSpec()),
+          domainAxis: const charts.OrdinalAxisSpec(
+            renderSpec: charts.NoneRenderSpec(),
+          ),
         );
       },
     );

@@ -13,6 +13,7 @@ class AppTheme extends ChangeNotifier {
 
   //Theme variables
   final _standardTheme = ThemeData(
+    primarySwatch: Colors.teal,
     textTheme: GoogleFonts.nunitoTextTheme(),
     primaryColor: const Color(0xFF047769),
     colorScheme: const ColorScheme.light(

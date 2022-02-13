@@ -48,6 +48,7 @@ class PieSummaryLabelChart extends StatelessWidget {
   List<charts.Series<OrdinalBills, String>> _createData(
     DateTime start,
     DateTime end,
+    BuildContext ctx,
   ) {
     var categories = getCategoriesAsStrings();
 
@@ -72,13 +73,16 @@ class PieSummaryLabelChart extends StatelessWidget {
     return [
       charts.Series<OrdinalBills, String>(
         id: 'Sales',
-        domainFn: (OrdinalBills sales, _) => sales.title,
-        measureFn: (OrdinalBills sales, _) => sales.sales,
+        domainFn: (OrdinalBills bill, _) => bill.title,
+        measureFn: (OrdinalBills bill, _) => bill.sales,
         data: data,
         // Set a label accessor to control the text of the bar label.
         labelAccessorFn: (OrdinalBills sales, _) =>
             '${sales.title}:\n${sales.sales.toStringAsFixed(2)} €',
-      )
+        colorFn: (_, index) {
+          return charts.MaterialPalette.teal.makeShades(data.length)[index!];
+        },
+      ),
     ];
   }
 
@@ -94,7 +98,7 @@ class PieSummaryLabelChart extends StatelessWidget {
     return Consumer<AnalysisState>(
       builder: (context, state, _) {
         return charts.PieChart<String>(
-          _createData(state.startDate, state.endDate),
+          _createData(state.startDate, state.endDate, context),
           animate: true,
           // Add an [ArcLabelDecorator] configured to render labels outside of the
           // arc with a leader line.
