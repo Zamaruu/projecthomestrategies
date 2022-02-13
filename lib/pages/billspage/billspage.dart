@@ -21,11 +21,11 @@ class _BillsPageState extends State<BillsPage>
   void initState() {
     pageIndex = 0;
     _tabController = TabController(length: 3, vsync: this);
-    _tabController.addListener(() {
-      setState(() {
-        pageIndex = _tabController.index;
-      });
-    });
+    // _tabController.addListener(() {
+    //   setState(() {
+    //     pageIndex = _tabController.index;
+    //   });
+    // });
     super.initState();
   }
 
@@ -44,7 +44,8 @@ class _BillsPageState extends State<BillsPage>
   @override
   Widget build(BuildContext context) {
     return BaseScaffold(
-      pageTitle: pageTitles.elementAt(pageIndex),
+      pageTitle: "Ausgaben",
+      //pageTitle: pageTitles.elementAt(pageIndex),
       //body: _pages.elementAt(pageIndex),
       body: BodyTabView(children: _pages, controller: _tabController),
       bottomNavigationBar: Container(
@@ -59,11 +60,11 @@ class _BillsPageState extends State<BillsPage>
           unselectedLabelColor: Colors.grey[600],
           labelColor: Theme.of(context).primaryColor,
           controller: _tabController,
-          onTap: (index) {
-            setState(() {
-              pageIndex = index;
-            });
-          },
+          // onTap: (index) {
+          //   setState(() {
+          //     pageIndex = index;
+          //   });
+          // },
           tabs: const <Tab>[
             Tab(
               iconMargin: EdgeInsets.only(bottom: 5),
