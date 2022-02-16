@@ -5,6 +5,7 @@ import 'package:projecthomestrategies/bloc/models/billcategory_model.dart';
 import 'package:projecthomestrategies/bloc/provider/billing_state.dart';
 import 'package:projecthomestrategies/service/apiresponsehandler_service.dart';
 import 'package:projecthomestrategies/service/billing_service.dart';
+import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/widgets/pages/billspage/billcategories/billcategorytile.dart';
 import 'package:projecthomestrategies/widgets/pages/billspage/billcategories/newbillcategorydialog.dart';
 import 'package:provider/provider.dart';
@@ -58,7 +59,7 @@ class _BillCategoriesDialogState extends State<BillCategoriesDialog> {
   }
 
   Future<void> refreshBillCategories(BuildContext ctx) async {
-    var token = ctx.read<AuthenticationState>().token;
+    var token = Global.getToken(ctx);
     var householdId =
         ctx.read<AuthenticationState>().sessionUser.household!.householdId!;
     var response =

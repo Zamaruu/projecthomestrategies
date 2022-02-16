@@ -5,6 +5,7 @@ import 'package:projecthomestrategies/bloc/provider/billing_state.dart';
 import 'package:projecthomestrategies/service/apiresponsehandler_service.dart';
 import 'package:projecthomestrategies/service/billing_service.dart';
 import 'package:projecthomestrategies/service/messenger_service.dart';
+import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/addbillmodal.dart';
 import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/billingtimesection.dart';
 import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/lastmonthsummary.dart';
@@ -44,7 +45,7 @@ class BillsSummary extends StatelessWidget {
   }
 
   Future<void> refreshBills(BuildContext ctx) async {
-    var token = ctx.read<AuthenticationState>().token;
+    var token = Global.getToken(ctx);
     var householdId =
         ctx.read<AuthenticationState>().sessionUser.household!.householdId!;
     var response =

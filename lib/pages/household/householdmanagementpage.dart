@@ -24,7 +24,7 @@ class HouseholdDataLoader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<ApiResponseModel>(
-      future: HouseholdService(context.read<AuthenticationState>().token)
+      future: HouseholdService(Global.getToken(context))
           .getHouseholdForManagement(householdModel.householdId!),
       builder:
           (BuildContext context, AsyncSnapshot<ApiResponseModel> snapshot) {
@@ -85,7 +85,7 @@ class _HouseholdManagementState extends State<HouseholdManagement> {
     var exists = widget.householdModel.householdMember!
         .where((element) => element.email == newUser.email);
     if (exists.isEmpty) {
-      var token = ctx.read<AuthenticationState>().token;
+      var token = Global.getToken(ctx);
 
       var response = await HouseholdService(token).addUserToHousehold(
         newUser,

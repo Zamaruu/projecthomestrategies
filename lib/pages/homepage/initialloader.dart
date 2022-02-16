@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/models/apiresponse_model.dart';
 import 'package:projecthomestrategies/bloc/provider/appcache_state.dart';
-import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/pages/homepage/homepage.dart';
 import 'package:projecthomestrategies/service/notification_service.dart';
+import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/errorpage.dart';
 import 'package:provider/provider.dart';
 
@@ -13,8 +13,8 @@ class InitialLoader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<ApiResponseModel>(
-      future: NotificationService(context.read<AuthenticationState>().token)
-          .getAllNotifcations(),
+      future:
+          NotificationService(Global.getToken(context)).getAllNotifcations(),
       builder:
           (BuildContext context, AsyncSnapshot<ApiResponseModel> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
