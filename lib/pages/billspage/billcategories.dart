@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:projecthomestrategies/bloc/models/apiresponse_model.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/models/billcategory_model.dart';
@@ -10,18 +11,8 @@ import 'package:projecthomestrategies/widgets/pages/billspage/billcategories/bil
 import 'package:projecthomestrategies/widgets/pages/billspage/billcategories/newbillcategorydialog.dart';
 import 'package:provider/provider.dart';
 
-class BillCategoriesDialog extends StatefulWidget {
+class BillCategoriesDialog extends StatelessWidget {
   const BillCategoriesDialog({Key? key}) : super(key: key);
-
-  @override
-  _BillCategoriesDialogState createState() => _BillCategoriesDialogState();
-}
-
-class _BillCategoriesDialogState extends State<BillCategoriesDialog> {
-  @override
-  void initState() {
-    super.initState();
-  }
 
   List<String> getCategoryNames(List<BillCategoryModel> billCategories) {
     if (billCategories.isNotEmpty) {
@@ -89,13 +80,26 @@ class _BillCategoriesDialogState extends State<BillCategoriesDialog> {
           } else {
             return RefreshIndicator(
               onRefresh: () => refreshBillCategories(context),
-              child: ListView.builder(
-                itemCount: state.billCategories.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return BillCategoryTile(
-                    billCategory: state.billCategories[index],
-                  );
-                },
+              child: AnimationLimiter(
+                child: ListView.builder(
+                  itemCount: state.billCategories.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (BuildContext context, int index) {
+                    return AnimationConfiguration.staggeredList(
+                      position: index,
+                      duration: const Duration(milliseconds: 375),
+                      child: SlideAnimation(
+                        verticalOffset: 50.0,
+                        child: FadeInAnimation(
+                          child: BillCategoryTile(
+                            billCategory: state.billCategories[index],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
             );
           }
