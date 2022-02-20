@@ -101,10 +101,11 @@ class BillsSummary extends StatelessWidget {
                 shrinkWrap: true,
                 children: <Widget>[
                   LastMonthSummary(bills: model.bills),
-                  BillingTimeSection(
-                    label: "Letzten 7 Tage",
-                    bills: getLastSevendays(model.bills),
-                  ),
+                  if (getLastSevendays(model.bills).isNotEmpty)
+                    BillingTimeSection(
+                      label: "Letzten 7 Tage",
+                      bills: getLastSevendays(model.bills),
+                    ),
                   BillingTimeSection(
                     label: "Ältere Rechnungen",
                     bills: getOtherBills(model.bills),

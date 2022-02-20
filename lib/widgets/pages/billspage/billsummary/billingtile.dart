@@ -109,11 +109,14 @@ class BillingTile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 0.0),
       child: ListTile(
         onTap: onTap != null ? () => onTap!() : null,
-        leading: Text(
-          "${bill.amount!.toStringAsFixed(2)} €",
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+        leading: Container(
+          constraints: const BoxConstraints(minWidth: 80, maxWidth: 200),
+          child: Text(
+            "${bill.amount!.toStringAsFixed(2)} €",
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         title: Text(
