@@ -25,10 +25,12 @@ class CreateBillCategoryDialog extends StatefulWidget {
 class _CreateBillCategoryDialogState extends State<CreateBillCategoryDialog> {
   late bool isLoading;
   late TextEditingController nameController;
+  late FocusNode nameFocusNode;
 
   @override
   void initState() {
     isLoading = false;
+    nameFocusNode = FocusNode();
     nameController = TextEditingController();
     super.initState();
   }
@@ -90,6 +92,7 @@ class _CreateBillCategoryDialogState extends State<CreateBillCategoryDialog> {
         isDialog: true,
         child: TextInputField(
           helperText: "Name",
+          focusNode: nameFocusNode,
           controller: nameController,
           type: TextInputType.text,
           maxChars: 30,

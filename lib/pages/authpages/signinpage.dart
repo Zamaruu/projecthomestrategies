@@ -24,9 +24,13 @@ class _SignInPageState extends State<SignInPage> {
   late TextEditingController passwordController;
   late bool staySignedIn;
   late bool isLoading;
+  late FocusNode emailFocusNode;
+  late FocusNode passwordFocusNode;
 
   @override
   void initState() {
+    emailFocusNode = FocusNode();
+    passwordFocusNode = FocusNode();
     emailController = TextEditingController();
     passwordController = TextEditingController();
     staySignedIn = false;
@@ -131,6 +135,7 @@ class _SignInPageState extends State<SignInPage> {
                             height: 64,
                           ),
                           TextInputField(
+                            focusNode: emailFocusNode,
                             controller: emailController,
                             helperText: "E-Mail Adresse",
                             type: TextInputType.emailAddress,
@@ -139,9 +144,11 @@ class _SignInPageState extends State<SignInPage> {
                             height: 32,
                           ),
                           TextInputField(
-                              controller: passwordController,
-                              helperText: "Passwort",
-                              type: TextInputType.visiblePassword),
+                            focusNode: passwordFocusNode,
+                            controller: passwordController,
+                            helperText: "Passwort",
+                            type: TextInputType.visiblePassword,
+                          ),
                           StaySignedInCheckBox(
                             staySignedIn: staySignedIn,
                             setSignedIn: setSignedIn,

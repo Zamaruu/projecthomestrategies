@@ -25,9 +25,22 @@ class _SignUpPageState extends State<SignUpPage> {
   late TextEditingController firstnameController;
   late TextEditingController surnameController;
 
+  late FocusNode nameFocusNode;
+  late FocusNode surnameFocusNode;
+  late FocusNode emailFocusNode;
+  late FocusNode passwordFocusNode;
+  late FocusNode checkPasswordFocusNode;
+
   @override
   void initState() {
     isLoading = false;
+
+    emailFocusNode = FocusNode();
+    surnameFocusNode = FocusNode();
+    emailFocusNode = FocusNode();
+    passwordFocusNode = FocusNode();
+    checkPasswordFocusNode = FocusNode();
+
     emailController = TextEditingController();
     passwordController = TextEditingController();
     checkPasswordController = TextEditingController();
@@ -123,24 +136,31 @@ class _SignUpPageState extends State<SignUpPage> {
                       Row(
                         children: [
                           Expanded(
-                              child: TextInputField(
-                                  controller: firstnameController,
-                                  helperText: "Vorname",
-                                  type: TextInputType.text)),
+                            child: TextInputField(
+                              focusNode: nameFocusNode,
+                              controller: firstnameController,
+                              helperText: "Vorname",
+                              type: TextInputType.text,
+                            ),
+                          ),
                           const SizedBox(
                             width: 20,
                           ),
                           Expanded(
-                              child: TextInputField(
-                                  controller: surnameController,
-                                  helperText: "Nachname",
-                                  type: TextInputType.text)),
+                            child: TextInputField(
+                              focusNode: surnameFocusNode,
+                              controller: surnameController,
+                              helperText: "Nachname",
+                              type: TextInputType.text,
+                            ),
+                          ),
                         ],
                       ),
                       const SizedBox(
                         height: 32,
                       ),
                       TextInputField(
+                        focusNode: emailFocusNode,
                         controller: emailController,
                         helperText: "E-Mail Adresse",
                         type: TextInputType.emailAddress,
@@ -149,16 +169,20 @@ class _SignUpPageState extends State<SignUpPage> {
                         height: 32,
                       ),
                       TextInputField(
-                          controller: passwordController,
-                          helperText: "Passwort",
-                          type: TextInputType.visiblePassword),
+                        focusNode: passwordFocusNode,
+                        controller: passwordController,
+                        helperText: "Passwort",
+                        type: TextInputType.visiblePassword,
+                      ),
                       const SizedBox(
                         height: 32,
                       ),
                       TextInputField(
-                          controller: checkPasswordController,
-                          helperText: "Passwort wiederholen",
-                          type: TextInputType.visiblePassword),
+                        focusNode: checkPasswordFocusNode,
+                        controller: checkPasswordController,
+                        helperText: "Passwort wiederholen",
+                        type: TextInputType.visiblePassword,
+                      ),
                     ],
                   ),
                 ),

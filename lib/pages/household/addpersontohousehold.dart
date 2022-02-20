@@ -17,10 +17,12 @@ class AddUserToHousehold extends StatefulWidget {
 class _AddUserToHouseholdState extends State<AddUserToHousehold> {
   late bool isLoading;
   late TextEditingController emailController;
+  late FocusNode emailFocusNode;
 
   @override
   void initState() {
     isLoading = false;
+    emailFocusNode = FocusNode();
     emailController = TextEditingController();
     super.initState();
   }
@@ -51,6 +53,7 @@ class _AddUserToHouseholdState extends State<AddUserToHousehold> {
         isLoading: isLoading,
         isDialog: true,
         child: TextInputField(
+          focusNode: emailFocusNode,
           controller: emailController,
           type: TextInputType.emailAddress,
           helperText: "Benutzer E-Mail",

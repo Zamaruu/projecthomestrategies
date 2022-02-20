@@ -27,10 +27,12 @@ class _CreateHouseholdDialogState extends State<CreateHouseholdDialog> {
   late bool isLoading;
   late TextEditingController householdNameController;
   late List<UserModel> householdMember;
+  late FocusNode nameFocusNode;
 
   @override
   void initState() {
     isLoading = false;
+    nameFocusNode = FocusNode();
     householdNameController = TextEditingController();
     householdMember = <UserModel>[];
     householdMember.add(widget.sessionUser);
@@ -170,6 +172,7 @@ class _CreateHouseholdDialogState extends State<CreateHouseholdDialog> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextInputField(
+                focusNode: nameFocusNode,
                 controller: householdNameController,
                 helperText: "Name des Haushalts",
                 type: TextInputType.text,

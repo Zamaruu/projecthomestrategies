@@ -1,29 +1,94 @@
 import 'package:flutter/material.dart';
 
-class TextInputField extends StatelessWidget {
+class TextInputField extends StatefulWidget {
   final TextEditingController controller;
   final String helperText;
   final TextInputType type;
+  final IconData? suffixIcon;
   final int? maxChars;
+  final FocusNode focusNode;
+  final double borderWidth;
 
-  const TextInputField(
-      {Key? key,
-      required this.controller,
-      required this.helperText,
-      required this.type,
-      this.maxChars})
-      : super(key: key);
+  const TextInputField({
+    Key? key,
+    required this.controller,
+    required this.helperText,
+    required this.type,
+    required this.focusNode,
+    this.maxChars,
+    this.suffixIcon,
+    this.borderWidth = 2.0,
+  }) : super(key: key);
+
+  @override
+  State<TextInputField> createState() => _TextInputFieldState();
+}
+
+class _TextInputFieldState extends State<TextInputField> {
+  final Color backgroundColor = Colors.grey.withOpacity(0.15);
+  late bool hasFocus;
+
+  @override
+  void initState() {
+    super.initState();
+    hasFocus = false;
+    widget.focusNode.addListener(_onFocusChange);
+  }
+
+  void _onFocusChange() {
+    setState(() {
+      hasFocus = widget.focusNode.hasFocus;
+    });
+  }
+
+  Icon _buildSuffixIcon() {
+    return Icon(widget.suffixIcon);
+  }
+
+  InputDecoration _buildInputDecoration() {
+    return InputDecoration(
+      labelText: widget.helperText,
+      suffix: widget.suffixIcon != null ? _buildSuffixIcon() : null,
+      suffixIconConstraints: const BoxConstraints(maxHeight: 21),
+      isDense: true,
+      contentPadding: const EdgeInsets.all(11),
+      filled: true,
+      fillColor: backgroundColor,
+      labelStyle: TextStyle(
+        color: hasFocus || widget.controller.text.isNotEmpty
+            ? Theme.of(context).primaryColor
+            : Colors.grey[600],
+        fontWeight: hasFocus || widget.controller.text.isNotEmpty
+            ? FontWeight.bold
+            : FontWeight.normal,
+      ),
+      floatingLabelBehavior: FloatingLabelBehavior.auto,
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+            color: widget.controller.text.isNotEmpty
+                ? Theme.of(context).primaryColor
+                : Colors.transparent,
+            width: widget.borderWidth),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Theme.of(context).primaryColor,
+          width: widget.borderWidth,
+        ),
+        borderRadius: BorderRadius.circular(15),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: controller,
-      keyboardType: type,
-      obscureText: type == TextInputType.visiblePassword,
-      maxLength: maxChars,
-      decoration: InputDecoration(
-        labelText: helperText,
-      ),
+      controller: widget.controller,
+      keyboardType: widget.type,
+      obscureText: widget.type == TextInputType.visiblePassword,
+      maxLength: widget.maxChars,
+      decoration: _buildInputDecoration(),
     );
   }
 }

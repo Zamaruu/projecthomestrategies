@@ -22,10 +22,12 @@ class EditCategoryDialog extends StatefulWidget {
 class _EditCategoryDialogState extends State<EditCategoryDialog> {
   late bool isLoading;
   late TextEditingController nameController;
+  late FocusNode nameFocusNode;
 
   @override
   void initState() {
     isLoading = false;
+    nameFocusNode = FocusNode();
     nameController = TextEditingController(
       text: widget.catgeory.billCategoryName,
     );
@@ -73,6 +75,7 @@ class _EditCategoryDialogState extends State<EditCategoryDialog> {
         isLoading: isLoading,
         isDialog: true,
         child: TextInputField(
+          focusNode: nameFocusNode,
           helperText: "Name",
           controller: nameController,
           type: TextInputType.text,
