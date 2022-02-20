@@ -5,7 +5,10 @@ import 'package:projecthomestrategies/app_config_loader.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/utils/colortheme.dart';
 import 'package:provider/provider.dart';
+import 'bloc/models/bill_model.dart';
+import 'bloc/models/billcategory_model.dart';
 import 'bloc/provider/appcache_state.dart';
+import 'bloc/provider/billing_state.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,6 +29,12 @@ class HomeStrategies extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => AuthenticationState(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => BillingState(
+            <BillCategoryModel>[],
+            <BillModel>[],
+          ),
         ),
         ChangeNotifierProvider(
           create: (context) => AppCacheState(

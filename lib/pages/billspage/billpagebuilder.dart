@@ -1,25 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/models/bill_model.dart';
 import 'package:projecthomestrategies/bloc/models/billcategory_model.dart';
-import 'package:projecthomestrategies/bloc/provider/appcache_state.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/provider/billing_state.dart';
 import 'package:projecthomestrategies/pages/billspage/billspage.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/errorpage.dart';
 import 'package:provider/provider.dart';
 import 'package:projecthomestrategies/service/billing_service.dart';
-
-class MountBillProvider extends StatelessWidget {
-  const MountBillProvider({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => BillingState(<BillCategoryModel>[], <BillModel>[]),
-      child: const BillContentBuilder(),
-    );
-  }
-}
 
 class BillContentBuilder extends StatelessWidget {
   const BillContentBuilder({Key? key}) : super(key: key);
