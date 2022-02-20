@@ -5,10 +5,12 @@ import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/pages/authpages/signuppage.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/utils/securestoragehandler.dart';
+import 'package:projecthomestrategies/widgets/auth/registerblob.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/loading/somesrategiesloadingbuilder.dart';
 import 'package:projecthomestrategies/widgets/auth/authenticationresponse.dart';
 import 'package:projecthomestrategies/widgets/auth/staysignedincheckbox.dart';
 import 'package:projecthomestrategies/widgets/auth/submitfab.dart';
+import 'package:projecthomestrategies/widgets/globalwidgets/primarybutton.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/textinputfield.dart';
 import 'package:provider/provider.dart';
 
@@ -110,78 +112,96 @@ class _SignInPageState extends State<SignInPage> {
           return KeyboardVisibilityBuilder(
             builder: (context, isKeyboadVisible) {
               return Scaffold(
-                body: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(25.0),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "Willkommen zurück,",
-                            style: TextStyle(
-                              fontSize: 33,
-                              fontWeight: FontWeight.bold,
-                            ),
+                body: Stack(
+                  children: [
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(25.0),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "Willkommen zurück,",
+                                style: TextStyle(
+                                  fontSize: 33,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const Text(
+                                "Melde dich an",
+                                style: TextStyle(
+                                  fontSize: 33,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 64,
+                              ),
+                              TextInputField(
+                                focusNode: emailFocusNode,
+                                controller: emailController,
+                                helperText: "E-Mail Adresse",
+                                suffixIcon: Icons.mail,
+                                type: TextInputType.emailAddress,
+                              ),
+                              const SizedBox(
+                                height: 32,
+                              ),
+                              TextInputField(
+                                focusNode: passwordFocusNode,
+                                controller: passwordController,
+                                helperText: "Passwort",
+                                suffixIcon: Icons.vpn_key,
+                                type: TextInputType.visiblePassword,
+                              ),
+                              StaySignedInCheckBox(
+                                staySignedIn: staySignedIn,
+                                setSignedIn: setSignedIn,
+                              ),
+                              const SizedBox(
+                                height: 35,
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: const Size.fromHeight(40), // NEW
+                                ),
+                                onPressed: () => handleSignIn(auth, context),
+                                child: const Text("Anmelden"),
+                              ),
+                            ],
                           ),
-                          const Text(
-                            "Melde dich an",
-                            style: TextStyle(
-                              fontSize: 33,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 64,
-                          ),
-                          TextInputField(
-                            focusNode: emailFocusNode,
-                            controller: emailController,
-                            helperText: "E-Mail Adresse",
-                            type: TextInputType.emailAddress,
-                          ),
-                          const SizedBox(
-                            height: 32,
-                          ),
-                          TextInputField(
-                            focusNode: passwordFocusNode,
-                            controller: passwordController,
-                            helperText: "Passwort",
-                            type: TextInputType.visiblePassword,
-                          ),
-                          StaySignedInCheckBox(
-                            staySignedIn: staySignedIn,
-                            setSignedIn: setSignedIn,
-                          ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                floatingActionButton: !isKeyboadVisible
-                    ? SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 40.0),
-                              child: TextButton(
-                                  onPressed: () =>
-                                      navigateToRegisterPage(context),
-                                  child: const Text("Noch kein Konto?")),
-                            ),
-                            SubmitFAB(
-                              key: const Key("SignInSubmit"),
-                              tag: "SignIn",
-                              onPressed: () => handleSignIn(auth, context),
-                              tooltip: "Anmelden",
-                              icon: Icons.arrow_forward,
-                            ),
-                          ],
+                    if (!isKeyboadVisible)
+                      Positioned(
+                        bottom: -80,
+                        left: -35,
+                        child: RegisterBlob(
+                          onTap: () => navigateToRegisterPage(context),
                         ),
-                      )
-                    : null,
+                      ),
+                  ],
+                ),
+                // floatingActionButton: !isKeyboadVisible
+                //     ? SizedBox(
+                //         width: MediaQuery.of(context).size.width,
+                //         child: Row(
+                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //           children: [
+                //             Padding(
+                //               padding: const EdgeInsets.only(left: 40.0),
+                //               child: TextButton(
+                //                 onPressed: () =>
+                //                     navigateToRegisterPage(context),
+                //                 child: const Text("Noch kein Konto?"),
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //       )
+                //     : null,
               );
             },
           );

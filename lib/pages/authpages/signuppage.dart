@@ -35,7 +35,7 @@ class _SignUpPageState extends State<SignUpPage> {
   void initState() {
     isLoading = false;
 
-    emailFocusNode = FocusNode();
+    nameFocusNode = FocusNode();
     surnameFocusNode = FocusNode();
     emailFocusNode = FocusNode();
     passwordFocusNode = FocusNode();

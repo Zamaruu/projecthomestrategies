@@ -41,15 +41,24 @@ class _TextInputFieldState extends State<TextInputField> {
     });
   }
 
-  Icon _buildSuffixIcon() {
-    return Icon(widget.suffixIcon);
+  Padding _buildSuffixIcon() {
+    return Padding(
+      padding: const EdgeInsets.only(right: 8.0),
+      child: Icon(
+        widget.suffixIcon,
+        color: hasFocus || widget.controller.text.isNotEmpty
+            ? Theme.of(context).primaryColor
+            : Colors.grey,
+        size: 24,
+      ),
+    );
   }
 
   InputDecoration _buildInputDecoration() {
     return InputDecoration(
       labelText: widget.helperText,
-      suffix: widget.suffixIcon != null ? _buildSuffixIcon() : null,
-      suffixIconConstraints: const BoxConstraints(maxHeight: 21),
+      suffixIcon: widget.suffixIcon != null ? _buildSuffixIcon() : null,
+      suffixIconConstraints: const BoxConstraints(maxHeight: 25),
       isDense: true,
       contentPadding: const EdgeInsets.all(11),
       filled: true,
