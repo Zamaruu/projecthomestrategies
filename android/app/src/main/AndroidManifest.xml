@@ -4,7 +4,7 @@
    <application
         android:label="Home\nStrategies"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/hs_launcher">
         <activity
             android:name=".MainActivity"
             android:exported="true"
