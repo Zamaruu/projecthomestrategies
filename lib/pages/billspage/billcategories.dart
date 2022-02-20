@@ -78,27 +78,53 @@ class BillCategoriesDialog extends StatelessWidget {
               child: Text("Keine Kategorien"),
             );
           } else {
-            return RefreshIndicator(
-              onRefresh: () => refreshBillCategories(context),
-              child: AnimationLimiter(
-                child: ListView.builder(
-                  itemCount: state.billCategories.length,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (BuildContext context, int index) {
-                    return AnimationConfiguration.staggeredList(
-                      position: index,
-                      duration: const Duration(milliseconds: 375),
-                      child: SlideAnimation(
-                        verticalOffset: 50.0,
-                        child: FadeInAnimation(
-                          child: BillCategoryTile(
-                            billCategory: state.billCategories[index],
+            return AnimationLimiter(
+              child: Container(
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 10,
+                ),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(7)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      offset: Offset(0, 5),
+                      blurRadius: 5,
+                      spreadRadius: 1,
+                    ),
+                  ],
+                ),
+                child: RefreshIndicator(
+                  onRefresh: () => refreshBillCategories(context),
+                  child: ListView.separated(
+                    itemCount: state.billCategories.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (BuildContext context, int index) {
+                      return AnimationConfiguration.staggeredList(
+                        position: index,
+                        duration: const Duration(milliseconds: 375),
+                        child: SlideAnimation(
+                          verticalOffset: 50.0,
+                          child: FadeInAnimation(
+                            child: BillCategoryTile(
+                              billCategory: state.billCategories[index],
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return Divider(
+                        color: Colors.grey.shade600,
+                        height: 4,
+                        indent: 15,
+                        endIndent: 15,
+                      );
+                    },
+                  ),
                 ),
               ),
             );
