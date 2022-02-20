@@ -16,19 +16,19 @@ class AppTheme extends ChangeNotifier {
     primarySwatch: Colors.teal,
     textTheme: GoogleFonts.nunitoTextTheme(),
     primaryColor: const Color(0xFF047769),
-    colorScheme: const ColorScheme(
-      primary: Color(0xFF047769),
-      primaryVariant: Color(0xFF047769),
-      secondary: Color(0xFF0cb09c),
-      secondaryVariant: Color(0xFF0cb09c),
+    colorScheme: ColorScheme(
+      primary: const Color(0xFF047769),
+      primaryVariant: const Color(0xFF047769),
+      secondary: const Color(0xFF0cb09c),
+      secondaryVariant: const Color(0xFF0cb09c),
       surface: Colors.white,
-      background: Colors.white,
+      background: Colors.grey,
       error: Colors.red,
-      onPrimary: Colors.white,
+      onPrimary: Colors.white, // Appbar text und icons
       onSecondary: Colors.white,
-      onSurface: Colors.white,
+      onSurface: Colors.grey.shade800,
       onBackground: Colors.white,
-      onError: Colors.white,
+      onError: Colors.red,
       brightness: Brightness.light,
     ),
     appBarTheme: const AppBarTheme(
