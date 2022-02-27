@@ -11,6 +11,7 @@ import 'package:projecthomestrategies/widgets/globalwidgets/cancelbutton.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/primarybutton.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/loading/somesrategiesloadingbuilder.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/textinputfield.dart';
+import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/addbillimagesection.dart';
 import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/addbillinformationsection.dart';
 import 'package:provider/provider.dart';
 
@@ -116,6 +117,7 @@ class _AddBillModalState extends State<AddBillModal> {
                   NewBillInformationSection(
                     billCategories: widget.billCategories,
                   ),
+                  const NewBillImageSection(),
                 ],
               ),
               Positioned(

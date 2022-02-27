@@ -34,6 +34,7 @@ class NewBillInformationSection extends StatelessWidget {
     return Consumer<NewBillState>(
       builder: (context, state, _) => Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        margin: const EdgeInsets.only(bottom: 15),
         decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(7)),
