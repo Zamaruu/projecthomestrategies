@@ -19,21 +19,20 @@ class NewBillImageSection extends StatelessWidget {
         ),
         side: BorderSide(color: Theme.of(ctx).primaryColor.withOpacity(0.5)),
       ),
-      onPressed: () => _getFromGallery(ctx),
+      onPressed: () => _addImageModal(ctx),
       icon: const Icon(Icons.add_a_photo),
       label: const Text("Bild hinzufügen"),
     );
   }
 
-  void _getFromGallery(BuildContext ctx) async {
-    var pickedFile = await ImagePicker().pickImage(
-      source: ImageSource.gallery,
-      // maxWidth: 1800,
-      // maxHeight: 1800,
+  void _addImageModal(BuildContext ctx) async {
+    var result = await showModalBottomSheet<List<File>>(
+      context: ctx,
+      builder: (context) => const _AddMediaBottomSheet(),
     );
-    if (pickedFile != null) {
-      File imageFile = File(pickedFile.path);
-      ctx.read<NewBillState>().addImageToList(imageFile);
+
+    if (result != null) {
+      ctx.read<NewBillState>().addImageToList(result);
     }
   }
 
@@ -76,6 +75,90 @@ class NewBillImageSection extends StatelessWidget {
             },
           ),
           _addImageButton(context),
+        ],
+      ),
+    );
+  }
+}
+
+class _AddMediaBottomSheet extends StatelessWidget {
+  final double height = 130;
+
+  const _AddMediaBottomSheet({Key? key}) : super(key: key);
+
+  void _getFromGallery(BuildContext ctx) async {
+    var pickedFiles = await ImagePicker().pickMultiImage();
+
+    if (pickedFiles != null) {
+      List<File> temp = <File>[];
+      File tempFile;
+
+      for (var image in pickedFiles) {
+        tempFile = File(image.path);
+        temp.add(tempFile);
+      }
+
+      Navigator.pop(ctx, temp);
+    }
+  }
+
+  void _getFromCamera(BuildContext ctx) async {
+    var pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
+
+    if (pickedFile != null) {
+      File imageFile = File(pickedFile.path);
+      Navigator.pop(ctx, [imageFile]);
+    }
+  }
+
+  ButtonStyle _buttonStyle(BuildContext ctx) {
+    return OutlinedButton.styleFrom(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+      ),
+      side: BorderSide(color: Theme.of(ctx).primaryColor.withOpacity(0.5)),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.width / 2.2,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Container(
+            height: double.maxFinite,
+            width: MediaQuery.of(context).size.width / 2.2,
+            margin: const EdgeInsets.only(
+              left: 10,
+              top: 10,
+              bottom: 10,
+              right: 5,
+            ),
+            child: OutlinedButton.icon(
+              onPressed: () => _getFromGallery(context),
+              style: _buttonStyle(context),
+              icon: const Icon(Icons.collections),
+              label: const Text("Aus Gallerie"),
+            ),
+          ),
+          Container(
+            height: double.maxFinite,
+            width: MediaQuery.of(context).size.width / 2.2,
+            margin: const EdgeInsets.only(
+              left: 5,
+              top: 10,
+              bottom: 10,
+              right: 10,
+            ),
+            child: OutlinedButton.icon(
+              onPressed: () => _getFromCamera(context),
+              style: _buttonStyle(context),
+              icon: const Icon(Icons.photo_camera),
+              label: const Text("Kamera"),
+            ),
+          ),
         ],
       ),
     );

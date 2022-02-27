@@ -44,8 +44,8 @@ class NewBillState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addImageToList(File image) {
-    _images = [..._images, image];
+  void addImageToList(List<File> image) {
+    _images = [..._images, ...image];
     notifyListeners();
   }
 

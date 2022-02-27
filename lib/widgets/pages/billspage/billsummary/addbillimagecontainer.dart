@@ -58,7 +58,7 @@ class AddBillImageContainer extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 //width: double.maxFinite,
                 //height: 10,
-                child: Text("${_getImageSizeInMegaByte()} Mb"),
+                child: Text("${_getImageSizeInMegaByte()} MB"),
               ),
             ),
           ),
