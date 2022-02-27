@@ -1,5 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:projecthomestrategies/bloc/provider/new_bill_state.dart';
+import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/addbillimagecontainer.dart';
 import 'package:projecthomestrategies/widgets/pages/homepage/panelheading.dart';
+import 'package:provider/provider.dart';
 
 class NewBillImageSection extends StatelessWidget {
   const NewBillImageSection({Key? key}) : super(key: key);
@@ -13,10 +19,22 @@ class NewBillImageSection extends StatelessWidget {
         ),
         side: BorderSide(color: Theme.of(ctx).primaryColor.withOpacity(0.5)),
       ),
-      onPressed: () {},
+      onPressed: () => _getFromGallery(ctx),
       icon: const Icon(Icons.add_a_photo),
       label: const Text("Bild hinzufügen"),
     );
+  }
+
+  void _getFromGallery(BuildContext ctx) async {
+    var pickedFile = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      // maxWidth: 1800,
+      // maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      File imageFile = File(pickedFile.path);
+      ctx.read<NewBillState>().addImageToList(imageFile);
+    }
   }
 
   @override
@@ -41,6 +59,22 @@ class NewBillImageSection extends StatelessWidget {
           const PanelHeading(
             heading: "Bilder",
             padding: 0,
+          ),
+          Selector<NewBillState, List<File>>(
+            selector: (context, model) => model.images,
+            builder: (context, images, _) {
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: images.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return AddBillImageContainer(
+                    image: images[index],
+                    listIndex: index,
+                  );
+                },
+              );
+            },
           ),
           _addImageButton(context),
         ],

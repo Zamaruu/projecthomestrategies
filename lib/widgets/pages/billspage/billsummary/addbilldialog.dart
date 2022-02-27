@@ -6,11 +6,7 @@ import 'package:projecthomestrategies/bloc/provider/billing_state.dart';
 import 'package:projecthomestrategies/bloc/provider/new_bill_state.dart';
 import 'package:projecthomestrategies/service/apiresponsehandler_service.dart';
 import 'package:projecthomestrategies/service/billing_service.dart';
-import 'package:projecthomestrategies/utils/globals.dart';
-import 'package:projecthomestrategies/widgets/globalwidgets/cancelbutton.dart';
-import 'package:projecthomestrategies/widgets/globalwidgets/primarybutton.dart';
-import 'package:projecthomestrategies/widgets/globalwidgets/loading/somesrategiesloadingbuilder.dart';
-import 'package:projecthomestrategies/widgets/globalwidgets/textinputfield.dart';
+import 'package:projecthomestrategies/widgets/globalwidgets/loading/loadingsnackbar.dart';
 import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/addbillimagesection.dart';
 import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/addbillinformationsection.dart';
 import 'package:provider/provider.dart';
@@ -28,18 +24,13 @@ class AddBillModal extends StatefulWidget {
 }
 
 class _AddBillModalState extends State<AddBillModal> {
-  late bool isLoading;
-
-  @override
-  void initState() {
-    isLoading = false;
-    super.initState();
-  }
-
-  void toggleLoading(bool newValue) {
-    setState(() {
-      isLoading = newValue;
-    });
+  void toggleLoading(bool newValue, BuildContext ctx, LoadingSnackbar loader) {
+    ctx.read<NewBillState>().setLoading(newValue);
+    if (newValue) {
+      loader.showLoadingSnackbar();
+    } else {
+      loader.dismissSnackbar();
+    }
   }
 
   bool validateBillData(BuildContext ctx) {
@@ -65,10 +56,13 @@ class _AddBillModalState extends State<AddBillModal> {
   }
 
   Future<void> _createNewBill(BuildContext ctx) async {
+    LoadingSnackbar loader = LoadingSnackbar(ctx);
+
     if (!validateBillData(ctx)) {
       return;
     }
-    toggleLoading(true);
+
+    toggleLoading(true, ctx, loader);
 
     var token = ctx.read<AuthenticationState>().token;
 
@@ -88,7 +82,9 @@ class _AddBillModalState extends State<AddBillModal> {
     );
 
     var response = await BillingService(token).createNewBill(newBill);
-    toggleLoading(false);
+
+    toggleLoading(false, ctx, loader);
+
     if (response.statusCode == 200) {
       widget.state.addBill(response.object as BillModel);
       Navigator.pop(ctx);
@@ -109,32 +105,53 @@ class _AddBillModalState extends State<AddBillModal> {
           appBar: AppBar(
             title: const Text("Rechnung erstellen"),
           ),
-          body: Stack(
+          body: ListView(
+            padding: const EdgeInsets.all(10.0),
             children: [
-              ListView(
-                padding: const EdgeInsets.all(10.0),
+              NewBillInformationSection(
+                billCategories: widget.billCategories,
+              ),
+              const NewBillImageSection(),
+            ],
+          ),
+          bottomNavigationBar: Container(
+            decoration: BoxDecoration(
+              border: Border(
+                top: BorderSide(width: 1.0, color: Colors.grey.shade400),
+              ),
+            ),
+            height: kBottomNavigationBarHeight,
+            child: Selector<NewBillState, bool>(
+              selector: (context, model) => model.isLoading,
+              builder: (context, isLoading, _) => Row(
                 children: [
-                  NewBillInformationSection(
-                    billCategories: widget.billCategories,
+                  SizedBox(
+                    height: kBottomNavigationBarHeight,
+                    width: MediaQuery.of(context).size.width / 2,
+                    child: TextButton.icon(
+                      onPressed:
+                          isLoading ? null : () => Navigator.of(context).pop(),
+                      style: TextButton.styleFrom(
+                        primary: Colors.grey.shade700,
+                      ),
+                      icon: const Icon(Icons.arrow_back),
+                      label: const Text("Abbrechen"),
+                    ),
                   ),
-                  const NewBillImageSection(),
+                  SizedBox(
+                    height: kBottomNavigationBarHeight,
+                    width: MediaQuery.of(context).size.width / 2,
+                    child: TextButton.icon(
+                      onPressed:
+                          isLoading ? null : () => _createNewBill(context),
+                      style: TextButton.styleFrom(),
+                      icon: const Icon(Icons.add),
+                      label: const Text("Erstellen"),
+                    ),
+                  ),
                 ],
               ),
-              Positioned(
-                bottom: 3,
-                right: 8,
-                child: Row(
-                  children: [
-                    CancelButton(onCancel: () => Navigator.of(context).pop()),
-                    PrimaryButton(
-                      onPressed: () => _createNewBill(context),
-                      text: "Erstellen",
-                      icon: Icons.add,
-                    ),
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
         );
       },
