@@ -1,6 +1,7 @@
 import 'dart:io';
-
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:projecthomestrategies/bloc/provider/new_bill_state.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 
 class AddBillImageContainer extends StatelessWidget {
@@ -42,7 +43,8 @@ class AddBillImageContainer extends StatelessWidget {
               child: IconButton(
                 splashColor: Theme.of(context).primaryColor.withOpacity(0.4),
                 splashRadius: Global.splashRadius,
-                onPressed: () {},
+                onPressed: () =>
+                    context.read<NewBillState>().removeImageFromList(listIndex),
                 icon: const Icon(Icons.clear),
               ),
             ),

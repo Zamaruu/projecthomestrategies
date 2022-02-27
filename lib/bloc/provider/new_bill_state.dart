@@ -49,6 +49,12 @@ class NewBillState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void removeImageFromList(int index) {
+    _images.removeAt(index);
+    //_images = [..._images];
+    notifyListeners();
+  }
+
   void setLoading(bool value) {
     _isLoading = value;
     notifyListeners();

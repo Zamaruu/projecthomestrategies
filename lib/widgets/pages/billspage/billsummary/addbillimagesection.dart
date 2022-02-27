@@ -60,16 +60,15 @@ class NewBillImageSection extends StatelessWidget {
             heading: "Bilder",
             padding: 0,
           ),
-          Selector<NewBillState, List<File>>(
-            selector: (context, model) => model.images,
-            builder: (context, images, _) {
+          Consumer<NewBillState>(
+            builder: (context, state, _) {
               return ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: images.length,
+                itemCount: state.images.length,
                 itemBuilder: (BuildContext context, int index) {
                   return AddBillImageContainer(
-                    image: images[index],
+                    image: state.images[index],
                     listIndex: index,
                   );
                 },
