@@ -101,4 +101,8 @@ class Global {
   static UserModel getCurrentUser(BuildContext context) {
     return context.read<AuthenticationState>().sessionUser;
   }
+
+  static bool isStringNullOrEmpty(String? s) {
+    return s == null || s.isEmpty;
+  }
 }

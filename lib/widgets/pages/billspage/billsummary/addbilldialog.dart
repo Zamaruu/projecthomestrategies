@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/models/bill_model.dart';
 import 'package:projecthomestrategies/bloc/models/billcategory_model.dart';
+import 'package:projecthomestrategies/bloc/models/billimage_model.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/provider/billing_state.dart';
 import 'package:projecthomestrategies/bloc/provider/new_bill_state.dart';
 import 'package:projecthomestrategies/service/apiresponsehandler_service.dart';
 import 'package:projecthomestrategies/service/billing_service.dart';
+import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/loading/loadingsnackbar.dart';
 import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/addbillimagesection.dart';
 import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/addbillinformationsection.dart';
@@ -64,7 +66,7 @@ class _AddBillModalState extends State<AddBillModal> {
 
     toggleLoading(true, ctx, loader);
 
-    var token = ctx.read<AuthenticationState>().token;
+    var token = Global.getToken(ctx);
 
     var user = ctx.read<AuthenticationState>().sessionUser;
     var amount = double.tryParse(
@@ -72,12 +74,21 @@ class _AddBillModalState extends State<AddBillModal> {
     var category =
         widget.billCategories[ctx.read<NewBillState>().categorySelection];
     var date = ctx.read<NewBillState>().selectedDate;
+    var description =
+        ctx.read<NewBillState>().descriptionController.text.trim();
+    var images = ctx
+        .read<NewBillState>()
+        .images
+        .map((i) => BillImageModel(billImageId: 0, image: i))
+        .toList();
 
     BillModel newBill = BillModel(
       amount: amount,
       category: category,
       date: date,
+      description: description,
       buyer: user,
+      images: images,
       household: user.household!,
     );
 

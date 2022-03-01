@@ -1,11 +1,13 @@
 import 'dart:io';
-
+import 'dart:typed_data';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:projecthomestrategies/bloc/provider/new_bill_state.dart';
 import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/addbillimagecontainer.dart';
 import 'package:projecthomestrategies/widgets/pages/homepage/panelheading.dart';
 import 'package:provider/provider.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
 
 class NewBillImageSection extends StatelessWidget {
   const NewBillImageSection({Key? key}) : super(key: key);
@@ -26,13 +28,31 @@ class NewBillImageSection extends StatelessWidget {
   }
 
   void _addImageModal(BuildContext ctx) async {
-    var result = await showModalBottomSheet<List<File>>(
+    var pickedImages = await showModalBottomSheet<List<File>>(
       context: ctx,
       builder: (context) => const _AddMediaBottomSheet(),
     );
 
-    if (result != null) {
-      ctx.read<NewBillState>().addImageToList(result);
+    var dir = await path_provider.getTemporaryDirectory();
+
+    if (pickedImages != null) {
+      List<Uint8List> temp = <Uint8List>[];
+
+      for (var image in pickedImages) {
+        var result = await FlutterImageCompress.compressWithFile(
+          image.absolute.path,
+          minWidth: 1920,
+          minHeight: 1080,
+          quality: 80,
+        );
+
+        print(image.lengthSync());
+        print(result!.length);
+
+        temp.add(result);
+      }
+
+      ctx.read<NewBillState>().addImageToList(temp);
     }
   }
 

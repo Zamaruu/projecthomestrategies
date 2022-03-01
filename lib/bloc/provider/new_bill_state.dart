@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 
@@ -15,8 +14,8 @@ class NewBillState extends ChangeNotifier {
   int get categorySelection => _categorySelection;
   late DateTime _selectedDate;
   DateTime get selectedDate => _selectedDate;
-  late List<File> _images;
-  List<File> get images => _images;
+  late List<Uint8List> _images;
+  List<Uint8List> get images => _images;
 
   late bool _isLoading;
   bool get isLoading => _isLoading;
@@ -25,7 +24,7 @@ class NewBillState extends ChangeNotifier {
     _isLoading = false;
     _categorySelection = 0;
     _selectedDate = DateTime.now().toLocal();
-    _images = <File>[];
+    _images = <Uint8List>[];
     _selectedDateController = TextEditingController(
       text: Global.datetimeToDeString(_selectedDate),
     );
@@ -44,7 +43,7 @@ class NewBillState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addImageToList(List<File> image) {
+  void addImageToList(List<Uint8List> image) {
     _images = [..._images, ...image];
     notifyListeners();
   }

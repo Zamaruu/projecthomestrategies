@@ -227,11 +227,14 @@ class BillingService {
 
       final uri = Uri.parse(rawUri);
 
+      var jsonBill = newBill.toCreateJson();
+      var body = jsonEncode(jsonBill);
+
       var response = await http
           .post(
             uri,
             headers: header,
-            body: jsonEncode(newBill.toCreateJson()),
+            body: body,
           )
           .timeout(Global.timeoutDuration);
 

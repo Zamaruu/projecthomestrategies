@@ -110,7 +110,9 @@ class _TextInputFieldState extends State<TextInputField> {
       ),
       child: TextFormField(
         inputFormatters: widget.inputFormatters,
-        maxLines: widget.maxLines,
+        maxLines: widget.type == TextInputType.visiblePassword
+            ? null
+            : widget.maxLines,
         onTap: widget.onTap != null ? () => widget.onTap!() : null,
         controller: widget.controller,
         keyboardType: widget.type,

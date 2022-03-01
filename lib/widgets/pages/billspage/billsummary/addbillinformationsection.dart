@@ -78,7 +78,7 @@ class NewBillInformationSection extends StatelessWidget {
             TextInputField(
               verticalMargin: textfieldMargin,
               inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z.,&]")),
+                FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z.,&? ]")),
               ],
               controller: state.descriptionController,
               helperText: "Beschreibung",

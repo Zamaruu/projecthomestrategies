@@ -52,6 +52,7 @@ dependencies:
   flutter_material_color_picker: ^1.1.0+2
   blobs: ^2.0.0
   image_picker: ^0.8.4+10
+  flutter_image_compress: ^1.1.0
 
 dev_dependencies:
   flutter_test:

@@ -1,11 +1,11 @@
-import 'dart:io';
+import 'dart:typed_data';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/provider/new_bill_state.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 
 class AddBillImageContainer extends StatelessWidget {
-  final File image;
+  final Uint8List image;
   final int listIndex;
 
   const AddBillImageContainer({
@@ -15,7 +15,7 @@ class AddBillImageContainer extends StatelessWidget {
   }) : super(key: key);
 
   String _getImageSizeInMegaByte() {
-    return (image.lengthSync() / 1000000).toStringAsFixed(2);
+    return (image.length / 1000000).toStringAsFixed(2);
   }
 
   @override
@@ -30,7 +30,7 @@ class AddBillImageContainer extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         image: DecorationImage(
           fit: BoxFit.cover,
-          image: FileImage(image),
+          image: MemoryImage(image),
         ),
       ),
       child: Stack(
