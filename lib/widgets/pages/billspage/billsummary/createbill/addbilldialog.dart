@@ -9,8 +9,8 @@ import 'package:projecthomestrategies/service/apiresponsehandler_service.dart';
 import 'package:projecthomestrategies/service/billing_service.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/loading/loadingsnackbar.dart';
-import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/addbillimagesection.dart';
-import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/addbillinformationsection.dart';
+import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/createbill/addbillimagesection.dart';
+import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/createbill/addbillinformationsection.dart';
 import 'package:provider/provider.dart';
 
 class AddBillModal extends StatefulWidget {

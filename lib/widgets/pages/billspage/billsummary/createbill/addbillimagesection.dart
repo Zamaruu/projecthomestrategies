@@ -4,7 +4,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:projecthomestrategies/bloc/provider/new_bill_state.dart';
-import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/addbillimagecontainer.dart';
+import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/createbill/addbillimagecontainer.dart';
 import 'package:projecthomestrategies/widgets/pages/homepage/panelheading.dart';
 import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
