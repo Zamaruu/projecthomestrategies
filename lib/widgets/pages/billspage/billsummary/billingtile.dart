@@ -6,6 +6,7 @@ import 'package:projecthomestrategies/bloc/provider/billing_state.dart';
 import 'package:projecthomestrategies/service/apiresponsehandler_service.dart';
 import 'package:projecthomestrategies/service/billing_service.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
+import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/editbill/editbillbuilder.dart';
 import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/editbilldialog.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/confirmationdialog.dart';
 import 'package:provider/provider.dart';
@@ -23,22 +24,31 @@ class BillingTile extends StatelessWidget {
   }) : super(key: key);
 
   Future editBill(BuildContext ctx) async {
-    var response = await showDialog<ApiResponseModel>(
-      context: ctx,
-      builder: (context) {
-        return EditBillModal(
-          billCategories: ctx.read<BillingState>().billCategories,
-          state: ctx.read<BillingState>(),
-          billToEdit: bill,
-        );
-      },
+    Navigator.of(ctx).push(
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (context) => EditBillBuilder(
+          billId: bill.billId!,
+          categories: ctx.read<BillingState>().billCategories,
+        ),
+      ),
     );
-    if (response != null) {
-      ApiResponseHandlerService(
-        context: ctx,
-        response: response,
-      ).showSnackbar();
-    }
+    // var response = await showDialog<ApiResponseModel>(
+    //   context: ctx,
+    //   builder: (context) {
+    //     return EditBillModal(
+    //       billCategories: ctx.read<BillingState>().billCategories,
+    //       state: ctx.read<BillingState>(),
+    //       billToEdit: bill,
+    //     );
+    //   },
+    // );
+    // if (response != null) {
+    //   ApiResponseHandlerService(
+    //     context: ctx,
+    //     response: response,
+    //   ).showSnackbar();
+    // }
   }
 
   Future deleteBill(BuildContext ctx) async {

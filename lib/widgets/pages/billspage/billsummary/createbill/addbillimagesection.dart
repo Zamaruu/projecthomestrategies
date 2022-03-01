@@ -30,7 +30,7 @@ class NewBillImageSection extends StatelessWidget {
   void _addImageModal(BuildContext ctx) async {
     var pickedImages = await showModalBottomSheet<List<File>>(
       context: ctx,
-      builder: (context) => const _AddMediaBottomSheet(),
+      builder: (context) => const AddMediaBottomSheet(),
     );
 
     var dir = await path_provider.getTemporaryDirectory();
@@ -101,10 +101,10 @@ class NewBillImageSection extends StatelessWidget {
   }
 }
 
-class _AddMediaBottomSheet extends StatelessWidget {
+class AddMediaBottomSheet extends StatelessWidget {
   final double height = 130;
 
-  const _AddMediaBottomSheet({Key? key}) : super(key: key);
+  const AddMediaBottomSheet({Key? key}) : super(key: key);
 
   void _getFromGallery(BuildContext ctx) async {
     var pickedFiles = await ImagePicker().pickMultiImage();

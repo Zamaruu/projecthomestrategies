@@ -12,8 +12,8 @@ class BillImageModel {
   BillImageModel.fromJson(Map<String, dynamic> json) {
     billImageId = json['billImageId'];
     image = Global.isStringNullOrEmpty(json['image'])
-        ? base64Decode(json['image'])
-        : null;
+        ? null
+        : base64Decode(json['image']);
   }
 
   Map<String, dynamic> toJson() {
