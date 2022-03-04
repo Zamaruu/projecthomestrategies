@@ -6,8 +6,8 @@ import 'package:projecthomestrategies/service/apiresponsehandler_service.dart';
 import 'package:projecthomestrategies/service/billing_service.dart';
 import 'package:projecthomestrategies/service/messenger_service.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
-import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/addbillmodal.dart';
 import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/billingtimesection.dart';
+import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/createbill/addbilldialog.dart';
 import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/lastmonthsummary.dart';
 import 'package:provider/provider.dart';
 
@@ -64,16 +64,17 @@ class BillsSummary extends StatelessWidget {
   void createBill(BuildContext ctx) {
     var categoriesExist = ctx.read<BillingState>().billCategories.isNotEmpty;
     if (categoriesExist) {
-      showDialog(
-        context: ctx,
-        builder: (BuildContext context) {
-          var billCategories = ctx.read<BillingState>().billCategories;
-          var billState = ctx.read<BillingState>();
-          return AddBillModal(
+      var billCategories = ctx.read<BillingState>().billCategories;
+      var billState = ctx.read<BillingState>();
+
+      Navigator.of(ctx).push(
+        MaterialPageRoute(
+          fullscreenDialog: true,
+          builder: (context) => AddBillModal(
             billCategories: billCategories,
             state: billState,
-          );
-        },
+          ),
+        ),
       );
     } else {
       InAppMessengerService(
