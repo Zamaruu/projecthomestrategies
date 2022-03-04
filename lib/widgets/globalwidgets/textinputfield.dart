@@ -14,6 +14,7 @@ class TextInputField extends StatefulWidget {
   final double verticalMargin;
   final double horizontalMargin;
   final List<TextInputFormatter>? inputFormatters;
+  final bool readonly;
 
   const TextInputField({
     Key? key,
@@ -29,6 +30,7 @@ class TextInputField extends StatefulWidget {
     this.verticalMargin = 0.0,
     this.horizontalMargin = 0.0,
     this.inputFormatters,
+    this.readonly = false,
   }) : super(key: key);
 
   @override
@@ -76,7 +78,9 @@ class _TextInputFieldState extends State<TextInputField> {
       fillColor: backgroundColor,
       labelStyle: TextStyle(
         color: hasFocus || widget.controller.text.isNotEmpty
-            ? Theme.of(context).primaryColor
+            ? widget.readonly
+                ? Colors.grey.shade600
+                : Theme.of(context).primaryColor
             : Colors.grey[600],
         fontWeight: hasFocus || widget.controller.text.isNotEmpty
             ? FontWeight.bold
@@ -86,7 +90,9 @@ class _TextInputFieldState extends State<TextInputField> {
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(
             color: widget.controller.text.isNotEmpty
-                ? Theme.of(context).primaryColor
+                ? widget.readonly
+                    ? Colors.grey
+                    : Theme.of(context).primaryColor
                 : Colors.transparent,
             width: widget.borderWidth),
         borderRadius: BorderRadius.circular(8),
@@ -110,10 +116,12 @@ class _TextInputFieldState extends State<TextInputField> {
       ),
       child: TextFormField(
         inputFormatters: widget.inputFormatters,
-        maxLines: widget.type == TextInputType.visiblePassword
-            ? null
-            : widget.maxLines,
-        onTap: widget.onTap != null ? () => widget.onTap!() : null,
+        maxLines:
+            widget.type == TextInputType.visiblePassword ? 1 : widget.maxLines,
+        onTap: widget.onTap != null && !widget.readonly
+            ? () => widget.onTap!()
+            : null,
+        readOnly: widget.readonly,
         controller: widget.controller,
         keyboardType: widget.type,
         obscureText: widget.type == TextInputType.visiblePassword,

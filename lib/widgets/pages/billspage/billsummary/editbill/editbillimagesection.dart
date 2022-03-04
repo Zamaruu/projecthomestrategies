@@ -41,13 +41,13 @@ class EditBillImageSection extends StatelessWidget {
           image.absolute.path,
           minWidth: 1920,
           minHeight: 1080,
-          quality: 80,
+          quality: 70,
         );
 
         print(image.lengthSync());
         print(result!.length);
 
-        temp.add(BillImageModel(image: result));
+        temp.add(BillImageModel(billImageId: 0, image: result));
       }
 
       ctx.read<EditBillState>().addImageToList(temp);
@@ -70,30 +70,34 @@ class EditBillImageSection extends StatelessWidget {
           )
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const PanelHeading(
-            heading: "Bilder",
-            padding: 0,
-          ),
-          Consumer<EditBillState>(
-            builder: (context, state, _) {
-              return ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: state.images.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return EditBillImageContainer(
-                    image: state.images[index].image!,
-                    listIndex: index,
-                  );
-                },
-              );
-            },
-          ),
-          _addImageButton(context),
-        ],
+      child: Consumer<EditBillState>(
+        builder: (context, state, _) => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            PanelHeading(
+              heading: "Bilder",
+              padding: 0,
+              trailing: Text("${state.images.length} / ${state.maxImages}"),
+            ),
+            Consumer<EditBillState>(
+              builder: (context, state, _) {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: state.images.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return EditBillImageContainer(
+                      image: state.images[index],
+                      listIndex: index,
+                    );
+                  },
+                );
+              },
+            ),
+            if (state.isEditing && state.images.length < state.maxImages)
+              _addImageButton(context),
+          ],
+        ),
       ),
     );
   }

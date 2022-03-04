@@ -59,6 +59,7 @@ class EditBillInformationSection extends StatelessWidget {
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp("[0-9.,]")),
               ],
+              readonly: !state.isEditing,
               controller: state.moneySumController,
               helperText: "Rechnungsbetrag (in €) *",
               type: TextInputType.number,
@@ -69,6 +70,7 @@ class EditBillInformationSection extends StatelessWidget {
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp("[0-9.]")),
               ],
+              readonly: !state.isEditing,
               onTap: () => _selectDate(context),
               controller: state.selectedDateController,
               helperText: "Rechnungsdatum *",
@@ -80,6 +82,7 @@ class EditBillInformationSection extends StatelessWidget {
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z.,&? ]")),
               ],
+              readonly: !state.isEditing,
               controller: state.descriptionController,
               helperText: "Beschreibung",
               maxChars: 160,
@@ -98,18 +101,30 @@ class EditBillInformationSection extends StatelessWidget {
                 style: TextStyle(color: Theme.of(context).primaryColor),
                 underline: Container(
                   height: 2,
-                  color: Theme.of(context).primaryColor,
+                  color: state.isEditing
+                      ? Theme.of(context).primaryColor
+                      : Colors.grey,
                 ),
-                onChanged: (int? newValue) {
-                  state.setCategorySelection(newValue!);
-                },
-                items: List.generate(
-                  billCategories.length,
-                  (index) => DropdownMenuItem<int>(
-                    value: index,
-                    child: Text(billCategories[index].billCategoryName!),
-                  ),
-                ),
+                onChanged: state.isEditing
+                    ? (int? newValue) {
+                        state.setCategorySelection(newValue!);
+                      }
+                    : null,
+                items: state.isEditing
+                    ? List.generate(
+                        billCategories.length,
+                        (index) => DropdownMenuItem<int>(
+                          value: index,
+                          child: Text(billCategories[index].billCategoryName!),
+                        ),
+                      )
+                    : [
+                        DropdownMenuItem<int>(
+                          value: state.categorySelection,
+                          child: Text(billCategories[state.categorySelection]
+                              .billCategoryName!),
+                        ),
+                      ],
               ),
             ),
           ],

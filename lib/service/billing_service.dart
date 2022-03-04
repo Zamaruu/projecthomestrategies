@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:projecthomestrategies/bloc/models/apiresponse_model.dart';
 import 'package:projecthomestrategies/bloc/models/bill_model.dart';
 import 'package:projecthomestrategies/bloc/models/billcategory_model.dart';
+import 'package:projecthomestrategies/bloc/models/billimage_model.dart';
 import 'package:projecthomestrategies/bloc/models/household_model.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:http/http.dart' as http;
@@ -342,6 +343,41 @@ class BillingService {
           .delete(
             uri,
             headers: header,
+          )
+          .timeout(Global.timeoutDuration);
+
+      if (response.statusCode == 200) {
+        return ApiResponseModel.success(
+          response.statusCode,
+          response.body,
+          message: response.body,
+        );
+      } else {
+        return ApiResponseModel.error(
+          response.statusCode,
+          response.body.isNotEmpty ? response.body : response.reasonPhrase,
+        );
+      }
+    } on TimeoutException catch (e) {
+      return ApiResponseModel.error(408, e.message.toString());
+    } on Exception catch (e) {
+      return ApiResponseModel.error(500, e.toString());
+    }
+  }
+
+  Future<ApiResponseModel> deleteBillImages(
+    List<int> images,
+  ) async {
+    try {
+      final rawUri = url + "/Bills/Images";
+
+      final uri = Uri.parse(rawUri);
+
+      var response = await http
+          .delete(
+            uri,
+            headers: header,
+            body: jsonEncode(images),
           )
           .timeout(Global.timeoutDuration);
 
