@@ -43,13 +43,12 @@ class NewBillImageSection extends StatelessWidget {
           image.absolute.path,
           minWidth: 1920,
           minHeight: 1080,
-          quality: 80,
+          quality: 70,
         );
 
-        print(image.lengthSync());
-        print(result!.length);
-
-        temp.add(result);
+        if (result != null) {
+          temp.add(result);
+        }
       }
 
       ctx.read<NewBillState>().addImageToList(temp);
@@ -72,30 +71,30 @@ class NewBillImageSection extends StatelessWidget {
           )
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const PanelHeading(
-            heading: "Bilder",
-            padding: 0,
-          ),
-          Consumer<NewBillState>(
-            builder: (context, state, _) {
-              return ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: state.images.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return AddBillImageContainer(
-                    image: state.images[index],
-                    listIndex: index,
-                  );
-                },
-              );
-            },
-          ),
-          _addImageButton(context),
-        ],
+      child: Consumer<NewBillState>(
+        builder: (context, state, _) => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            PanelHeading(
+              heading: "Bilder",
+              padding: 0,
+              trailing: Text("${state.images.length} / ${state.maxImages}"),
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: state.images.length,
+              itemBuilder: (BuildContext context, int index) {
+                return AddBillImageContainer(
+                  image: state.images[index],
+                  listIndex: index,
+                );
+              },
+            ),
+            if (!state.isLoading && state.images.length < state.maxImages)
+              _addImageButton(context),
+          ],
+        ),
       ),
     );
   }

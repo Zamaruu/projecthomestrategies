@@ -19,6 +19,7 @@ class NewBillState extends ChangeNotifier {
 
   late bool _isLoading;
   bool get isLoading => _isLoading;
+  final int maxImages = 3;
 
   NewBillState() {
     _isLoading = false;

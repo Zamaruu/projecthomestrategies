@@ -44,9 +44,6 @@ class EditBillImageSection extends StatelessWidget {
           quality: 70,
         );
 
-        print(image.lengthSync());
-        print(result!.length);
-
         temp.add(BillImageModel(billImageId: 0, image: result));
       }
 
