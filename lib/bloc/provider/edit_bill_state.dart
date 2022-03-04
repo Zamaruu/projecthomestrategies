@@ -94,6 +94,8 @@ class EditBillState extends ChangeNotifier {
 
   void setBillWhenEdited(BillModel editedBill) {
     _bill = editedBill;
+    _imagesToDelete = <int>[];
+
     notifyListeners();
   }
 
@@ -101,6 +103,7 @@ class EditBillState extends ChangeNotifier {
     _categorySelection = _initialCategorySelection;
     _selectedDate = _bill.date!;
     _images = _bill.images!;
+    _imagesToDelete = <int>[];
 
     _selectedDateController.text = Global.datetimeToDeString(_selectedDate);
     _moneySumController.text = _bill.amount!.toStringAsFixed(2);
