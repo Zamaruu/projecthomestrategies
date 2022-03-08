@@ -80,7 +80,7 @@ class PieSummaryLabelChart extends StatelessWidget {
         labelAccessorFn: (OrdinalBills sales, _) =>
             '${sales.title}:\n${sales.sales.toStringAsFixed(2)} €',
         colorFn: (_, index) {
-          return charts.MaterialPalette.teal.makeShades(data.length)[index!];
+          return charts.MaterialPalette.blue.makeShades(data.length)[index!];
         },
       ),
     ];

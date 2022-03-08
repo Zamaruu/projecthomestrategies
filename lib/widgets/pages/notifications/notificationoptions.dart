@@ -94,6 +94,10 @@ class NotificationOptions extends StatelessWidget {
     return Consumer<AppCacheState>(
       builder: (context, model, _) {
         return PopupMenuButton(
+          icon: const Icon(
+            Icons.more_vert,
+            color: Colors.black,
+          ),
           onSelected: (value) {
             if (value == 1) {
               setAllNotificationsOnSeen(

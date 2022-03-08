@@ -15,12 +15,13 @@ class AppTheme extends ChangeNotifier {
   final _standardTheme = ThemeData(
     primarySwatch: Colors.teal,
     textTheme: GoogleFonts.nunitoTextTheme(),
-    primaryColor: const Color(0xFF047769),
+    primaryColor: const Color(0xFF5670f0),
+    backgroundColor: Colors.white,
     colorScheme: ColorScheme(
-      primary: const Color(0xFF047769),
-      primaryVariant: const Color(0xFF047769),
-      secondary: const Color(0xFF0cb09c),
-      secondaryVariant: const Color(0xFF0cb09c),
+      primary: const Color(0xFF5670f0),
+      primaryVariant: const Color(0xFF5670f0),
+      secondary: const Color(0xFF7EC9F5),
+      secondaryVariant: const Color(0xFF7EC9F5),
       surface: Colors.white,
       background: Colors.grey,
       error: Colors.red,
@@ -32,7 +33,7 @@ class AppTheme extends ChangeNotifier {
       brightness: Brightness.light,
     ),
     appBarTheme: const AppBarTheme(
-      backgroundColor: Color(0xFF047769),
+      backgroundColor: Color(0xFF7EC9F5),
     ),
   );
 

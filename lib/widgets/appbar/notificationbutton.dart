@@ -7,7 +7,9 @@ import 'package:projecthomestrategies/pages/homepage/notificationdialog.dart';
 import 'package:provider/provider.dart';
 
 class NotificationButton extends StatelessWidget {
-  const NotificationButton({Key? key}) : super(key: key);
+  final Color color;
+
+  const NotificationButton({Key? key, required this.color}) : super(key: key);
 
   void openNotifications(BuildContext ctx) {
     Navigator.push(
@@ -34,12 +36,10 @@ class NotificationButton extends StatelessWidget {
             style: const TextStyle(color: Colors.white),
           ),
           child: IconButton(
+            color: color,
             splashRadius: Global.splashRadius,
             onPressed: () => openNotifications(context),
-            icon: const Icon(
-              Icons.notifications_none,
-              color: Colors.white,
-            ),
+            icon: const Icon(Icons.notifications_none),
           ),
         );
       },

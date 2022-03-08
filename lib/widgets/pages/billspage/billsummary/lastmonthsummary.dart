@@ -6,7 +6,7 @@ class LastMonthSummary extends StatelessWidget {
   final List<BillModel> bills;
   late double currentMonthAmount;
   late double previousMonthAmount;
-  final Color textColor = Colors.white;
+  final Color textColor = Colors.black;
 
   LastMonthSummary({Key? key, required this.bills}) : super(key: key) {
     currentMonthAmount = getCurrentMonthAmount(bills);
@@ -66,20 +66,14 @@ class LastMonthSummary extends StatelessWidget {
 
   BoxDecoration decoration(BuildContext ctx) {
     return BoxDecoration(
-      gradient: LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomRight,
-        colors: [
-          Theme.of(ctx).primaryColor,
-          Colors.blue,
-        ],
-      ),
+      borderRadius: BorderRadius.circular(20),
+      color: Colors.white,
       boxShadow: const [
         BoxShadow(
-          color: Colors.blue,
-          offset: Offset(0, 2),
+          color: Colors.grey,
+          offset: Offset(0, 4),
           blurRadius: 10,
-          spreadRadius: 3,
+          spreadRadius: 4,
         ),
       ],
     );
@@ -88,12 +82,13 @@ class LastMonthSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 150,
-      margin: const EdgeInsets.only(bottom: 20),
+      height: 177,
+      margin: const EdgeInsets.only(bottom: 20, left: 10, right: 10, top: 5),
       padding: const EdgeInsets.all(20),
       decoration: decoration(context),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
             child: Column(
@@ -102,6 +97,7 @@ class LastMonthSummary extends StatelessWidget {
                 Text(
                   "Dieser Monat",
                   style: TextStyle(
+                    fontSize: 21,
                     color: textColor,
                   ),
                 ),
@@ -111,6 +107,12 @@ class LastMonthSummary extends StatelessWidget {
                     color: textColor,
                     fontWeight: FontWeight.bold,
                     fontSize: 40,
+                  ),
+                ),
+                Text(
+                  "letzter Monat",
+                  style: TextStyle(
+                    color: textColor,
                   ),
                 ),
                 Text(
@@ -124,53 +126,33 @@ class LastMonthSummary extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.25,
-            child: Column(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.white.withOpacity(0.65),
-                        offset: const Offset(0, 0),
-                        blurRadius: 10,
-                        spreadRadius: 3,
-                      ),
-                    ],
-                  ),
+          Column(
+            children: [
+              Container(
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      offset: Offset(0, 0),
+                      blurRadius: 10,
+                      spreadRadius: 3,
+                    ),
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: Icon(
                     isLastMonthAmountBigger()
-                        ? Icons.arrow_circle_down
-                        : Icons.arrow_circle_up,
-                    color:
-                        isLastMonthAmountBigger() ? Colors.green : Colors.red,
-                    size: 50,
+                        ? Icons.arrow_downward
+                        : Icons.arrow_upward,
+                    color: Colors.black,
+                    size: 27.5,
                   ),
                 ),
-                // Container(
-                //   padding: const EdgeInsets.all(4),
-                //   decoration: BoxDecoration(
-                //     boxShadow: [
-                //       BoxShadow(
-                //         color: Colors.white.withOpacity(0.5),
-                //         offset: const Offset(0, 0),
-                //         blurRadius: 10,
-                //         spreadRadius: 3,
-                //       ),
-                //     ],
-                //   ),
-                //   child: Text(
-                //     isLastMonthAmountBigger() ? "Absteigend" : "Aufsteigend",
-                //     style: TextStyle(
-                //       color:
-                //           isLastMonthAmountBigger() ? Colors.green : Colors.red,
-                //     ),
-                //   ),
-                // )
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),

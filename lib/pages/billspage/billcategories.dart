@@ -71,6 +71,7 @@ class BillCategoriesDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: Consumer<BillingState>(
         builder: (context, state, _) {
           if (state.billCategories.isEmpty) {

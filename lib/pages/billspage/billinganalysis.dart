@@ -17,31 +17,34 @@ class BillingsAnalysis extends StatelessWidget {
     return Consumer<BillingState>(
       builder: (ctx, state, child) {
         return Scaffold(
+          backgroundColor: Colors.transparent,
           body: state.bills.isEmpty
               ? const Center(
                   child: Text("Keine Rechnungen vorhanden"),
                 )
               : ListView(
                   children: [
+                    BillRetrospect(
+                      graphColor: Theme.of(context).primaryColor,
+                      bills: state.bills,
+                    ),
                     Container(
-                      height: 250,
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 20,
+                      ),
                       decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        boxShadow: [
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: const [
                           BoxShadow(
-                            color: Theme.of(context).primaryColor,
-                            offset: const Offset(0, 2),
+                            color: Colors.grey,
+                            offset: Offset(0, 2),
                             blurRadius: 10,
                             spreadRadius: 3,
                           ),
                         ],
                       ),
-                      child: BillRetrospect(
-                        bills: state.bills,
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 20),
                       child: ChangeNotifierProvider<AnalysisState>(
                         create: (context) => AnalysisState(
                           state.getOldestDate(),
@@ -53,7 +56,8 @@ class BillingsAnalysis extends StatelessWidget {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 17.0),
+                                  horizontal: 10.0,
+                                ),
                                 child: Row(
                                   children: const [
                                     PanelHeading(

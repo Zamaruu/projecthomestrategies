@@ -16,6 +16,7 @@ class TimeSeriesSales {
 
 // ignore: must_be_immutable
 class BillRetrospect extends StatelessWidget {
+  final Color graphColor;
   late List<BillModel> bills;
   late List<charts.Series<dynamic, DateTime>> seriesList;
 
@@ -39,6 +40,7 @@ class BillRetrospect extends StatelessWidget {
   BillRetrospect({
     Key? key,
     required this.bills,
+    required this.graphColor,
   }) : super(key: key) {
     bills = getLastThirtyDays(bills);
     seriesList = _createData();
@@ -95,7 +97,7 @@ class BillRetrospect extends StatelessWidget {
     return [
       charts.Series<TimeSeriesSales, DateTime>(
         id: 'Sales',
-        colorFn: (_, __) => charts.MaterialPalette.white,
+        colorFn: (_, __) => charts.ColorUtil.fromDartColor(graphColor),
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
         data: data,
@@ -106,10 +108,10 @@ class BillRetrospect extends StatelessWidget {
   final domainAxisStyle = const charts.DateTimeAxisSpec(
     renderSpec: charts.SmallTickRendererSpec(
       lineStyle: charts.LineStyleSpec(
-        color: charts.MaterialPalette.white,
+        color: charts.MaterialPalette.black,
       ),
       labelStyle: charts.TextStyleSpec(
-        color: charts.MaterialPalette.white,
+        color: charts.MaterialPalette.black,
       ),
     ),
   );
@@ -117,11 +119,11 @@ class BillRetrospect extends StatelessWidget {
   final primaryAxisStyle = const charts.NumericAxisSpec(
     renderSpec: charts.GridlineRendererSpec(
       lineStyle: charts.LineStyleSpec(
-        color: charts.MaterialPalette.white,
+        color: charts.MaterialPalette.black,
         thickness: 0,
       ),
       labelStyle: charts.TextStyleSpec(
-        color: charts.MaterialPalette.white,
+        color: charts.MaterialPalette.black,
       ),
     ),
   );
@@ -146,7 +148,21 @@ class BillRetrospect extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 270,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.grey,
+            offset: Offset(0, 2),
+            blurRadius: 10,
+            spreadRadius: 3,
+          ),
+        ],
+      ),
       padding: const EdgeInsets.all(8.0),
+      margin: const EdgeInsets.all(10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

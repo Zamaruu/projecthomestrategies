@@ -5,7 +5,9 @@ class HomepageListContainer extends StatelessWidget {
   final double topMargin;
   final Widget child;
 
-  const HomepageListContainer({ Key? key, required this.child, this.padding = 8.0, this.topMargin = 0.0}) : super(key: key);
+  const HomepageListContainer(
+      {Key? key, required this.child, this.padding = 8.0, this.topMargin = 0.0})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

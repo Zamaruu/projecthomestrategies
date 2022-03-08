@@ -1,3 +1,4 @@
+import 'package:blobs/blobs.dart';
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/widgets/appbar/customappbar.dart';
 import 'package:projecthomestrategies/widgets/drawermenu/drawer.dart';
@@ -37,7 +38,26 @@ class BaseScaffold extends StatelessWidget {
         showActions: showActions,
       ),
       endDrawer: showMenuDrawer ? const MenuDrawer() : null,
-      body: body,
+      body: Container(
+        color: Colors.white,
+        child: Stack(
+          children: [
+            Positioned(
+              top: -200,
+              //right: -20,
+              left: -60,
+              child: Blob.fromID(
+                id: const ['17-8-8991'],
+                size: 500,
+                styles: BlobStyles(
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+              ),
+            ),
+            body,
+          ],
+        ),
+      ),
       floatingActionButton: fab,
       bottomNavigationBar: bottomNavigationBar,
     );
