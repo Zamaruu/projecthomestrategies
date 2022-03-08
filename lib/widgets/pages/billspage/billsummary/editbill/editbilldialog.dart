@@ -138,6 +138,7 @@ class EditBillDialog extends StatelessWidget {
         toggleLoading(true, ctx, loader);
 
         var token = ctx.read<AuthenticationState>().token;
+        var imageResponse = await _deleteBillImages(ctx, deleteAll: true);
         var response = await BillingService(token).deleteBill(bill.billId!);
 
         toggleLoading(false, ctx, loader);
@@ -146,12 +147,19 @@ class EditBillDialog extends StatelessWidget {
           ctx.read<BillingState>().removeBill(bill);
 
           Navigator.pop(ctx);
+        } else {
+          if (imageResponse.statusCode != 200) {
+            ApiResponseHandlerService.fromResponseModel(
+              context: ctx,
+              response: imageResponse,
+            ).showSnackbar();
+          } else {
+            ApiResponseHandlerService.fromResponseModel(
+              context: ctx,
+              response: response,
+            ).showSnackbar();
+          }
         }
-
-        ApiResponseHandlerService.fromResponseModel(
-          context: ctx,
-          response: response,
-        ).showSnackbar();
       }
     }
     // if (response != null) {
@@ -162,10 +170,19 @@ class EditBillDialog extends StatelessWidget {
     // }
   }
 
-  Future<ApiResponseModel> _deleteBillImages(BuildContext ctx) async {
+  Future<ApiResponseModel> _deleteBillImages(
+    BuildContext ctx, {
+    bool deleteAll = false,
+  }) async {
     var token = Global.getToken(ctx);
-
-    var deleteImages = ctx.read<EditBillState>().imagesToDelete;
+    var deleteImages = deleteAll
+        ? ctx
+            .read<EditBillState>()
+            .bill
+            .images!
+            .map((i) => i.billImageId!)
+            .toList()
+        : ctx.read<EditBillState>().imagesToDelete;
 
     if (deleteImages.isNotEmpty) {
       return await BillingService(token).deleteBillImages(deleteImages);
