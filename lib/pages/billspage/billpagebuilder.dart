@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/models/bill_model.dart';
 import 'package:projecthomestrategies/bloc/models/billcategory_model.dart';
+import 'package:projecthomestrategies/bloc/models/user_model.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/provider/billing_state.dart';
+import 'package:projecthomestrategies/bloc/provider/filter_bills_state.dart';
 import 'package:projecthomestrategies/pages/billspage/billspage.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/errorpage.dart';
 import 'package:provider/provider.dart';
@@ -38,6 +40,11 @@ class BillContentBuilder extends StatelessWidget {
               var bills = snapshot.data!["bills"]! as List<BillModel>;
               var categories =
                   snapshot.data!["categories"]! as List<BillCategoryModel>;
+
+              context.read<BillFilterState>().initFilter(
+                    users: snapshot.data!['users'] as List<UserModel>,
+                    categories: categories,
+                  );
 
               // cache.setBills(bills, notify: false);
               // cache.setBillCategories(categories, notify: false);

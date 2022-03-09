@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/models/bill_model.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/provider/billing_state.dart';
+import 'package:projecthomestrategies/bloc/provider/filter_bills_state.dart';
 import 'package:projecthomestrategies/service/apiresponsehandler_service.dart';
 import 'package:projecthomestrategies/service/billing_service.dart';
 import 'package:projecthomestrategies/service/messenger_service.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/billingtimesection.dart';
 import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/createbill/addbilldialog.dart';
+import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/filterdialog/filterbuilder.dart';
 import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/lastmonthsummary.dart';
 import 'package:provider/provider.dart';
 
@@ -86,6 +88,16 @@ class BillsSummary extends StatelessWidget {
     }
   }
 
+  void filterBills(BuildContext ctx) {
+    Navigator.push(
+      ctx,
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (context) => const FilterBuilder(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,13 +130,36 @@ class BillsSummary extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => createBill(context),
-        tooltip: "Neue Rechnung erstellen",
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          SizedBox(
+            width: 45.0,
+            height: 45.0,
+            child: RawMaterialButton(
+              fillColor: Theme.of(context).colorScheme.secondary,
+              shape: const CircleBorder(),
+              elevation: 0.0,
+              child: const Icon(
+                Icons.search,
+                color: Colors.black,
+              ),
+              onPressed: () => filterBills(context),
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          FloatingActionButton(
+            onPressed: () => createBill(context),
+            heroTag: null,
+            tooltip: "Neue Rechnung erstellen",
+            child: const Icon(
+              Icons.add,
+              color: Colors.black,
+            ),
+          ),
+        ],
       ),
     );
   }

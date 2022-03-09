@@ -6,6 +6,7 @@ import 'package:projecthomestrategies/bloc/models/bill_model.dart';
 import 'package:projecthomestrategies/bloc/models/billcategory_model.dart';
 import 'package:projecthomestrategies/bloc/models/billimage_model.dart';
 import 'package:projecthomestrategies/bloc/models/household_model.dart';
+import 'package:projecthomestrategies/service/household_service.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:http/http.dart' as http;
 
@@ -30,10 +31,13 @@ class BillingService {
       var householdId = household.householdId!;
       var bills = await getBillsForHousehold(householdId);
       var categories = await getBillCategoriesForHousehold(householdId);
+      var users =
+          await HouseholdService(token).getMemberOfHousehold(householdId);
 
       return <String, List>{
         "bills": bills.object,
         "categories": categories.object,
+        "users": users.object,
       };
     }
   }

@@ -228,6 +228,7 @@ class EditBillDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: Colors.black,
         title: const Text("Rechnung bearbeiten"),
         actions: <Widget>[
           billMenu(context),

@@ -166,9 +166,12 @@ class HouseholdService {
           .timeout(Global.timeoutDuration);
 
       if (response.statusCode == 200) {
+        var jsonBody = jsonDecode(response.body);
         return ApiResponseModel.success(
           response.statusCode,
-          jsonDecode(response.body),
+          List<UserModel>.from(
+            jsonBody.map((model) => UserModel.fromJson(model)),
+          ),
         );
       } else {
         return ApiResponseModel.error(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:projecthomestrategies/app_config_loader.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
+import 'package:projecthomestrategies/bloc/provider/filter_bills_state.dart';
 import 'package:projecthomestrategies/utils/colortheme.dart';
 import 'package:provider/provider.dart';
 import 'bloc/models/bill_model.dart';
@@ -43,6 +44,9 @@ class HomeStrategies extends StatelessWidget {
             [],
             [],
           ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => BillFilterState(),
         ),
       ],
       child: const AppConfigLoader(),

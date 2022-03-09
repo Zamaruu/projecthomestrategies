@@ -114,6 +114,7 @@ class _AddBillModalState extends State<AddBillModal> {
       builder: (context, _) {
         return Scaffold(
           appBar: AppBar(
+            foregroundColor: Colors.black,
             title: const Text("Rechnung erstellen"),
           ),
           body: ListView(
