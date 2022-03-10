@@ -3,18 +3,28 @@ import 'package:projecthomestrategies/bloc/models/bill_model.dart';
 import 'package:projecthomestrategies/bloc/models/billcategory_model.dart';
 
 class BillingState with ChangeNotifier {
+  late List<BillCategoryModel> _rawCategories;
   late List<BillCategoryModel> _billCategories;
   List<BillCategoryModel> get billCategories => _billCategories;
+  late List<BillModel> _rawBills;
+  List<BillModel> get rawBills => _rawBills;
   late List<BillModel> _bills;
   List<BillModel> get bills => _bills;
 
   BillingState(List<BillCategoryModel> billCategories, List<BillModel> bills) {
     _billCategories = billCategories;
+    _rawCategories = [];
     _bills = bills;
+    _rawBills = [];
   }
 
   bool isEmpty() {
     return _billCategories.isEmpty && _bills.isEmpty;
+  }
+
+  void setBillsToStandard() {
+    _bills = _rawBills;
+    notifyListeners();
   }
 
   void setBills(List<BillModel> newBills) {
@@ -34,6 +44,7 @@ class BillingState with ChangeNotifier {
   }) {
     _billCategories = billCategories;
     _bills = bills;
+    _rawBills = bills;
     if (notify) {
       notifyListeners();
     }

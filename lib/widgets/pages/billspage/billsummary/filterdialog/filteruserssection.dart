@@ -24,9 +24,12 @@ class FilterUsersSection extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const PanelHeading(
+          PanelHeading(
             heading: "Benutzer",
             padding: 15,
+            trailing: Text(
+              context.watch<BillFilterState>().getCurrentUserFilterCount(),
+            ),
           ),
           Material(
             color: Colors.white,
@@ -46,6 +49,7 @@ class FilterUsersSection extends StatelessWidget {
                     ),
                     onChanged: (ticked) => filterState.setFilterForUser(
                       filterState.users[index].userId!,
+                      context,
                     ),
                   );
                 },

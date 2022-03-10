@@ -3,8 +3,8 @@ import 'package:projecthomestrategies/bloc/provider/filter_bills_state.dart';
 import 'package:projecthomestrategies/widgets/pages/homepage/panelheading.dart';
 import 'package:provider/provider.dart';
 
-class FilterCategoiesSection extends StatelessWidget {
-  const FilterCategoiesSection({Key? key}) : super(key: key);
+class FilterCategoriesSection extends StatelessWidget {
+  const FilterCategoriesSection({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +24,12 @@ class FilterCategoiesSection extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const PanelHeading(
+          PanelHeading(
             heading: "Kategorien",
             padding: 15,
+            trailing: Text(
+              context.watch<BillFilterState>().getCurrentCategoryFilterCount(),
+            ),
           ),
           Material(
             color: Colors.white,
@@ -46,6 +49,7 @@ class FilterCategoiesSection extends StatelessWidget {
                     ),
                     onChanged: (ticked) => filterState.setFilterForCategories(
                       filterState.categories[index].billCategoryId!,
+                      context,
                     ),
                   );
                 },
