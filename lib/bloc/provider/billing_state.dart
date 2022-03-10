@@ -52,6 +52,7 @@ class BillingState with ChangeNotifier {
 
   void addBill(BillModel newBill) {
     _bills = [..._bills, newBill];
+    _rawBills = _bills;
     notifyListeners();
   }
 
@@ -66,6 +67,7 @@ class BillingState with ChangeNotifier {
       _bills[index].category = bill.category;
       _bills[index].amount = bill.amount;
       _bills[index].date = bill.date;
+      _rawBills = _bills;
       notifyListeners();
     }
   }
@@ -78,6 +80,7 @@ class BillingState with ChangeNotifier {
       return;
     } else {
       _bills.removeAt(index);
+      _rawBills = _bills;
       notifyListeners();
     }
   }
