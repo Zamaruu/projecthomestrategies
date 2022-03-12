@@ -34,6 +34,7 @@ class AppTheme extends ChangeNotifier {
     ),
     appBarTheme: const AppBarTheme(
       backgroundColor: Color(0xFF7EC9F5),
+      foregroundColor: Colors.black,
     ),
   );
 

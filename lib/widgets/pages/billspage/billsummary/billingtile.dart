@@ -58,7 +58,7 @@ class BillingTile extends StatelessWidget {
               style: DefaultTextStyle.of(context).style,
               children: <TextSpan>[
                 TextSpan(
-                  text: bill.buyer!.email!,
+                  text: bill.buyer!.firstname!,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: bill.buyer!.color!,
