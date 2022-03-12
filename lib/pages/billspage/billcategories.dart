@@ -137,7 +137,7 @@ class BillCategoriesDialog extends StatelessWidget {
         tooltip: "Neue Kategorie erstellen",
         child: const Icon(
           Icons.add,
-          color: Colors.white,
+          color: Colors.black,
         ),
       ),
     );

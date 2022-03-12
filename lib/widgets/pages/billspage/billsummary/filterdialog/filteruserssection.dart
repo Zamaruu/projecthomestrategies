@@ -41,6 +41,7 @@ class FilterUsersSection extends StatelessWidget {
                 itemCount: filterState.users.length,
                 itemBuilder: (BuildContext context, int index) {
                   return CheckboxListTile(
+                    activeColor: Theme.of(context).primaryColor,
                     title: Text(
                       "${filterState.users[index].firstname} ${filterState.users[index].surname}",
                     ),

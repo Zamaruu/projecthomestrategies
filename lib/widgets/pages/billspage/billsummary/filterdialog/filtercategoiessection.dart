@@ -41,6 +41,7 @@ class FilterCategoriesSection extends StatelessWidget {
                 itemCount: filterState.categories.length,
                 itemBuilder: (BuildContext context, int index) {
                   return CheckboxListTile(
+                    activeColor: Theme.of(context).primaryColor,
                     title: Text(
                       "${filterState.categories[index].billCategoryName}",
                     ),
