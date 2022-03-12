@@ -80,7 +80,9 @@ class EditBillInformationSection extends StatelessWidget {
             TextInputField(
               verticalMargin: textfieldMargin,
               inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z.,&? ]")),
+                FilteringTextInputFormatter.allow(
+                  RegExp("[0-9a-zA-Z.,&?äüö€!# ]"),
+                ),
               ],
               readonly: !state.isEditing,
               controller: state.descriptionController,
