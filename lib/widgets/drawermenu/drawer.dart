@@ -57,6 +57,7 @@ class MenuDrawer extends StatelessWidget {
                   ),
                 ),
                 DrawerTile(
+                  routeName: "/homepage",
                   icon: FontAwesomeIcons.home,
                   drawerTitle: "Startseite",
                   isDisabled: authState.isUserPartOfHousehold(),
@@ -64,24 +65,28 @@ class MenuDrawer extends StatelessWidget {
                       Global.navigateWithOutSamePush(context, "/homepage"),
                 ),
                 DrawerTile(
+                  routeName: "",
                   icon: FontAwesomeIcons.table,
                   drawerTitle: "Haushaltsplan",
                   isDisabled: authState.isUserPartOfHousehold(),
                   onClick: () {},
                 ),
                 DrawerTile(
+                  routeName: "",
                   icon: FontAwesomeIcons.listOl,
                   drawerTitle: "Einkaufsliste",
                   isDisabled: authState.isUserPartOfHousehold(),
                   onClick: () {},
                 ),
                 DrawerTile(
+                  routeName: "",
                   icon: FontAwesomeIcons.utensils,
                   drawerTitle: "Rezepte",
                   isDisabled: authState.isUserPartOfHousehold(),
                   onClick: () {},
                 ),
                 DrawerTile(
+                  routeName: "/bills",
                   icon: FontAwesomeIcons.wallet,
                   drawerTitle: "Rechnungen & Ausgaben [Beta]",
                   isDisabled: authState.isUserPartOfHousehold(),
@@ -89,12 +94,14 @@ class MenuDrawer extends StatelessWidget {
                       Global.navigateWithOutSamePush(context, "/bills"),
                 ),
                 DrawerTile(
+                  routeName: "",
                   icon: FontAwesomeIcons.check,
                   drawerTitle: "Aufgabenlisten",
                   isDisabled: authState.isUserPartOfHousehold(),
                   onClick: () {},
                 ),
                 DrawerTile(
+                  routeName: "/household",
                   icon: FontAwesomeIcons.users,
                   drawerTitle: "Mein Haushalt [Beta]",
                   onClick: () => Global.navigateWithOutSamePush(
@@ -104,6 +111,7 @@ class MenuDrawer extends StatelessWidget {
                 ),
                 const Spacer(),
                 DrawerTile(
+                  routeName: "/settings",
                   icon: FontAwesomeIcons.userCog,
                   drawerTitle: "Mein Konto",
                   onClick: () => Global.navigateWithOutSamePush(
@@ -112,6 +120,7 @@ class MenuDrawer extends StatelessWidget {
                   ),
                 ),
                 DrawerTile(
+                  routeName: "",
                   icon: FontAwesomeIcons.signOutAlt,
                   drawerTitle: "Abmelden",
                   onClick: () async {
