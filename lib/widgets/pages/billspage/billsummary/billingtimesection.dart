@@ -32,7 +32,10 @@ class BillingTimeSection extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: PanelHeading(heading: label),
+            child: PanelHeading(
+              heading: label,
+              trailing: Text("(${bills.length})"),
+            ),
           ),
           AnimationLimiter(
             child: ListView.separated(
