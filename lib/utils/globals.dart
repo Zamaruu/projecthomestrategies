@@ -4,6 +4,7 @@ import 'package:projecthomestrategies/bloc/models/user_model.dart';
 import 'package:projecthomestrategies/pages/billspage/billpagebuilder.dart';
 import 'package:projecthomestrategies/pages/homepage/initialloader.dart';
 import 'package:projecthomestrategies/pages/homepage/notificationdialog.dart';
+import 'package:projecthomestrategies/pages/recipes/recipebuilder.dart';
 import 'package:projecthomestrategies/pages/settings/settingspage.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,7 @@ class Global {
     "/signin": (context) => const SignInPage(),
     "/signup": (context) => const SignUpPage(),
     "/household": (context) => HouseholdPage(),
+    "/recipes": (context) => const RecipeBuilder(),
     "/auth": (context) => const AuthenticationHander(),
     "/notifications": (context) => const NotificationDialog(),
     "/settings": (context) => const SettingsPage(),
