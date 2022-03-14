@@ -3,6 +3,10 @@ import 'package:projecthomestrategies/bloc/models/bill_model.dart';
 import 'package:projecthomestrategies/bloc/models/billcategory_model.dart';
 
 class BillingState with ChangeNotifier {
+  final int _pageSize = 50;
+  int get pageSize => _pageSize;
+  late int _pageCount;
+  int get pageCount => _pageCount;
   late List<BillCategoryModel> _rawCategories;
   late List<BillCategoryModel> _billCategories;
   List<BillCategoryModel> get billCategories => _billCategories;
@@ -16,6 +20,7 @@ class BillingState with ChangeNotifier {
     _rawCategories = [];
     _bills = bills;
     _rawBills = [];
+    _pageCount = 1;
   }
 
   bool isEmpty() {
@@ -32,6 +37,11 @@ class BillingState with ChangeNotifier {
     notifyListeners();
   }
 
+  void addBills(List<BillModel> newBills) {
+    _bills = [..._bills, ...newBills];
+    notifyListeners();
+  }
+
   void setBillCategories(List<BillCategoryModel> newCategories) {
     _billCategories = newCategories;
     notifyListeners();
@@ -45,6 +55,7 @@ class BillingState with ChangeNotifier {
     _billCategories = billCategories;
     _bills = bills;
     _rawBills = bills;
+    _pageCount = 1;
     if (notify) {
       notifyListeners();
     }
@@ -126,5 +137,14 @@ class BillingState with ChangeNotifier {
     return dates
         .reduce((a, b) => a.isAfter(b) ? a : b)
         .add(const Duration(minutes: 10));
+  }
+
+  void setPageCount(int newPage) {
+    _pageCount = newPage;
+    notifyListeners();
+  }
+
+  bool canLoadMore() {
+    return _bills.length >= _pageSize;
   }
 }

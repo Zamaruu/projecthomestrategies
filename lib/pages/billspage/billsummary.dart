@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/models/bill_model.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/provider/billing_state.dart';
-import 'package:projecthomestrategies/bloc/provider/filter_bills_state.dart';
 import 'package:projecthomestrategies/service/apiresponsehandler_service.dart';
 import 'package:projecthomestrategies/service/billing_service.dart';
 import 'package:projecthomestrategies/service/messenger_service.dart';
@@ -13,8 +12,29 @@ import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/filter
 import 'package:projecthomestrategies/widgets/pages/billspage/billsummary/lastmonthsummary.dart';
 import 'package:provider/provider.dart';
 
-class BillsSummary extends StatelessWidget {
+class BillsSummary extends StatefulWidget {
   const BillsSummary({Key? key}) : super(key: key);
+
+  @override
+  State<BillsSummary> createState() => _BillsSummaryState();
+}
+
+class _BillsSummaryState extends State<BillsSummary> {
+  late bool isLoading;
+  late bool finalPageReached;
+
+  @override
+  void initState() {
+    super.initState();
+    isLoading = false;
+    finalPageReached = false;
+  }
+
+  void setLoading(bool value) {
+    setState(() {
+      isLoading = value;
+    });
+  }
 
   List<BillModel> getLastSevendays(List<BillModel> bills) {
     bills = sortBillsAfterDate(bills);
@@ -98,6 +118,56 @@ class BillsSummary extends StatelessWidget {
     );
   }
 
+  Future<void> _loadMore(BuildContext ctx) async {
+    if (finalPageReached) {
+      ApiResponseHandlerService.custom(
+        context: ctx,
+        customMessage: "Es sind keine weiteren Rechnungen vorhanden!",
+        statusCode: 500,
+      ).showSnackbar();
+
+      return;
+    }
+
+    var billState = ctx.read<BillingState>();
+
+    setLoading(true);
+
+    var page = billState.pageCount;
+    var token = Global.getToken(ctx);
+    var household = ctx.read<AuthenticationState>().getSessionHousehold();
+
+    page = page + 1;
+
+    var response = await BillingService(token).getBillsForHousehold(
+      household!.householdId!,
+      pageNumber: page,
+      pageSize: billState.pageSize,
+    );
+
+    setLoading(false);
+
+    if (response.statusCode == 200) {
+      var newBills = response.object as List<BillModel>;
+
+      if (newBills.isNotEmpty) {
+        billState.setPageCount(page);
+        billState.addBills(newBills);
+      }
+
+      if (newBills.length < billState.pageSize) {
+        setState(() {
+          finalPageReached = true;
+        });
+      }
+    } else {
+      ApiResponseHandlerService.fromResponseModel(
+        context: ctx,
+        response: response,
+      ).showSnackbar();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,6 +194,18 @@ class BillsSummary extends StatelessWidget {
                     label: "Ältere Rechnungen",
                     bills: getOtherBills(model.bills),
                   ),
+                  if (!isLoading && !finalPageReached)
+                    TextButton(
+                      onPressed: () => _loadMore(context),
+                      child: const Text("Mehr laden..."),
+                    ),
+                  if (isLoading)
+                    const SizedBox(
+                      height: 100,
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
                 ],
               ),
             );

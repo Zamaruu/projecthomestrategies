@@ -188,10 +188,13 @@ class BillingService {
 
   //Bills
   Future<ApiResponseModel> getBillsForHousehold(
-    int householdId,
-  ) async {
+    int householdId, {
+    int pageNumber = 1,
+    int pageSize = 50,
+  }) async {
     try {
-      final rawUri = url + "/Bills/$householdId";
+      final rawUri = url +
+          "/Bills/Paged/$householdId?pageNumber=$pageNumber&pageSize=$pageSize";
 
       final uri = Uri.parse(rawUri);
 
