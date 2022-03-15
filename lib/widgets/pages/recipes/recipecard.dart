@@ -30,6 +30,32 @@ class RecipeCard extends StatelessWidget {
     );
   }
 
+  Align _favouriteBadge() {
+    return Align(
+      alignment: Alignment.bottomRight,
+      child: Container(
+        margin: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.white,
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Colors.grey.shade400,
+              spreadRadius: 5,
+              blurRadius: 5,
+            )
+          ],
+        ),
+        child: Icon(
+          recipe.isFavourite! ? Icons.favorite : Icons.favorite_outline,
+          size: 30,
+          color: Colors.red,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -48,6 +74,7 @@ class RecipeCard extends StatelessWidget {
                   image: MemoryImage(recipe.recipe!.getImageAsBytes()!),
                 ),
               ),
+              child: recipe.isFavourite! ? _favouriteBadge() : null,
             ),
             ListTile(
               leading: buildAvatar(),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/models/apiresponse_model.dart';
 import 'package:projecthomestrategies/bloc/models/fullrecipe.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
+import 'package:projecthomestrategies/bloc/provider/detailrecipe_state.dart';
 import 'package:projecthomestrategies/service/recipe_service.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/errorpage.dart';
 import 'package:projecthomestrategies/widgets/pages/recipes/recipedetails/recipedetailspage.dart';
@@ -35,9 +36,9 @@ class RecipeDetailsBuilder extends StatelessWidget {
           } else {
             var fullRecipe = snapshot.data!.object as FullRecipeModel;
 
-            return RecipeDetailsPage(
-              recipe: fullRecipe.recipe!,
-              creator: fullRecipe.creator!,
+            return ChangeNotifierProvider(
+              create: (context) => DetailRecipeState(fullRecipe),
+              child: const RecipeDetailsPage(),
             );
           }
         },

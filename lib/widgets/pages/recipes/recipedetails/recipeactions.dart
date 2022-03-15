@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:projecthomestrategies/bloc/provider/detailrecipe_state.dart';
+import 'package:projecthomestrategies/service/apiresponsehandler_service.dart';
+import 'package:projecthomestrategies/service/recipe_service.dart';
+import 'package:projecthomestrategies/utils/globals.dart';
+import 'package:provider/provider.dart';
 
 class RecipeActions extends StatefulWidget {
   const RecipeActions({Key? key}) : super(key: key);
@@ -8,7 +13,57 @@ class RecipeActions extends StatefulWidget {
 }
 
 class _RecipeActionsState extends State<RecipeActions> {
-  bool isFavourite = false;
+  late bool isLoading;
+
+  @override
+  void initState() {
+    isLoading = false;
+    super.initState();
+  }
+
+  void setIsLoading(bool value) {
+    setState(() {
+      isLoading = value;
+    });
+  }
+
+  void setFavouriteStatus(BuildContext ctx, bool currentStatus) async {
+    var id = ctx.read<DetailRecipeState>().recipe.recipe!.id!;
+
+    if (currentStatus) {
+      setIsLoading(true);
+
+      var token = Global.getToken(ctx);
+      var response = await RecipeService(token).removeRecipeAsFavourite(id);
+
+      setIsLoading(false);
+
+      if (response.statusCode == 200) {
+        ctx.read<DetailRecipeState>().removeFavouriteStatusOf(id);
+      } else {
+        ApiResponseHandlerService.fromResponseModel(
+          context: ctx,
+          response: response,
+        ).showSnackbar();
+      }
+    } else {
+      setIsLoading(true);
+
+      var token = Global.getToken(ctx);
+      var response = await RecipeService(token).setRecipeAsFavourite(id);
+
+      setIsLoading(false);
+
+      if (response.statusCode == 200) {
+        ctx.read<DetailRecipeState>().setFavouriteStatusOf(id);
+      } else {
+        ApiResponseHandlerService.fromResponseModel(
+          context: ctx,
+          response: response,
+        ).showSnackbar();
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,30 +71,38 @@ class _RecipeActionsState extends State<RecipeActions> {
       height: 60,
       child: Row(
         children: [
-          SizedBox(
-            height: kBottomNavigationBarHeight,
-            width: MediaQuery.of(context).size.width / 2,
-            child: TextButton.icon(
-              onPressed: () {
-                setState(() {
-                  isFavourite = !isFavourite;
-                });
-              },
-              style: TextButton.styleFrom(
-                primary: Colors.red,
-              ),
-              icon: Icon(
-                isFavourite ? Icons.favorite : Icons.favorite_outline,
-                color: Colors.red,
-              ),
-              label: const Text("Speichern"),
-            ),
+          Selector<DetailRecipeState, bool>(
+            selector: (context, model) => model.recipe.isFavourite!,
+            builder: (context, isFavourite, _) {
+              return SizedBox(
+                height: kBottomNavigationBarHeight,
+                width: MediaQuery.of(context).size.width / 2,
+                child: TextButton.icon(
+                  onPressed: isLoading
+                      ? null
+                      : () => setFavouriteStatus(context, isFavourite),
+                  style: TextButton.styleFrom(
+                    primary: Colors.red,
+                  ),
+                  icon: isLoading
+                      ? const SizedBox(
+                          height: kBottomNavigationBarHeight / 0.6,
+                          child: CircularProgressIndicator(),
+                        )
+                      : Icon(
+                          isFavourite ? Icons.favorite : Icons.favorite_outline,
+                          color: Colors.red,
+                        ),
+                  label: const Text("Speichern"),
+                ),
+              );
+            },
           ),
           SizedBox(
             height: kBottomNavigationBarHeight,
             width: MediaQuery.of(context).size.width / 2,
             child: TextButton.icon(
-              onPressed: () {},
+              onPressed: isLoading ? null : () {},
               // style: TextButton.styleFrom(
               //   primary: Colors.grey.shade700,
               // ),
