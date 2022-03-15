@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/models/fullrecipe.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/draweravatar.dart';
+import 'package:projecthomestrategies/widgets/pages/recipes/recipedetails/recipedetailsbuilder.dart';
 
 class RecipeCard extends StatelessWidget {
   final FullRecipeModel recipe;
@@ -20,60 +21,83 @@ class RecipeCard extends StatelessWidget {
     );
   }
 
+  void _pushDetailsPage(BuildContext ctx) {
+    Navigator.push(
+      ctx,
+      MaterialPageRoute(
+        builder: (context) => RecipeDetailsBuilder(id: recipe.recipe!.id!),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-      child: Column(
-        children: [
-          Container(
-            height: 200,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              image: const DecorationImage(
-                fit: BoxFit.cover,
-                image: NetworkImage(
-                    "https://www.aponet.de/fileadmin/_processed_/f/e/csm_26141_cheeseburger_9e68312998.jpg"),
+    return GestureDetector(
+      onTap: () => _pushDetailsPage(context),
+      child: Card(
+        elevation: 10,
+        margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+        child: Column(
+          children: [
+            Container(
+              height: 200,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: MemoryImage(recipe.recipe!.getImageAsBytes()!),
+                ),
               ),
             ),
-          ),
-          ListTile(
-            leading: buildAvatar(),
-            title: Text(recipe.recipe!.name ?? "Fehler beim namen"),
-            subtitle: Text(
-              "von ${recipe.creator!.firstname!} ${recipe.creator!.surname!}",
+            ListTile(
+              leading: buildAvatar(),
+              title: Text(recipe.recipe!.name ?? "Fehler beim namen"),
+              subtitle: Text(
+                "von ${recipe.creator!.firstname!} ${recipe.creator!.surname!}",
+              ),
+              trailing: SizedBox(
+                width: 90,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text("${recipe.recipe!.cookingTime} min"),
+                    const SizedBox(width: 5),
+                    const Icon(Icons.timer),
+                  ],
+                ),
+              ),
             ),
-          ),
-          if (recipe.recipe!.desctiption != null)
+            if (recipe.recipe!.desctiption != null)
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Text(
+                  recipe.recipe!.desctiption!,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
             Padding(
-              padding: const EdgeInsets.all(10),
-              child: Text(
-                recipe.recipe!.desctiption!,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+              padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  TextButton.icon(
+                    onPressed: () {},
+                    icon: const Icon(Icons.restaurant_menu),
+                    label: const Text("Kochen"),
+                  ),
+                  TextButton.icon(
+                    onPressed: () => _pushDetailsPage(context),
+                    icon: const Icon(Icons.info),
+                    label: const Text("Mehr Informationen"),
+                  ),
+                ],
               ),
-            ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                TextButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(Icons.restaurant_menu),
-                  label: const Text("Kochen"),
-                ),
-                TextButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(Icons.info),
-                  label: const Text("Mehr Informationen"),
-                ),
-              ],
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

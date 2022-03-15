@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:projecthomestrategies/bloc/models/cookingstep_model.dart';
 
 class RecipeModel {
@@ -9,7 +12,7 @@ class RecipeModel {
   String? displayImage;
   int? cookingTime;
   bool? makePublic;
-  String? createdAt;
+  DateTime? createdAt;
   List<CookingStepModel>? cookingSteps;
 
   RecipeModel(
@@ -33,7 +36,7 @@ class RecipeModel {
     displayImage = json['displayImage'];
     cookingTime = json['cookingTime'];
     makePublic = json['makePublic'];
-    createdAt = json['createdAt'];
+    createdAt = DateTime.parse(json['createdAt']).toLocal();
     if (json['cookingSteps'] != null) {
       cookingSteps = <CookingStepModel>[];
       json['cookingSteps'].forEach((v) {
@@ -52,10 +55,17 @@ class RecipeModel {
     data['displayImage'] = displayImage;
     data['cookingTime'] = cookingTime;
     data['makePublic'] = makePublic;
-    data['createdAt'] = createdAt;
+    data['createdAt'] = createdAt!.toIso8601String();
     if (cookingSteps != null) {
       data['cookingSteps'] = cookingSteps!.map((v) => v.toJson()).toList();
     }
     return data;
+  }
+
+  Uint8List? getImageAsBytes() {
+    if (displayImage != null) {
+      return base64Decode(displayImage!);
+    }
+    return null;
   }
 }

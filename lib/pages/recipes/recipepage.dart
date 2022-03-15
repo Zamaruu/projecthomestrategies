@@ -17,7 +17,7 @@ class _RecipePageState extends State<RecipePage>
   @override
   void initState() {
     pageIndex = 0;
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
 
     super.initState();
   }
@@ -25,7 +25,7 @@ class _RecipePageState extends State<RecipePage>
   final List<Widget> _pages = <Widget>[
     const PublicRecipesPage(),
     const Scaffold(),
-    //const Scaffold(),
+    const Scaffold(),
   ];
 
   @override
@@ -59,11 +59,11 @@ class _RecipePageState extends State<RecipePage>
               text: "Unsere Gerichte",
               icon: Icon(Icons.menu_book),
             ),
-            // Tab(
-            //   iconMargin: EdgeInsets.only(bottom: 5),
-            //   text: "Analyse",
-            //   icon: Icon(Icons.analytics),
-            // ),
+            Tab(
+              iconMargin: EdgeInsets.only(bottom: 5),
+              text: "Gespeichert",
+              icon: Icon(Icons.favorite),
+            ),
           ],
         ),
       ),

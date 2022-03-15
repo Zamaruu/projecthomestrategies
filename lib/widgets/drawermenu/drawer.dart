@@ -81,7 +81,7 @@ class MenuDrawer extends StatelessWidget {
                 DrawerTile(
                   routeName: "/recipes",
                   icon: FontAwesomeIcons.utensils,
-                  drawerTitle: "Rezepte",
+                  drawerTitle: "Rezepte [Beta]",
                   isDisabled: authState.isUserPartOfHousehold(),
                   onClick: () =>
                       Global.navigateWithOutSamePush(context, "/recipes"),
