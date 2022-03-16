@@ -14,6 +14,10 @@ class ApiResponseModel {
     hasError = true;
   }
 
+  bool isSuccess() {
+    return statusCode == 200;
+  }
+
   @override
   String toString() {
     return "Statuscode: $statusCode,\nMessage: $message,\nHat Fehler: $hasError,\nObjekt: $object";

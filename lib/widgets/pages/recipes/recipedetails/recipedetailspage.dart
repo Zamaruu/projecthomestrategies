@@ -25,6 +25,7 @@ class RecipeDetailsPage extends StatelessWidget {
           body: ListView(
             children: [
               RecipeImage(
+                heroTag: "imageOf${recipe.id}",
                 image: recipe.getImageAsBytes()!,
               ),
               RecipeCreatorInfo(

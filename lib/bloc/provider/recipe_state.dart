@@ -9,7 +9,15 @@ class RecipeState with ChangeNotifier {
     _publicRecipes = <FullRecipeModel>[];
   }
 
+  bool hasRecipeData() {
+    return _publicRecipes.isNotEmpty;
+  }
+
   void setInitialData(List<FullRecipeModel> publicRecipes) {
+    _publicRecipes = publicRecipes;
+  }
+
+  void setRecipes(List<FullRecipeModel> publicRecipes) {
     _publicRecipes = publicRecipes;
   }
 }

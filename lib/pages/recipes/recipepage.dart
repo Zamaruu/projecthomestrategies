@@ -11,19 +11,18 @@ class RecipePage extends StatefulWidget {
 
 class _RecipePageState extends State<RecipePage>
     with SingleTickerProviderStateMixin {
-  late int pageIndex;
   late TabController _tabController;
 
   @override
   void initState() {
-    pageIndex = 0;
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
 
     super.initState();
   }
 
   final List<Widget> _pages = <Widget>[
     const PublicRecipesPage(),
+    const Scaffold(),
     const Scaffold(),
     const Scaffold(),
   ];
@@ -63,6 +62,11 @@ class _RecipePageState extends State<RecipePage>
               iconMargin: EdgeInsets.only(bottom: 5),
               text: "Gespeichert",
               icon: Icon(Icons.favorite),
+            ),
+            Tab(
+              iconMargin: EdgeInsets.only(bottom: 5),
+              text: "Planner",
+              icon: Icon(Icons.date_range),
             ),
           ],
         ),

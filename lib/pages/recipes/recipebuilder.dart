@@ -13,32 +13,37 @@ class RecipeBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AuthenticationState>(
-      builder: (context, auth, _) => FutureBuilder<ApiResponseModel>(
-        future: RecipeService(auth.token).getRecipesBasic(),
-        builder: (
-          BuildContext context,
-          AsyncSnapshot<ApiResponseModel> snapshot,
-        ) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(
-                  color: Theme.of(context).primaryColor,
+    if (context.read<RecipeState>().hasRecipeData()) {
+      return const RecipePage();
+    } else {
+      return Consumer<AuthenticationState>(
+        builder: (context, auth, _) => FutureBuilder<ApiResponseModel>(
+          future: RecipeService(auth.token).getRecipesBasic(),
+          builder: (
+            BuildContext context,
+            AsyncSnapshot<ApiResponseModel> snapshot,
+          ) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(
+                    color: Theme.of(context).primaryColor,
+                  ),
                 ),
-              ),
-            );
-          }
-          if (snapshot.hasError) {
-            return ErrorPageHandler(error: snapshot.error.toString());
-          } else {
-            var publicRecipes = snapshot.data!.object as List<FullRecipeModel>;
-            context.read<RecipeState>().setInitialData(publicRecipes);
+              );
+            }
+            if (snapshot.hasError) {
+              return ErrorPageHandler(error: snapshot.error.toString());
+            } else {
+              var publicRecipes =
+                  snapshot.data!.object as List<FullRecipeModel>;
+              context.read<RecipeState>().setInitialData(publicRecipes);
 
-            return const RecipePage();
-          }
-        },
-      ),
-    );
+              return const RecipePage();
+            }
+          },
+        ),
+      );
+    }
   }
 }

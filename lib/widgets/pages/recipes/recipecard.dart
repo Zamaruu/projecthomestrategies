@@ -65,16 +65,19 @@ class RecipeCard extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
         child: Column(
           children: [
-            Container(
-              height: 200,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: MemoryImage(recipe.recipe!.getImageAsBytes()!),
+            Hero(
+              tag: "imageOf${recipe.recipe!.id}",
+              child: Container(
+                height: 200,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: MemoryImage(recipe.recipe!.getImageAsBytes()!),
+                  ),
                 ),
+                child: recipe.isFavourite! ? _favouriteBadge() : null,
               ),
-              child: recipe.isFavourite! ? _favouriteBadge() : null,
             ),
             ListTile(
               leading: buildAvatar(),
