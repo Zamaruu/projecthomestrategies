@@ -10,9 +10,14 @@ class RecipeState with ChangeNotifier {
   late List<FullRecipeModel> _detailedRecipes;
   List<FullRecipeModel> get detailedRecipes => _detailedRecipes;
 
+  //Favourite Recipes
+  late List<FullRecipeModel> _favouriteRecipes;
+  List<FullRecipeModel> get favouriteRecipes => _favouriteRecipes;
+
   RecipeState() {
     _publicRecipes = <FullRecipeModel>[];
     _detailedRecipes = <FullRecipeModel>[];
+    _favouriteRecipes = <FullRecipeModel>[];
   }
 
   bool hasRecipeData() {
@@ -50,6 +55,42 @@ class RecipeState with ChangeNotifier {
 
   void clearDetailedRecipeCache() {
     _detailedRecipes = <FullRecipeModel>[];
+    notifyListeners();
+  }
+
+  // -----------------------------------------------------------
+  // Favourite Recipes
+  bool isFavouritesNotEmpty() {
+    return _favouriteRecipes.isNotEmpty;
+  }
+
+  void setFavourites(List<FullRecipeModel> favourites, {bool notify = false}) {
+    _favouriteRecipes = favourites;
+
+    if (notify) {
+      notifyListeners();
+    }
+  }
+
+  void addRecipeToFavourite(FullRecipeModel recipe) {
+    if (favouriteRecipes
+        .any((element) => element.recipe!.id == recipe.recipe!.id)) {
+      return;
+    }
+
+    _favouriteRecipes = [...favouriteRecipes, recipe];
+    notifyListeners();
+  }
+
+  void removeRecipeFromFavourites(String id) {
+    if (!favouriteRecipes.any((element) => element.recipe!.id == id)) {
+      return;
+    }
+
+    int index =
+        favouriteRecipes.indexWhere((element) => element.recipe!.id == id);
+
+    _favouriteRecipes = List.from(favouriteRecipes)..removeAt(index);
     notifyListeners();
   }
 }

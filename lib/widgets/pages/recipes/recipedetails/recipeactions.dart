@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/provider/detailrecipe_state.dart';
+import 'package:projecthomestrategies/bloc/provider/recipe_state.dart';
 import 'package:projecthomestrategies/service/apiresponsehandler_service.dart';
 import 'package:projecthomestrategies/service/recipe_service.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
@@ -40,6 +41,7 @@ class _RecipeActionsState extends State<RecipeActions> {
 
       if (response.statusCode == 200) {
         ctx.read<DetailRecipeState>().removeFavouriteStatusOf(id);
+        ctx.read<RecipeState>().removeRecipeFromFavourites(id);
       } else {
         ApiResponseHandlerService.fromResponseModel(
           context: ctx,
@@ -56,6 +58,9 @@ class _RecipeActionsState extends State<RecipeActions> {
 
       if (response.statusCode == 200) {
         ctx.read<DetailRecipeState>().setFavouriteStatusOf(id);
+        ctx
+            .read<RecipeState>()
+            .addRecipeToFavourite(ctx.read<DetailRecipeState>().recipe);
       } else {
         ApiResponseHandlerService.fromResponseModel(
           context: ctx,

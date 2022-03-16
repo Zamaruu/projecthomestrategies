@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:projecthomestrategies/pages/recipes/favouriterecipespage.dart';
 import 'package:projecthomestrategies/pages/recipes/publicrecipespage.dart';
 import 'package:projecthomestrategies/widgets/basescaffold/basescaffold.dart';
+import 'package:projecthomestrategies/widgets/pages/recipes/favouiterecipes/favoritepagebuilder.dart';
 
 class RecipePage extends StatefulWidget {
   const RecipePage({Key? key}) : super(key: key);
@@ -23,7 +25,7 @@ class _RecipePageState extends State<RecipePage>
   final List<Widget> _pages = <Widget>[
     const PublicRecipesPage(),
     const Scaffold(),
-    const Scaffold(),
+    const FavouritePageBuilder(),
     const Scaffold(),
   ];
 
