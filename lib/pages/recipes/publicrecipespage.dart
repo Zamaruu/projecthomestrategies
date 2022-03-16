@@ -17,6 +17,8 @@ class PublicRecipesPage extends StatelessWidget {
 
     if (response.isSuccess()) {
       var recipes = response.object as List<FullRecipeModel>;
+
+      ctx.read<RecipeState>().clearDetailedRecipeCache();
       ctx.read<RecipeState>().setRecipes(recipes);
     } else {
       ApiResponseHandlerService.fromResponseModel(
