@@ -54,6 +54,7 @@ dependencies:
   image_picker: ^0.8.4+10
   flutter_image_compress: ^1.1.0
   photo_view: ^0.13.0
+  loading_animation_widget: ^1.1.0+3
 
 dev_dependencies:
   flutter_test:

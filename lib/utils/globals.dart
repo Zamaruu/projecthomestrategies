@@ -6,6 +6,7 @@ import 'package:projecthomestrategies/pages/homepage/initialloader.dart';
 import 'package:projecthomestrategies/pages/homepage/notificationdialog.dart';
 import 'package:projecthomestrategies/pages/recipes/recipebuilder.dart';
 import 'package:projecthomestrategies/pages/settings/settingspage.dart';
+import 'package:projecthomestrategies/widgets/auth/authorentication_wrapper.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
@@ -40,6 +41,18 @@ class Global {
     "/settings": (context) => const SettingsPage(),
   };
 
+  static Map<String, Widget> staticAppRoutes = {
+    "/homepage": const InitialLoader(),
+    "/bills": const BillContentBuilder(),
+    "/signin": const SignInPage(),
+    "/signup": const SignUpPage(),
+    "/household": HouseholdPage(),
+    "/recipes": const RecipeBuilder(),
+    "/auth": const AuthenticationHander(),
+    "/notifications": const NotificationDialog(),
+    "/settings": const SettingsPage(),
+  };
+
   static void navigateWithOutSamePush(
     BuildContext context,
     String nav, {
@@ -62,7 +75,14 @@ class Global {
     GlobalKey<NavigatorState> key,
     String nav,
   ) {
-    key.currentState!.pushNamed(nav);
+    key.currentState!.push(
+      MaterialPageRoute(
+        builder: (context) => AuthenticationWrapper(
+          child: staticAppRoutes[key]!,
+        ),
+      ),
+    );
+    //key.currentState!.pushNamed(nav);
   }
 
   static String datetimeToDeString(DateTime date,
