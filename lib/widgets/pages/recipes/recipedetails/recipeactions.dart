@@ -5,6 +5,7 @@ import 'package:projecthomestrategies/service/apiresponsehandler_service.dart';
 import 'package:projecthomestrategies/service/recipe_service.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:provider/provider.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class RecipeActions extends StatefulWidget {
   const RecipeActions({Key? key}) : super(key: key);
@@ -28,7 +29,7 @@ class _RecipeActionsState extends State<RecipeActions> {
     });
   }
 
-  void setFavouriteStatus(BuildContext ctx, bool currentStatus) async {
+  Future<void> setFavouriteStatus(BuildContext ctx, bool currentStatus) async {
     var id = ctx.read<DetailRecipeState>().recipe.recipe!.id!;
 
     if (currentStatus) {
@@ -90,9 +91,12 @@ class _RecipeActionsState extends State<RecipeActions> {
                     primary: Colors.red,
                   ),
                   icon: isLoading
-                      ? const SizedBox(
+                      ? SizedBox(
                           height: kBottomNavigationBarHeight / 0.6,
-                          child: CircularProgressIndicator(),
+                          child: LoadingAnimationWidget.fourRotatingDots(
+                            color: Colors.red,
+                            size: 17.5,
+                          ),
                         )
                       : Icon(
                           isFavourite ? Icons.favorite : Icons.favorite_outline,
