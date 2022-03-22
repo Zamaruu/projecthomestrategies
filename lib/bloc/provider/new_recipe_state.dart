@@ -12,10 +12,10 @@ class NewRecipeState with ChangeNotifier {
   int get householdId => _householdId;
   late int _creatorId;
   int get creatorId => _creatorId;
-  late String _recipeName;
-  String get recipeName => _recipeName;
-  late String _description;
-  String get description => _description;
+  late TextEditingController _recipeName;
+  TextEditingController get recipeName => _recipeName;
+  late TextEditingController _description;
+  TextEditingController get description => _description;
   late Uint8List? _image;
   Uint8List? get image => _image;
   late int _cookingTime;
@@ -30,8 +30,8 @@ class NewRecipeState with ChangeNotifier {
   NewRecipeState() {
     _householdId = 0;
     _creatorId = 0;
-    _recipeName = "";
-    _description = "";
+    _recipeName = TextEditingController(text: "");
+    _description = TextEditingController(text: "");
     _image = null;
     _cookingTime = 0;
     _makePublic = false;
@@ -48,8 +48,8 @@ class NewRecipeState with ChangeNotifier {
       householdId:
           ctx.read<AuthenticationState>().getSessionHousehold()!.householdId!,
       creatorId: Global.getCurrentUser(ctx).userId!,
-      name: recipeName,
-      desctiption: description,
+      name: recipeName.text.trim(),
+      desctiption: description.text.trim(),
       displayImage: convertImageToBase64(),
       cookingTime: cookingTime,
       makePublic: makePublic,
@@ -67,4 +67,11 @@ class NewRecipeState with ChangeNotifier {
     _image = null;
     notifyListeners();
   }
+
+  void addCookingStep(CookingStepModel newStep) {
+    _cookingSteps = <CookingStepModel>[...cookingSteps, newStep];
+    notifyListeners();
+  }
+
+  void removeCookingStep() {}
 }

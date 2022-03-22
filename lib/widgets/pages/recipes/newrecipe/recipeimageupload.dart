@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:projecthomestrategies/bloc/provider/new_recipe_state.dart';
@@ -13,7 +12,7 @@ class RecipeImageUpload extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 250,
       child: Selector<NewRecipeState, Uint8List?>(
         selector: (context, model) => model.image,

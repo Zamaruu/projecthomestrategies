@@ -1,58 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/models/cookingstep_model.dart';
+import 'package:projecthomestrategies/widgets/pages/recipes/divider/finishstepdivider.dart';
+import 'package:projecthomestrategies/widgets/pages/recipes/divider/nextstepdivider.dart';
 
 class RecipeCookingSteps extends StatelessWidget {
   final List<CookingStepModel> cookingSteps;
 
   const RecipeCookingSteps({Key? key, required this.cookingSteps})
       : super(key: key);
-
-  Padding _nextStepDivider(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width * 0.35,
-            height: 1,
-            color: Colors.grey,
-          ),
-          const Icon(Icons.arrow_downward),
-          Container(
-            width: MediaQuery.of(context).size.width * 0.35,
-            height: 1,
-            color: Colors.grey,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Padding _finishedDivider(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width * 0.35,
-            height: 1,
-            color: Colors.grey,
-          ),
-          const Text(
-            "Fertig",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width * 0.35,
-            height: 1,
-            color: Colors.grey,
-          ),
-        ],
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,9 +32,9 @@ class RecipeCookingSteps extends StatelessWidget {
                 children: [
                   CoockingStepTile(step: cookingSteps[index]),
                   if (index < cookingSteps.length - 1)
-                    _nextStepDivider(context),
+                    const NextCookingStepDivider(),
                   if (index == cookingSteps.length - 1)
-                    _finishedDivider(context),
+                    const FinishStepDivider(),
                 ],
               );
             },
