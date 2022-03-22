@@ -102,11 +102,24 @@ class NewBillImageSection extends StatelessWidget {
 
 class AddMediaBottomSheet extends StatelessWidget {
   final double height = 130;
+  final bool pickMultiple;
 
-  const AddMediaBottomSheet({Key? key}) : super(key: key);
+  const AddMediaBottomSheet({
+    Key? key,
+    this.pickMultiple = true,
+  }) : super(key: key);
 
   void _getFromGallery(BuildContext ctx) async {
-    var pickedFiles = await ImagePicker().pickMultiImage();
+    List<XFile>? pickedFiles = null;
+    if (pickMultiple) {
+      pickedFiles = await ImagePicker().pickMultiImage();
+    } else {
+      var image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        pickedFiles = <XFile>[];
+        pickedFiles.add(image);
+      }
+    }
 
     if (pickedFiles != null) {
       List<File> temp = <File>[];

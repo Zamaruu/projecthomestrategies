@@ -13,6 +13,7 @@ class BaseScaffold extends StatelessWidget {
   final Widget? fab;
   final Widget? bottomNavigationBar;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final FloatingActionButtonLocation fabLocation;
 
   BaseScaffold({
     Key? key,
@@ -24,6 +25,7 @@ class BaseScaffold extends StatelessWidget {
     this.bottomNavigationBar,
     this.showNotification = false,
     this.trailing,
+    this.fabLocation = FloatingActionButtonLocation.endFloat,
   }) : super(key: key);
 
   @override
@@ -58,6 +60,7 @@ class BaseScaffold extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButtonLocation: fabLocation,
       floatingActionButton: fab,
       bottomNavigationBar: bottomNavigationBar,
     );

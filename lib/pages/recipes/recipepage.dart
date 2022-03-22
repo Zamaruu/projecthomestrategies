@@ -3,6 +3,7 @@ import 'package:projecthomestrategies/pages/recipes/favouriterecipespage.dart';
 import 'package:projecthomestrategies/pages/recipes/publicrecipespage.dart';
 import 'package:projecthomestrategies/widgets/basescaffold/basescaffold.dart';
 import 'package:projecthomestrategies/widgets/pages/recipes/favouiterecipes/favoritepagebuilder.dart';
+import 'package:projecthomestrategies/widgets/pages/recipes/newrecipe/newrecipebuilder.dart';
 
 class RecipePage extends StatefulWidget {
   const RecipePage({Key? key}) : super(key: key);
@@ -18,7 +19,6 @@ class _RecipePageState extends State<RecipePage>
   @override
   void initState() {
     _tabController = TabController(length: 4, vsync: this);
-
     super.initState();
   }
 
@@ -36,6 +36,18 @@ class _RecipePageState extends State<RecipePage>
       body: TabBarView(
         controller: _tabController,
         children: _pages,
+      ),
+      fab: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              fullscreenDialog: true,
+              builder: (context) => const NewRecipeBuilder(),
+            ),
+          );
+        },
+        tooltip: "Neues Rezept erstellen",
+        child: const Icon(Icons.add),
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
