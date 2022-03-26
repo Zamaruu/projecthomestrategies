@@ -53,13 +53,7 @@ class NewRecipeCookingsteps extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: steps.length,
                 separatorBuilder: (BuildContext context, int index) {
-                  if (index < steps.length - 1) {
-                    return const NextCookingStepDivider();
-                  }
-                  if (index == steps.length - 1) {
-                    return const FinishStepDivider();
-                  }
-                  return const SizedBox();
+                  return const NextCookingStepDivider();
                 },
                 itemBuilder: (BuildContext context, int index) {
                   return CoockingStepTile(step: steps[index]);

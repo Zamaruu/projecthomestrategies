@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:projecthomestrategies/bloc/models/cookingstep_model.dart';
+import 'package:projecthomestrategies/bloc/models/recipe_ingredients_model.dart';
 
 class RecipeModel {
   String? id;
@@ -13,19 +14,24 @@ class RecipeModel {
   int? cookingTime;
   bool? makePublic;
   DateTime? createdAt;
+  List<String>? categories;
+  List<Ingredients>? ingredients;
   List<CookingStepModel>? cookingSteps;
 
-  RecipeModel(
-      {this.id,
-      this.householdId,
-      this.creatorId,
-      this.name,
-      this.desctiption,
-      this.displayImage,
-      this.cookingTime,
-      this.makePublic,
-      this.createdAt,
-      this.cookingSteps});
+  RecipeModel({
+    this.id,
+    this.householdId,
+    this.creatorId,
+    this.name,
+    this.desctiption,
+    this.displayImage,
+    this.cookingTime,
+    this.makePublic,
+    this.createdAt,
+    this.categories,
+    this.ingredients,
+    this.cookingSteps,
+  });
 
   RecipeModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -37,6 +43,15 @@ class RecipeModel {
     cookingTime = json['cookingTime'];
     makePublic = json['makePublic'];
     createdAt = DateTime.parse(json['createdAt']).toLocal();
+    categories = json['categories'] != null
+        ? json['categories'].cast<String>()
+        : <String>[];
+    if (json['ingredients'] != null) {
+      ingredients = <Ingredients>[];
+      json['ingredients'].forEach((v) {
+        ingredients!.add(Ingredients.fromJson(v));
+      });
+    }
     if (json['cookingSteps'] != null) {
       cookingSteps = <CookingStepModel>[];
       json['cookingSteps'].forEach((v) {
@@ -56,6 +71,10 @@ class RecipeModel {
     data['cookingTime'] = cookingTime;
     data['makePublic'] = makePublic;
     data['createdAt'] = createdAt!.toIso8601String();
+    data['categories'] = categories;
+    if (ingredients != null) {
+      data['ingredients'] = ingredients!.map((v) => v.toJson()).toList();
+    }
     if (cookingSteps != null) {
       data['cookingSteps'] = cookingSteps!.map((v) => v.toJson()).toList();
     }
