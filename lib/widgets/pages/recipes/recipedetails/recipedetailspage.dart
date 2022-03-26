@@ -7,6 +7,7 @@ import 'package:projecthomestrategies/widgets/pages/recipes/recipedetails/recipe
 import 'package:projecthomestrategies/widgets/pages/recipes/recipedetails/recipecookingsteps.dart';
 import 'package:projecthomestrategies/widgets/pages/recipes/recipedetails/recipecreatorinfo.dart';
 import 'package:projecthomestrategies/widgets/pages/recipes/recipedetails/recipeinformation.dart';
+import 'package:projecthomestrategies/widgets/pages/recipes/recipedetails/recipeingredients.dart';
 import 'package:provider/provider.dart';
 
 class RecipeDetailsPage extends StatelessWidget {
@@ -36,6 +37,10 @@ class RecipeDetailsPage extends StatelessWidget {
               RecipeInformation(
                 recipe: recipe,
               ),
+              if (recipe.ingredients != null)
+                RecipeIngredients(
+                  ingredients: recipe.ingredients!,
+                ),
               if (recipe.cookingSteps != null)
                 RecipeCookingSteps(
                   cookingSteps: recipe.cookingSteps!,
