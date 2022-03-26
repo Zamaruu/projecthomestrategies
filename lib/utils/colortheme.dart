@@ -13,32 +13,33 @@ class AppTheme extends ChangeNotifier {
 
   //Theme variables
   final _standardTheme = ThemeData(
-      primarySwatch: Colors.blue,
-      textTheme: GoogleFonts.nunitoTextTheme(),
-      primaryColor: const Color(0xFF5670f0),
-      backgroundColor: Colors.white,
-      colorScheme: ColorScheme(
-        primary: const Color(0xFF5670f0),
-        primaryVariant: const Color(0xFF5670f0),
-        secondary: const Color(0xFF7EC9F5),
-        secondaryVariant: const Color(0xFF7EC9F5),
-        surface: Colors.white,
-        background: Colors.grey,
-        error: Colors.red,
-        onPrimary: Colors.white, // Appbar text und icons
-        onSecondary: Colors.white,
-        onSurface: Colors.grey.shade800,
-        onBackground: Colors.white,
-        onError: Colors.red,
-        brightness: Brightness.light,
-      ),
-      appBarTheme: const AppBarTheme(
-        backgroundColor: Color(0xFF7EC9F5),
-        foregroundColor: Colors.black,
-      ),
-      floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        foregroundColor: Colors.black,
-      ));
+    primarySwatch: Colors.blue,
+    textTheme: GoogleFonts.nunitoTextTheme(),
+    primaryColor: const Color(0xFF5670f0),
+    backgroundColor: Colors.white,
+    colorScheme: ColorScheme(
+      primary: const Color(0xFF5670f0),
+      primaryVariant: const Color(0xFF5670f0),
+      secondary: const Color(0xFF7EC9F5),
+      secondaryVariant: const Color(0xFF7EC9F5),
+      surface: Colors.white,
+      background: Colors.grey,
+      error: Colors.red,
+      onPrimary: Colors.white, // Appbar text und icons
+      onSecondary: Colors.white,
+      onSurface: Colors.grey.shade800,
+      onBackground: Colors.white,
+      onError: Colors.red,
+      brightness: Brightness.light,
+    ),
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Color(0xFF7EC9F5),
+      foregroundColor: Colors.black,
+    ),
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      foregroundColor: Colors.black,
+    ),
+  );
 
   final _purpleTheme = ThemeData(
     textTheme: GoogleFonts.nunitoTextTheme(),

@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:projecthomestrategies/bloc/models/cookingstep_model.dart';
+import 'package:projecthomestrategies/bloc/models/recipe_ingredients_model.dart';
 import 'package:projecthomestrategies/bloc/provider/new_recipe_state.dart';
 import 'package:projecthomestrategies/widgets/pages/homepage/panelheading.dart';
-import 'package:projecthomestrategies/widgets/pages/recipes/divider/nextstepdivider.dart';
-import 'package:projecthomestrategies/widgets/pages/recipes/newrecipe/newrecipestepdialog.dart';
-import 'package:projecthomestrategies/widgets/pages/recipes/recipedetails/recipecookingsteps.dart';
+import 'package:projecthomestrategies/widgets/pages/recipes/newrecipe/newrecipeingredientsdialog.dart';
+import 'package:projecthomestrategies/widgets/pages/recipes/recipedetails/recipeingredientstile.dart';
 import 'package:provider/provider.dart';
 
-class NewRecipeCookingsteps extends StatelessWidget {
-  const NewRecipeCookingsteps({Key? key}) : super(key: key);
+class NewRecipeIngredients extends StatelessWidget {
+  const NewRecipeIngredients({Key? key}) : super(key: key);
 
-  Future<void> createNewStep(BuildContext ctx) async {
+  Future<void> addNewIngredient(BuildContext ctx) async {
     var currentLength = ctx.read<NewRecipeState>().cookingSteps.length + 1;
-    var response = await showDialog<CookingStepModel?>(
+    var response = await showDialog<Ingredients?>(
       context: ctx,
-      builder: (context) => RecipeStepDialog(
+      builder: (context) => RecipeIngredientsDialog(
         index: currentLength,
       ),
     );
 
     if (response != null) {
-      ctx.read<NewRecipeState>().addCookingStep(response);
+      ctx.read<NewRecipeState>().addIngredient(response);
     }
   }
 
@@ -43,19 +42,16 @@ class NewRecipeCookingsteps extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const PanelHeading(heading: "Kochschritte"),
-          Selector<NewRecipeState, List<CookingStepModel>>(
-            selector: (context, model) => model.cookingSteps,
-            builder: (context, steps, _) {
-              return ListView.separated(
+          const PanelHeading(heading: "Zutaten"),
+          Selector<NewRecipeState, List<Ingredients>>(
+            selector: (context, model) => model.ingredients,
+            builder: (context, ingredients, _) {
+              return ListView.builder(
                 shrinkWrap: true,
+                itemCount: ingredients.length,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: steps.length,
-                separatorBuilder: (BuildContext context, int index) {
-                  return const NextCookingStepDivider();
-                },
                 itemBuilder: (BuildContext context, int index) {
-                  return CoockingStepTile(step: steps[index]);
+                  return RecipeIgredientTile(ingredient: ingredients[index]);
                 },
               );
             },
@@ -73,9 +69,9 @@ class NewRecipeCookingsteps extends StatelessWidget {
                   color: Theme.of(context).primaryColor.withOpacity(0.5),
                 ),
               ),
-              onPressed: () => createNewStep(context),
+              onPressed: () => addNewIngredient(context),
               icon: const Icon(Icons.add),
-              label: const Text("Kochschritt hinzufügen"),
+              label: const Text("Zutat hinzufügen"),
             ),
           ),
         ],

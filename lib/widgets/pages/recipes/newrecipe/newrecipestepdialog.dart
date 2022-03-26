@@ -33,7 +33,7 @@ class RecipeStepDialog extends StatelessWidget {
     return CookingStepModel(
       stepNumber: index ?? step!.stepNumber,
       title: nameController.text.trim(),
-      description: nameController.text.trim(),
+      description: descriptionController.text.trim(),
     );
   }
 

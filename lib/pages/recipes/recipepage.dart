@@ -24,9 +24,13 @@ class _RecipePageState extends State<RecipePage>
 
   final List<Widget> _pages = <Widget>[
     const PublicRecipesPage(),
-    const Scaffold(),
+    const Scaffold(
+      backgroundColor: Colors.transparent,
+    ),
     const FavouritePageBuilder(),
-    const Scaffold(),
+    const Scaffold(
+      backgroundColor: Colors.transparent,
+    ),
   ];
 
   @override
@@ -69,8 +73,8 @@ class _RecipePageState extends State<RecipePage>
             ),
             Tab(
               iconMargin: EdgeInsets.only(bottom: 5),
-              text: "Unsere Gerichte",
-              icon: Icon(Icons.menu_book),
+              text: "Meine",
+              icon: Icon(Icons.person),
             ),
             Tab(
               iconMargin: EdgeInsets.only(bottom: 5),
