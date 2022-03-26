@@ -64,6 +64,7 @@ class RecipeCard extends StatelessWidget {
         elevation: 10,
         margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Hero(
               tag: "imageOf${recipe.recipe!.id}",
@@ -103,6 +104,7 @@ class RecipeCard extends StatelessWidget {
                 padding: const EdgeInsets.all(10),
                 child: Text(
                   recipe.recipe!.desctiption!,
+                  textAlign: TextAlign.left,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
