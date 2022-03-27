@@ -23,7 +23,7 @@ class Global {
       ? "http://192.168.0.71:5000/api" //Local Windows Docker
       : "http://194.163.182.236:5000/api"; //Live Production API and DB
   // static const String baseApiUrl = "http://10.0.2.2:5000/api";
-  static const Duration timeoutDuration = Duration(milliseconds: 7500);
+  static const Duration timeoutDuration = Duration(milliseconds: 15000);
   static Map<String, String> baseApiHeader = {
     "Accept": "application/json",
     "content-type": "application/json"

@@ -2,6 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:projecthomestrategies/bloc/models/fullrecipe.dart';
 
 class RecipeState with ChangeNotifier {
+  late int _pageCount;
+  int get pageCount => _pageCount;
+  late int _pageSize;
+  int get pageSize => _pageSize;
+  late bool _isLoading;
+  bool get isLoading => _isLoading;
+  late bool _finalPageReached;
+  bool get finalPageReached => _finalPageReached;
+
   late List<FullRecipeModel> _publicRecipes;
   List<FullRecipeModel> get publicRecipes => _publicRecipes;
 
@@ -15,6 +24,11 @@ class RecipeState with ChangeNotifier {
   List<FullRecipeModel> get favouriteRecipes => _favouriteRecipes;
 
   RecipeState() {
+    _pageSize = 1;
+    _pageCount = 25;
+    _finalPageReached = false;
+    _isLoading = false;
+
     _publicRecipes = <FullRecipeModel>[];
     _detailedRecipes = <FullRecipeModel>[];
     _favouriteRecipes = <FullRecipeModel>[];
@@ -30,6 +44,36 @@ class RecipeState with ChangeNotifier {
 
   void setRecipes(List<FullRecipeModel> publicRecipes) {
     _publicRecipes = publicRecipes;
+  }
+
+  // -----------------------------------------------------------
+  // Pagination
+  void setPageCount(int count) {
+    _pageCount = count;
+    notifyListeners();
+  }
+
+  void setIsLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
+
+  void setFinalPageReached(bool value) {
+    _finalPageReached = value;
+    notifyListeners();
+  }
+
+  void addReciepes(List<FullRecipeModel> recipes) {
+    _publicRecipes = [..._publicRecipes, ...recipes];
+    notifyListeners();
+  }
+
+  void resetPagingData({bool notify = false}) {
+    _pageCount = 1;
+    _pageSize = 25;
+    _isLoading = false;
+    _finalPageReached = false;
+    if (notify) notifyListeners();
   }
 
   // -----------------------------------------------------------

@@ -19,10 +19,11 @@ class RecipeService {
 
   Future<ApiResponseModel> getRecipesBasic({
     int pageNumber = 1,
-    int pageSize = 50,
+    int pageSize = 25,
   }) async {
     try {
-      final rawUri = url + "/Recipe/Public";
+      final rawUri =
+          url + "/Recipe/Public?pageNumber=$pageNumber&pageSize=$pageSize";
 
       final uri = Uri.parse(rawUri);
 
