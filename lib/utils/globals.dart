@@ -90,6 +90,10 @@ class Global {
     return DateFormat(format).format(date);
   }
 
+  static bool isDateInRange(DateTime start, DateTime end, DateTime date) {
+    return start.isBefore(date) && end.isAfter(date);
+  }
+
   static DateTime cutTimeFromDate(DateTime date) {
     return DateTime.utc(date.year, date.month, date.day);
   }

@@ -72,13 +72,14 @@ class _AppConfigLoaderState extends State<AppConfigLoader> {
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       title: 'Home Strategies',
-      // localizationsDelegates: const [
-      //   GlobalMaterialLocalizations.delegate,
-      //   GlobalWidgetsLocalizations.delegate,
-      // ],
-      // supportedLocales: const [
-      //   Locale('de', 'DE'),
-      // ],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('de', 'DE'),
+      ],
       theme: context.watch<AppTheme>().customTheme,
       initialRoute: '/auth',
       routes: Global.appRoutes,

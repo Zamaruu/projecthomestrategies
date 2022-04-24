@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/pages/recipes/favouriterecipespage.dart';
+import 'package:projecthomestrategies/pages/recipes/mealplannerpage.dart';
 import 'package:projecthomestrategies/pages/recipes/publicrecipespage.dart';
 import 'package:projecthomestrategies/widgets/basescaffold/basescaffold.dart';
 import 'package:projecthomestrategies/widgets/pages/recipes/favouiterecipes/favoritepagebuilder.dart';
@@ -28,9 +29,7 @@ class _RecipePageState extends State<RecipePage>
       backgroundColor: Colors.transparent,
     ),
     const FavouritePageBuilder(),
-    const Scaffold(
-      backgroundColor: Colors.transparent,
-    ),
+    const MealPlannerPage(),
   ];
 
   @override
