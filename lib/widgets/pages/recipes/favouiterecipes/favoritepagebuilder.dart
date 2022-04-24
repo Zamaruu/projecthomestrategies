@@ -25,6 +25,7 @@ class FavouritePageBuilder extends StatelessWidget {
           ) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Scaffold(
+                backgroundColor: Colors.transparent,
                 body: Center(
                   child: CircularProgressIndicator(
                     color: Theme.of(context).primaryColor,
