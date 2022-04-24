@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:projecthomestrategies/bloc/models/apiresponse_model.dart';
 import 'package:projecthomestrategies/bloc/models/fullrecipe.dart';
+import 'package:projecthomestrategies/bloc/models/plannedmeal_model.dart';
 import 'package:projecthomestrategies/bloc/models/recipe_model.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:http/http.dart' as http;
@@ -210,6 +211,47 @@ class RecipeService {
         return ApiResponseModel.success(
           response.statusCode,
           response.body,
+        );
+      } else {
+        return ApiResponseModel.error(
+          response.statusCode,
+          response.body.isNotEmpty ? response.body : response.reasonPhrase,
+        );
+      }
+    } on TimeoutException catch (e) {
+      return ApiResponseModel.error(408, e.message.toString());
+    } on Exception catch (e) {
+      return ApiResponseModel.error(500, e.toString());
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Meal Planner
+
+  Future<ApiResponseModel> getPlannedMeals({
+    int pageNumber = 1,
+    int pageSize = 50,
+  }) async {
+    try {
+      final rawUri = url + "/Recipe/MealPlanner";
+
+      final uri = Uri.parse(rawUri);
+
+      var response = await http
+          .get(
+            uri,
+            headers: header,
+          )
+          .timeout(Global.timeoutDuration);
+
+      if (response.statusCode == 200) {
+        var jsonBody = jsonDecode(response.body);
+
+        return ApiResponseModel.success(
+          response.statusCode,
+          List<PlannedMealModel>.from(
+            jsonBody.map((model) => PlannedMealModel.fromJson(model)),
+          ),
         );
       } else {
         return ApiResponseModel.error(

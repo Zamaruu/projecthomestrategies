@@ -4,6 +4,7 @@ import 'package:projecthomestrategies/pages/recipes/mealplannerpage.dart';
 import 'package:projecthomestrategies/pages/recipes/publicrecipespage.dart';
 import 'package:projecthomestrategies/widgets/basescaffold/basescaffold.dart';
 import 'package:projecthomestrategies/widgets/pages/recipes/favouiterecipes/favoritepagebuilder.dart';
+import 'package:projecthomestrategies/widgets/pages/recipes/mealplanner/mealplannerbuilder.dart';
 import 'package:projecthomestrategies/widgets/pages/recipes/newrecipe/newrecipebuilder.dart';
 
 class RecipePage extends StatefulWidget {
@@ -29,7 +30,7 @@ class _RecipePageState extends State<RecipePage>
       backgroundColor: Colors.transparent,
     ),
     const FavouritePageBuilder(),
-    const MealPlannerPage(),
+    const MealPlannerPageBuilder(),
   ];
 
   @override

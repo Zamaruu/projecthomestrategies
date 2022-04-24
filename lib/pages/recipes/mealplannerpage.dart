@@ -2,22 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/models/plannedmeal_model.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/basiccard.dart';
+import 'package:projecthomestrategies/widgets/pages/recipes/recipecard.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class MealPlannerPage extends StatelessWidget {
-  const MealPlannerPage({Key? key}) : super(key: key);
+  final List<PlannedMealModel> meals;
+
+  const MealPlannerPage({Key? key, required this.meals}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Colors.transparent,
-      body: MealPlannerCalendar(),
+      body: MealPlannerCalendar(
+        meals: meals,
+      ),
     );
   }
 }
 
 class MealPlannerCalendar extends StatefulWidget {
-  const MealPlannerCalendar({Key? key}) : super(key: key);
+  final List<PlannedMealModel> meals;
+
+  const MealPlannerCalendar({Key? key, required this.meals}) : super(key: key);
 
   @override
   State<MealPlannerCalendar> createState() => _MealPlannerCalendarState();
@@ -35,7 +42,7 @@ class _MealPlannerCalendarState extends State<MealPlannerCalendar> {
     _calendarFormat = CalendarFormat.week;
     _focusedDay = DateTime.now();
     _selectedDay = DateTime.now();
-    plannedMeals = [];
+    plannedMeals = widget.meals;
   }
 
   List<PlannedMealModel> _getEventsForDay(DateTime day) {
@@ -73,7 +80,7 @@ class _MealPlannerCalendarState extends State<MealPlannerCalendar> {
     return ListView(
       children: [
         BasicCard(
-          height: 150,
+          height: _calendarFormat == CalendarFormat.week ? 150 : 400,
           child: TableCalendar(
             locale: 'de_DE',
             eventLoader: (day) {
@@ -91,9 +98,9 @@ class _MealPlannerCalendarState extends State<MealPlannerCalendar> {
               });
             },
             availableCalendarFormats: const {
-              // CalendarFormat.month : 'Monat',
               // CalendarFormat.twoWeeks : '2 Wochen',
               CalendarFormat.week: 'Woche',
+              // CalendarFormat.month: 'Monat',
             },
             calendarBuilders: CalendarBuilders(
               singleMarkerBuilder: (context, date, event) {
@@ -119,7 +126,8 @@ class _MealPlannerCalendarState extends State<MealPlannerCalendar> {
             focusedDay: _focusedDay,
           ),
         ),
-        SelectedDayMeal(meal: _getMealForTheDay(_selectedDay!))
+        RecipeCard(recipe: _getMealForTheDay(_selectedDay!)!.recipe!),
+        // SelectedDayMeal(meal: _getMealForTheDay(_selectedDay!))
       ],
     );
   }
@@ -132,22 +140,24 @@ class SelectedDayMeal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BasicCard(
-      padding: 10,
-      child: meal != null
-          ? Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text("Rezept: " + meal!.recipe!.recipe!.name!),
-                Text("Ersteller: " + meal!.creator!.firstname!),
-                Text("Vom " + Global.datetimeToDeString(meal!.startDay!)),
-                Text("bis " + Global.datetimeToDeString(meal!.endDay!)),
-              ],
-            )
-          : const Center(
-              child: Text("Noch kein Essen geplant!"),
-            ),
+    return Column(
+      children: [
+        BasicCard(
+          padding: 10,
+          child: meal != null
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text("Vom " + Global.datetimeToDeString(meal!.startDay!)),
+                    Text("bis " + Global.datetimeToDeString(meal!.endDay!)),
+                  ],
+                )
+              : const Center(
+                  child: Text("Noch kein Essen geplant!"),
+                ),
+        ),
+      ],
     );
   }
 }
