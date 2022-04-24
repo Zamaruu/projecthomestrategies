@@ -15,40 +15,35 @@ class MealPlannerPageBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (context.read<RecipeState>().isFavouritesNotEmpty()) {
-      return const FavouriteRecipesPage();
-    } else {
-      return Consumer<AuthenticationState>(
-        builder: (context, auth, _) => FutureBuilder<ApiResponseModel>(
-          future: RecipeService(auth.token).getPlannedMeals(),
-          builder: (
-            BuildContext context,
-            AsyncSnapshot<ApiResponseModel> snapshot,
-          ) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Scaffold(
-                backgroundColor: Colors.transparent,
-                body: Center(
-                  child: CircularProgressIndicator(
-                    color: Theme.of(context).primaryColor,
-                  ),
+    return Consumer<AuthenticationState>(
+      builder: (context, auth, _) => FutureBuilder<ApiResponseModel>(
+        future: RecipeService(auth.token).getPlannedMeals(),
+        builder: (
+          BuildContext context,
+          AsyncSnapshot<ApiResponseModel> snapshot,
+        ) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Scaffold(
+              backgroundColor: Colors.transparent,
+              body: Center(
+                child: CircularProgressIndicator(
+                  color: Theme.of(context).primaryColor,
                 ),
-              );
-            }
-            if (snapshot.hasError) {
-              return ErrorPageHandler(error: snapshot.error.toString());
-            } else {
-              var plannedMeals =
-                  snapshot.data!.object as List<PlannedMealModel>;
-              // context.read<RecipeState>().setFavourites(favouriteRecipes);
+              ),
+            );
+          }
+          if (snapshot.hasError) {
+            return ErrorPageHandler(error: snapshot.error.toString());
+          } else {
+            var plannedMeals = snapshot.data!.object as List<PlannedMealModel>;
+            // context.read<RecipeState>().setFavourites(favouriteRecipes);
 
-              return MealPlannerPage(
-                meals: plannedMeals,
-              );
-            }
-          },
-        ),
-      );
-    }
+            return MealPlannerPage(
+              meals: plannedMeals,
+            );
+          }
+        },
+      ),
+    );
   }
 }

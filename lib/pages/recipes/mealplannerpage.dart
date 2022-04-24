@@ -46,7 +46,6 @@ class _MealPlannerCalendarState extends State<MealPlannerCalendar> {
   }
 
   List<PlannedMealModel> _getEventsForDay(DateTime day) {
-    print(day);
     var meals = plannedMeals
         .where((meal) =>
             Global.isDateInRange(
@@ -55,7 +54,6 @@ class _MealPlannerCalendarState extends State<MealPlannerCalendar> {
                 day) ||
             isSameDay(meal.startDay, day))
         .toList();
-    print(meals);
     return meals;
   }
 
