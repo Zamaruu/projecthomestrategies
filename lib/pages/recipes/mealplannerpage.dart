@@ -4,41 +4,6 @@ import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/basiccard.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-List<PlannendMealModel> plannedMeals = <PlannendMealModel>[
-  PlannendMealModel(
-    0,
-    "Maxi",
-    DateTime.now(),
-    DateTime.now().add(const Duration(hours: 1)),
-    "Suppe",
-    Colors.green,
-  ),
-  PlannendMealModel(
-    1,
-    "Selli",
-    DateTime.now().add(const Duration(days: 1)),
-    DateTime.now().add(const Duration(days: 1, hours: 1)),
-    "Hackbraten",
-    Colors.red,
-  ),
-  PlannendMealModel(
-    2,
-    "Selli",
-    DateTime.now().add(const Duration(days: 2)),
-    DateTime.now().add(const Duration(days: 3, hours: 1)),
-    "Bauerntopf",
-    Colors.blue,
-  ),
-  PlannendMealModel(
-    3,
-    "Maxi",
-    DateTime.now().add(const Duration(days: 4)),
-    DateTime.now().add(const Duration(days: 6, hours: 1)),
-    "Salat",
-    Colors.yellow,
-  ),
-];
-
 class MealPlannerPage extends StatelessWidget {
   const MealPlannerPage({Key? key}) : super(key: key);
 
@@ -62,6 +27,7 @@ class _MealPlannerCalendarState extends State<MealPlannerCalendar> {
   late CalendarFormat _calendarFormat;
   late DateTime _focusedDay;
   late DateTime? _selectedDay;
+  late List<PlannedMealModel> plannedMeals;
 
   @override
   void initState() {
@@ -69,15 +35,16 @@ class _MealPlannerCalendarState extends State<MealPlannerCalendar> {
     _calendarFormat = CalendarFormat.week;
     _focusedDay = DateTime.now();
     _selectedDay = DateTime.now();
+    plannedMeals = [];
   }
 
-  List<PlannendMealModel> _getEventsForDay(DateTime day) {
+  List<PlannedMealModel> _getEventsForDay(DateTime day) {
     print(day);
     var meals = plannedMeals
         .where((meal) =>
             Global.isDateInRange(
-                meal.startDay.subtract(const Duration(hours: 1)),
-                meal.endDay.add(const Duration(hours: 1)),
+                meal.startDay!.subtract(const Duration(hours: 1)),
+                meal.endDay!.add(const Duration(hours: 1)),
                 day) ||
             isSameDay(meal.startDay, day))
         .toList();
@@ -85,12 +52,12 @@ class _MealPlannerCalendarState extends State<MealPlannerCalendar> {
     return meals;
   }
 
-  PlannendMealModel? _getMealForTheDay(DateTime day) {
+  PlannedMealModel? _getMealForTheDay(DateTime day) {
     var meals = plannedMeals
         .where((meal) =>
             Global.isDateInRange(
-                meal.startDay.subtract(const Duration(hours: 1)),
-                meal.endDay.add(const Duration(hours: 1)),
+                meal.startDay!.subtract(const Duration(hours: 1)),
+                meal.endDay!.add(const Duration(hours: 1)),
                 day) ||
             isSameDay(meal.startDay, day))
         .toList();
@@ -130,11 +97,11 @@ class _MealPlannerCalendarState extends State<MealPlannerCalendar> {
             },
             calendarBuilders: CalendarBuilders(
               singleMarkerBuilder: (context, date, event) {
-                var meal = event as PlannendMealModel;
+                var meal = event as PlannedMealModel;
                 return Container(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: meal.color,
+                    color: Color(meal.color!),
                   ),
                   width: 7.0,
                   height: 7.0,
@@ -159,7 +126,7 @@ class _MealPlannerCalendarState extends State<MealPlannerCalendar> {
 }
 
 class SelectedDayMeal extends StatelessWidget {
-  final PlannendMealModel? meal;
+  final PlannedMealModel? meal;
 
   const SelectedDayMeal({Key? key, required this.meal}) : super(key: key);
 
@@ -172,10 +139,10 @@ class SelectedDayMeal extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text("Rezept: " + meal!.recipe),
-                Text("Ersteller: " + meal!.creator),
-                Text("Vom " + Global.datetimeToDeString(meal!.startDay)),
-                Text("bis " + Global.datetimeToDeString(meal!.endDay)),
+                Text("Rezept: " + meal!.recipe!.recipe!.name!),
+                Text("Ersteller: " + meal!.creator!.firstname!),
+                Text("Vom " + Global.datetimeToDeString(meal!.startDay!)),
+                Text("bis " + Global.datetimeToDeString(meal!.endDay!)),
               ],
             )
           : const Center(
