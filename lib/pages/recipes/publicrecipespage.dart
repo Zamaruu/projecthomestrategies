@@ -6,6 +6,7 @@ import 'package:projecthomestrategies/bloc/provider/recipe_state.dart';
 import 'package:projecthomestrategies/service/apiresponsehandler_service.dart';
 import 'package:projecthomestrategies/service/recipe_service.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
+import 'package:projecthomestrategies/widgets/pages/recipes/newrecipe/newrecipebuilder.dart';
 import 'package:projecthomestrategies/widgets/pages/recipes/recipecard.dart';
 import 'package:provider/provider.dart';
 
@@ -57,6 +58,18 @@ class _PublicRecipesPageState extends State<PublicRecipesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              fullscreenDialog: true,
+              builder: (context) => const NewRecipeBuilder(),
+            ),
+          );
+        },
+        tooltip: "Neues Rezept erstellen",
+        child: const Icon(Icons.add),
+      ),
       backgroundColor: Colors.transparent,
       body: Consumer<RecipeState>(
         builder: (context, state, _) {

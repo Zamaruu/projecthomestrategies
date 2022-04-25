@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/models/plannedmeal_model.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/basiccard.dart';
+import 'package:projecthomestrategies/widgets/pages/recipes/mealplanner/newmealplanningbuilder.dart';
 import 'package:projecthomestrategies/widgets/pages/recipes/mealplanner/selecteddaymeals.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -16,6 +17,18 @@ class MealPlannerPage extends StatelessWidget {
       backgroundColor: Colors.transparent,
       body: MealPlannerCalendar(
         meals: meals,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              fullscreenDialog: true,
+              builder: (context) => const NewMealPlanningBuilder(),
+            ),
+          );
+        },
+        tooltip: "Neues Rezept erstellen",
+        child: const Icon(Icons.add),
       ),
     );
   }

@@ -41,18 +41,6 @@ class _RecipePageState extends State<RecipePage>
         controller: _tabController,
         children: _pages,
       ),
-      fab: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              fullscreenDialog: true,
-              builder: (context) => const NewRecipeBuilder(),
-            ),
-          );
-        },
-        tooltip: "Neues Rezept erstellen",
-        child: const Icon(Icons.add),
-      ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           border: Border(
