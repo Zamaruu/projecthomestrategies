@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/models/plannedmeal_model.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/basiccard.dart';
-import 'package:projecthomestrategies/widgets/pages/recipes/recipecard.dart';
+import 'package:projecthomestrategies/widgets/pages/recipes/mealplanner/selecteddaymeals.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class MealPlannerPage extends StatelessWidget {
@@ -57,7 +57,7 @@ class _MealPlannerCalendarState extends State<MealPlannerCalendar> {
     return meals;
   }
 
-  PlannedMealModel? _getMealForTheDay(DateTime day) {
+  List<PlannedMealModel>? _getMealsForTheDay(DateTime day) {
     var meals = plannedMeals
         .where((meal) =>
             Global.isDateInRange(
@@ -70,7 +70,7 @@ class _MealPlannerCalendarState extends State<MealPlannerCalendar> {
     if (meals.isEmpty) {
       return null;
     }
-    return meals.first;
+    return meals;
   }
 
   @override
@@ -124,37 +124,8 @@ class _MealPlannerCalendarState extends State<MealPlannerCalendar> {
             focusedDay: _focusedDay,
           ),
         ),
-        RecipeCard(recipe: _getMealForTheDay(_selectedDay!)!.recipe!),
+        SelectedDayMeals(meals: _getMealsForTheDay(_selectedDay!)),
         // SelectedDayMeal(meal: _getMealForTheDay(_selectedDay!))
-      ],
-    );
-  }
-}
-
-class SelectedDayMeal extends StatelessWidget {
-  final PlannedMealModel? meal;
-
-  const SelectedDayMeal({Key? key, required this.meal}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        BasicCard(
-          padding: 10,
-          child: meal != null
-              ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text("Vom " + Global.datetimeToDeString(meal!.startDay!)),
-                    Text("bis " + Global.datetimeToDeString(meal!.endDay!)),
-                  ],
-                )
-              : const Center(
-                  child: Text("Noch kein Essen geplant!"),
-                ),
-        ),
       ],
     );
   }

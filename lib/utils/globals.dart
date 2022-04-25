@@ -131,4 +131,8 @@ class Global {
   static bool isStringNullOrEmpty(String? s) {
     return s == null || s.isEmpty;
   }
+
+  static bool isListNullOrEmpty(List? s) {
+    return s == null || s.isEmpty;
+  }
 }

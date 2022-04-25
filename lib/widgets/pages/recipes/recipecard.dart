@@ -5,8 +5,13 @@ import 'package:projecthomestrategies/widgets/pages/recipes/recipedetails/recipe
 
 class RecipeCard extends StatelessWidget {
   final FullRecipeModel recipe;
+  final EdgeInsets margin;
 
-  const RecipeCard({Key? key, required this.recipe}) : super(key: key);
+  const RecipeCard({
+    Key? key,
+    required this.recipe,
+    this.margin = const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+  }) : super(key: key);
 
   UserAvatar buildAvatar() {
     var firstLetter = recipe.creator!.firstname![0];
@@ -62,7 +67,7 @@ class RecipeCard extends StatelessWidget {
       onTap: () => _pushDetailsPage(context),
       child: Card(
         elevation: 10,
-        margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+        margin: margin,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
