@@ -17,10 +17,12 @@ import 'package:intl/intl.dart';
 import 'package:projecthomestrategies/pages/household/householdpage.dart';
 
 class Global {
+  static const String kMealSearchHistoryKey = "key_searchMealHistory";
+
   static const double splashRadius = 20;
   static const String baseApiUrl = kDebugMode
       //? "http://192.168.0.143:5000/api" //Local Ubuntu VM
-      ? "http://192.168.0.71:5000/api" //Local Windows Docker
+      ? "http://10.0.2.2:5000/api" //Local Windows Docker
       : "https://homestrategies.azurewebsites.net/api"; //Live Production API and DB
   // static const String baseApiUrl = "http://10.0.2.2:5000/api";
   static const Duration timeoutDuration = Duration(milliseconds: 15000);

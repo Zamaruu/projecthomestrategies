@@ -4,8 +4,11 @@ import 'package:projecthomestrategies/bloc/models/fullrecipe.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/provider/new_meal_planning_state.dart';
 import 'package:projecthomestrategies/service/recipe_service.dart';
+import 'package:projecthomestrategies/utils/globals.dart';
+import 'package:projecthomestrategies/widgets/pages/recipes/mealplanner/newmealplanning/searchmealhistory.dart';
 import 'package:projecthomestrategies/widgets/pages/recipes/recipecard.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchMealsOverlay extends StatefulWidget {
   const SearchMealsOverlay({Key? key}) : super(key: key);
@@ -17,12 +20,14 @@ class SearchMealsOverlay extends StatefulWidget {
 class _SearchMealsOverlayState extends State<SearchMealsOverlay> {
   late List<FullRecipeModel> queryiedRecipes;
   late bool isLoading;
+  late FloatingSearchBarController barController;
 
   @override
   void initState() {
     super.initState();
     isLoading = false;
     queryiedRecipes = <FullRecipeModel>[];
+    barController = FloatingSearchBarController();
   }
 
   void _toggleIsLoading(bool value) {
@@ -31,9 +36,35 @@ class _SearchMealsOverlayState extends State<SearchMealsOverlay> {
     });
   }
 
+  Future<void> _addItemToSearchHistory(String query) async {
+    final prefs = await SharedPreferences.getInstance();
+    var history = prefs.getStringList(Global.kMealSearchHistoryKey);
+    List<String> newHistory = <String>[];
+
+    if (!Global.isListNullOrEmpty(history)) {
+      // Check if Item is already in Serach History
+      for (var item in history!) {
+        if (item.toLowerCase() == query.toLowerCase()) {
+          return;
+        }
+      }
+
+      newHistory = history;
+    }
+    if (query.isNotEmpty) {
+      newHistory.add(query);
+    }
+    await prefs.setStringList(Global.kMealSearchHistoryKey, newHistory);
+  }
+
   Future<dynamic> _getRecipesByName(BuildContext ctx, String query) async {
+    if (query.isEmpty) {
+      return;
+    }
+
     _toggleIsLoading(true);
 
+    await _addItemToSearchHistory(query);
     var token = ctx.read<AuthenticationState>().token;
     var response = await RecipeService(token).queryRecipesByName(query);
 
@@ -48,26 +79,11 @@ class _SearchMealsOverlayState extends State<SearchMealsOverlay> {
     }
   }
 
-  Widget _searchHistoy() {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8),
-      child: Material(
-        color: Colors.white,
-        elevation: 4.0,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: Colors.accents.map((color) {
-            return Container(height: 112, color: color);
-          }).toList(),
-        ),
-      ),
-    );
-  }
-
   Widget buildFloatingSearchBar(BuildContext ctx) {
     final isPortrait = MediaQuery.of(ctx).orientation == Orientation.portrait;
 
     return FloatingSearchBar(
+      controller: barController,
       hint: 'Rezepte durchsuchen...',
       scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
       transitionDuration: const Duration(milliseconds: 800),
@@ -78,9 +94,7 @@ class _SearchMealsOverlayState extends State<SearchMealsOverlay> {
       width: isPortrait ? 600 : 500,
       debounceDelay: const Duration(milliseconds: 500),
       automaticallyImplyBackButton: false,
-      onQueryChanged: (query) {
-        // Call your model, bloc, controller here.
-      },
+      onQueryChanged: (query) => _getRecipesByName(ctx, query),
       onSubmitted: (query) => _getRecipesByName(ctx, query),
       // Specify a custom transition to be used for
       // animating between opened and closed stated.
@@ -98,8 +112,19 @@ class _SearchMealsOverlayState extends State<SearchMealsOverlay> {
             },
           ),
         ),
-        FloatingSearchBarAction.searchToClear(
+        FloatingSearchBarAction.icon(
+          icon: const Icon(
+            Icons.clear,
+            color: Colors.black,
+          ),
           showIfClosed: false,
+          showIfOpened: true,
+          onTap: () {
+            setState(() {
+              queryiedRecipes = [];
+              barController.clear();
+            });
+          },
         ),
       ],
       builder: (context, transition) {
@@ -120,7 +145,7 @@ class _SearchMealsOverlayState extends State<SearchMealsOverlay> {
         }
         //Else if()
         else {
-          return _searchHistoy();
+          return SearchMealHistory(searchBarController: barController);
         }
       },
     );
