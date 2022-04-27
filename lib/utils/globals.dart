@@ -21,7 +21,7 @@ class Global {
   static const String baseApiUrl = kDebugMode
       //? "http://192.168.0.143:5000/api" //Local Ubuntu VM
       ? "http://192.168.0.71:5000/api" //Local Windows Docker
-      : "http://194.163.182.236:5000/api"; //Live Production API and DB
+      : "https://homestrategies.azurewebsites.net/api"; //Live Production API and DB
   // static const String baseApiUrl = "http://10.0.2.2:5000/api";
   static const Duration timeoutDuration = Duration(milliseconds: 15000);
   static Map<String, String> baseApiHeader = {
