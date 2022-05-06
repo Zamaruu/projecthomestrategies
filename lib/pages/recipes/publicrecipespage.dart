@@ -59,6 +59,7 @@ class _PublicRecipesPageState extends State<PublicRecipesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        heroTag: "PublicRecipesFabTag",
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(

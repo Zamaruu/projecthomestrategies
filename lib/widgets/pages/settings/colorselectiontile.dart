@@ -56,26 +56,27 @@ class SelectColorTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<AuthenticationState>(
       builder: (context, model, _) => ListTile(
-          leading: Container(
-            height: 35,
-            width: 35,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: model.sessionUser.color,
-            ),
+        leading: Container(
+          height: 35,
+          width: 35,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: model.sessionUser.color,
           ),
-          title: const Text("Anzeigefarbe"),
-          trailing: IconButton(
-            tooltip: "Bearbeiten",
-            onPressed: () async {
-              await selectColorDialog(
-                context,
-                model.sessionUser.color!,
-              );
-            },
-            splashRadius: Global.splashRadius,
-            icon: const Icon(Icons.color_lens),
-          )),
+        ),
+        title: const Text("Anzeigefarbe"),
+        trailing: IconButton(
+          tooltip: "Bearbeiten",
+          onPressed: () async {
+            await selectColorDialog(
+              context,
+              model.sessionUser.color!,
+            );
+          },
+          splashRadius: Global.splashRadius,
+          icon: const Icon(Icons.color_lens),
+        ),
+      ),
     );
   }
 }

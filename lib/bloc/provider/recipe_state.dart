@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:projecthomestrategies/bloc/models/fullrecipe.dart';
+import 'package:projecthomestrategies/bloc/models/plannedmeal_model.dart';
 
 class RecipeState with ChangeNotifier {
   late int _pageCount;
@@ -23,6 +24,10 @@ class RecipeState with ChangeNotifier {
   late List<FullRecipeModel> _favouriteRecipes;
   List<FullRecipeModel> get favouriteRecipes => _favouriteRecipes;
 
+  //Meal Plannings
+  late List<PlannedMealModel> _plannedMeals;
+  List<PlannedMealModel> get plannedMeals => _plannedMeals;
+
   RecipeState() {
     _pageSize = 1;
     _pageCount = 25;
@@ -32,6 +37,7 @@ class RecipeState with ChangeNotifier {
     _publicRecipes = <FullRecipeModel>[];
     _detailedRecipes = <FullRecipeModel>[];
     _favouriteRecipes = <FullRecipeModel>[];
+    _plannedMeals = <PlannedMealModel>[];
   }
 
   bool hasRecipeData() {
@@ -136,5 +142,24 @@ class RecipeState with ChangeNotifier {
 
     _favouriteRecipes = List.from(favouriteRecipes)..removeAt(index);
     notifyListeners();
+  }
+
+  // -----------------------------------------------------------
+  // Meal Plannings
+  void setInitialMealPlanningData(List<PlannedMealModel> plannings) {
+    _plannedMeals = plannings;
+  }
+
+  bool isPlanningsNotEmpty() {
+    return _plannedMeals.isNotEmpty;
+  }
+
+  void setMealPlannings(List<PlannedMealModel> plannings,
+      {bool notify = false}) {
+    _plannedMeals = plannings;
+
+    if (notify) {
+      notifyListeners();
+    }
   }
 }

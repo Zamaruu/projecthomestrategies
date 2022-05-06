@@ -300,4 +300,36 @@ class RecipeService {
       return ApiResponseModel.error(500, e.toString());
     }
   }
+
+  Future<ApiResponseModel> createNewMealPlanning(PlannedMealModel meal) async {
+    try {
+      final rawUri = url + "/Recipe/MealPlanner";
+
+      final uri = Uri.parse(rawUri);
+
+      var response = await http
+          .post(
+            uri,
+            headers: header,
+            body: jsonEncode(meal.toCreateJson()),
+          )
+          .timeout(Global.timeoutDuration);
+
+      if (response.statusCode == 200) {
+        return ApiResponseModel.success(
+          response.statusCode,
+          response.body,
+        );
+      } else {
+        return ApiResponseModel.error(
+          response.statusCode,
+          response.body.isNotEmpty ? response.body : response.reasonPhrase,
+        );
+      }
+    } on TimeoutException catch (e) {
+      return ApiResponseModel.error(408, e.message.toString());
+    } on Exception catch (e) {
+      return ApiResponseModel.error(500, e.toString());
+    }
+  }
 }

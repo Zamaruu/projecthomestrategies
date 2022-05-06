@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
+import 'package:projecthomestrategies/bloc/models/household_model.dart';
 import 'package:projecthomestrategies/bloc/models/user_model.dart';
 import 'package:projecthomestrategies/pages/billspage/billpagebuilder.dart';
 import 'package:projecthomestrategies/pages/homepage/initialloader.dart';
@@ -128,6 +129,10 @@ class Global {
 
   static UserModel getCurrentUser(BuildContext context) {
     return context.read<AuthenticationState>().sessionUser;
+  }
+
+  static HouseholdModel getCurrentHousehold(BuildContext context) {
+    return context.read<AuthenticationState>().getSessionHousehold()!;
   }
 
   static bool isStringNullOrEmpty(String? s) {

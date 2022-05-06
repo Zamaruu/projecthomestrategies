@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/models/apiresponse_model.dart';
-import 'package:projecthomestrategies/bloc/models/fullrecipe.dart';
 import 'package:projecthomestrategies/bloc/models/plannedmeal_model.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/provider/recipe_state.dart';
-import 'package:projecthomestrategies/pages/recipes/favouriterecipespage.dart';
 import 'package:projecthomestrategies/pages/recipes/mealplannerpage.dart';
 import 'package:projecthomestrategies/service/recipe_service.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/errorpage.dart';
@@ -36,11 +34,11 @@ class MealPlannerPageBuilder extends StatelessWidget {
             return ErrorPageHandler(error: snapshot.error.toString());
           } else {
             var plannedMeals = snapshot.data!.object as List<PlannedMealModel>;
-            // context.read<RecipeState>().setFavourites(favouriteRecipes);
+            context
+                .read<RecipeState>()
+                .setInitialMealPlanningData(plannedMeals);
 
-            return MealPlannerPage(
-              meals: plannedMeals,
-            );
+            return const MealPlannerPage();
           }
         },
       ),
