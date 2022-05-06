@@ -57,6 +57,7 @@ class MealPlannerPage extends StatelessWidget {
         builder: (context, plannedMeals, _) {
           return MealPlannerCalendar(
             meals: plannedMeals,
+            refreshPlannings: () => _fetchMealPlannings(context),
           );
         },
       ),

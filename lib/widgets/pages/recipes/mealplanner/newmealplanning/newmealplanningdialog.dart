@@ -30,8 +30,6 @@ class NewMealPlanningDialog extends StatelessWidget {
     var mealPlanning = ctx.read<NewMealPlanningState>().buildMealPlanning(ctx);
     var token = Global.getToken(ctx);
 
-    print(mealPlanning);
-
     loader.showLoadingSnackbar();
     ctx.read<NewMealPlanningState>().setIsLoading(true);
     var response =
