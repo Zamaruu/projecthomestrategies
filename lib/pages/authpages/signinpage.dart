@@ -9,8 +9,6 @@ import 'package:projecthomestrategies/widgets/auth/registerblob.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/loading/somesrategiesloadingbuilder.dart';
 import 'package:projecthomestrategies/widgets/auth/authenticationresponse.dart';
 import 'package:projecthomestrategies/widgets/auth/staysignedincheckbox.dart';
-import 'package:projecthomestrategies/widgets/auth/submitfab.dart';
-import 'package:projecthomestrategies/widgets/globalwidgets/primarybutton.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/textinputfield.dart';
 import 'package:provider/provider.dart';
 
@@ -97,6 +95,17 @@ class _SignInPageState extends State<SignInPage> {
     }
   }
 
+  Future handleTryAgainWithSavedCredentials(
+      AuthenticationState auth, BuildContext ctx) async {
+    var credentials = await SecureStorageHandler().getLoggedInUserCredentials();
+
+    if (credentials != null) {
+      await auth.signInWithSavedCredentials(credentials, ctx);
+    } else {
+      return;
+    }
+  }
+
   void setSignedIn(bool newValue) {
     setState(() {
       staySignedIn = newValue;
@@ -168,6 +177,15 @@ class _SignInPageState extends State<SignInPage> {
                                 ),
                                 onPressed: () => handleSignIn(auth, context),
                                 child: const Text("Anmelden"),
+                              ),
+                              TextButton(
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: const Size.fromHeight(40), // NEW
+                                ),
+                                onPressed: () =>
+                                    handleTryAgainWithSavedCredentials(
+                                        auth, context),
+                                child: const Text("Erneut versuchen"),
                               ),
                             ],
                           ),

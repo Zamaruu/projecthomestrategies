@@ -28,8 +28,14 @@ class InitialLoader extends StatelessWidget {
         } else if (snapshot.hasError) {
           return ErrorPageHandler(error: snapshot.error.toString());
         } else {
-          var open = snapshot.data!.object["OpenNotifications"];
-          var seen = snapshot.data!.object["SeenNotifications"];
+          var notifications = snapshot.data!.object;
+
+          var open = notifications == null
+              ? []
+              : snapshot.data!.object["OpenNotifications"];
+          var seen = notifications == null
+              ? []
+              : snapshot.data!.object["SeenNotifications"];
           context.read<AppCacheState>().setInitialNotificationData(open, seen);
           return const HomePage();
         }

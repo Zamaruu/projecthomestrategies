@@ -8,6 +8,7 @@ class PlannedMealModel {
   DateTime? startDay;
   DateTime? endDay;
   int? color;
+  String? basicRecipeName;
   FullRecipeModel? recipe;
   UserModel? creator;
   HouseholdModel? household;
@@ -17,6 +18,7 @@ class PlannedMealModel {
     this.startDay,
     this.endDay,
     this.color,
+    this.basicRecipeName,
     this.recipe,
     this.creator,
     this.household,
@@ -27,6 +29,7 @@ class PlannedMealModel {
     startDay = DateTime.parse(json['startDay']).toLocal();
     endDay = DateTime.parse(json['endDay']);
     color = json['color'];
+    basicRecipeName = json['basicRecipeName'];
     recipe = json['recipe'] != null
         ? FullRecipeModel.fromJson(json['recipe'])
         : null;
@@ -43,6 +46,7 @@ class PlannedMealModel {
     data['startDay'] = startDay.toString();
     data['endDay'] = endDay.toString();
     data['color'] = color;
+    data['basicRecipeName'] = basicRecipeName;
     if (recipe != null) {
       data['recipe'] = recipe!.toJson();
     }
@@ -61,6 +65,7 @@ class PlannedMealModel {
     data['startDay'] = startDay.toString();
     data['endDay'] = endDay.toString();
     data['color'] = color;
+    data['basicRecipeName'] = basicRecipeName;
     if (recipe != null) {
       data['recipeId'] = recipe!.recipe!.id!;
     }
