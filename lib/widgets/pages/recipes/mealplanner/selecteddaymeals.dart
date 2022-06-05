@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/models/plannedmeal_model.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
+import 'package:projecthomestrategies/widgets/globalwidgets/basiccard.dart';
 import 'package:projecthomestrategies/widgets/pages/recipes/recipecard.dart';
 
 class SelectedDayMeals extends StatelessWidget {
@@ -16,12 +17,21 @@ class SelectedDayMeals extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         itemCount: meals!.length,
         itemBuilder: (BuildContext context, int index) {
-          return RecipeCard(recipe: meals![index].recipe!);
+          if (meals![index].recipe == null) {
+            return BasicRecipeCard(meal: meals![index]);
+          } else {
+            return RecipeCard(recipe: meals![index].recipe!);
+          }
         },
       );
     } else {
-      return const Center(
-        child: Text("Noch kein Essen geplant!"),
+      return const BasicCard(
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 5),
+          child: Center(
+            child: Text("Noch kein Essen geplant!"),
+          ),
+        ),
       );
     }
   }

@@ -34,7 +34,7 @@ class RecipeCookingSteps extends StatelessWidget {
                   if (index < cookingSteps.length - 1)
                     const NextCookingStepDivider(),
                   if (index == cookingSteps.length - 1)
-                    const FinishStepDivider(),
+                    const TextStepDivider(text: "Fertig"),
                 ],
               );
             },

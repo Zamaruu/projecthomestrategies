@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:projecthomestrategies/bloc/models/fullrecipe.dart';
+import 'package:projecthomestrategies/bloc/models/plannedmeal_model.dart';
+import 'package:projecthomestrategies/widgets/globalwidgets/basiccard.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/draweravatar.dart';
 import 'package:projecthomestrategies/widgets/pages/recipes/recipedetails/recipedetailsbuilder.dart';
 
@@ -135,6 +138,52 @@ class RecipeCard extends StatelessWidget {
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class BasicRecipeCard extends StatelessWidget {
+  final PlannedMealModel meal;
+
+  const BasicRecipeCard({Key? key, required this.meal}) : super(key: key);
+
+  UserAvatar buildAvatar() {
+    var firstLetter = meal.creator!.firstname![0];
+    var lastLetter = meal.creator!.surname![0];
+
+    return UserAvatar(
+      firstLetter: firstLetter,
+      lastLetter: lastLetter,
+      color: meal.creator!.color!,
+      avatarRadius: 45,
+      fontSize: 20,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BasicCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+            child: Text(
+              meal.basicRecipeName!,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 17,
+              ),
+            ),
+          ),
+          ListTile(
+            leading: buildAvatar(),
+            title: Text(
+              "von ${meal.creator!.firstname!} ${meal.creator!.surname!}",
+            ),
+          ),
+        ],
       ),
     );
   }

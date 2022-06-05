@@ -6,6 +6,8 @@ import 'package:projecthomestrategies/service/recipe_service.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/basiccard.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/loading/loadingsnackbar.dart';
+import 'package:projecthomestrategies/widgets/globalwidgets/textinputfield.dart';
+import 'package:projecthomestrategies/widgets/pages/recipes/divider/finishstepdivider.dart';
 import 'package:projecthomestrategies/widgets/pages/recipes/mealplanner/newmealplanning/mealplanningbottombar.dart';
 import 'package:projecthomestrategies/widgets/pages/recipes/mealplanner/newmealplanning/searchmealsoverlay.dart';
 import 'package:projecthomestrategies/widgets/pages/recipes/mealplanner/newmealplanning/selectmealcard.dart';
@@ -60,10 +62,10 @@ class NewMealPlanningDialog extends StatelessWidget {
           children: [
             ListView(
               padding: const EdgeInsets.all(10),
-              children: const [
-                _RecipeSection(),
-                _MealDateRange(),
-                _ColorSelect(),
+              children: [
+                _MealTypeBuilder(),
+                const _MealDateRange(),
+                const _ColorSelect(),
               ],
             ),
             const SearchMealsOverlay(),
@@ -86,19 +88,40 @@ class NewMealPlanningDialog extends StatelessWidget {
   }
 }
 
+class _MealTypeBuilder extends StatelessWidget {
+  final FocusNode focus = FocusNode();
+
+  _MealTypeBuilder({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const _RecipeSection(),
+        const Padding(
+          padding: EdgeInsets.symmetric(vertical: 5.0),
+          child: TextStepDivider(text: "oder"),
+        ),
+        _BasicRecipeNameSection(focusNode: focus),
+      ],
+    );
+  }
+}
+
 class _RecipeSection extends StatelessWidget {
   const _RecipeSection({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Selector<NewMealPlanningState, FullRecipeModel?>(
-      selector: (context, state) => state.selectedRecipe,
-      builder: (context, recipe, _) {
-        if (recipe != null) {
+    return Consumer<NewMealPlanningState>(
+      builder: (context, state, _) {
+        if (state.selectedRecipe != null) {
           return SelectMealCard(
             onSelectIcon: Icons.clear,
             onSelectText: "Rezept löschen",
-            recipe: recipe,
+            recipe: state.selectedRecipe!,
             onSelect: () => context.read<NewMealPlanningState>().removeRecipe(),
             margin: const EdgeInsets.symmetric(vertical: 5),
           );
@@ -110,16 +133,46 @@ class _RecipeSection extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(10)),
               ),
               side: BorderSide(
-                color: Theme.of(context).primaryColor.withOpacity(0.5),
+                color: Global.isStringNullOrEmpty(
+                        state.basicRecipeNameController!.text)
+                    ? Theme.of(context).primaryColor.withOpacity(0.5)
+                    : Colors.grey,
               ),
             ),
-            onPressed: () => {
-              context.read<NewMealPlanningState>().setIsSearchModalOpen(true),
-            },
+            onPressed: Global.isStringNullOrEmpty(
+                    state.basicRecipeNameController!.text)
+                ? () => {
+                      context
+                          .read<NewMealPlanningState>()
+                          .setIsSearchModalOpen(true),
+                    }
+                : null,
             icon: const Icon(Icons.ramen_dining),
             label: const Text("Rezept auswählen"),
           );
         }
+      },
+    );
+  }
+}
+
+class _BasicRecipeNameSection extends StatelessWidget {
+  final FocusNode focusNode;
+
+  const _BasicRecipeNameSection({Key? key, required this.focusNode})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<NewMealPlanningState>(
+      builder: (context, state, _) {
+        return TextInputField(
+          enabled: state.selectedRecipe == null,
+          controller: state.basicRecipeNameController!,
+          helperText: "Gerichtname",
+          type: TextInputType.text,
+          focusNode: focusNode,
+        );
       },
     );
   }

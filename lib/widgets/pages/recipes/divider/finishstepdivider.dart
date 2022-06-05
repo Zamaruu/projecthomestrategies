@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-class FinishStepDivider extends StatelessWidget {
-  const FinishStepDivider({Key? key}) : super(key: key);
+class TextStepDivider extends StatelessWidget {
+  final String text;
+
+  const TextStepDivider({Key? key, required this.text}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +17,8 @@ class FinishStepDivider extends StatelessWidget {
             height: 1,
             color: Colors.grey,
           ),
-          const Text(
-            "Fertig",
+          Text(
+            text,
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           Container(

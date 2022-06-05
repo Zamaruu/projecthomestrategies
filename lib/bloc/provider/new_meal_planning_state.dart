@@ -12,6 +12,9 @@ class NewMealPlanningState with ChangeNotifier {
 
   late FullRecipeModel? _selectedRecipe;
   FullRecipeModel? get selectedRecipe => _selectedRecipe;
+  late TextEditingController? _basicRecipeNameController;
+  TextEditingController? get basicRecipeNameController =>
+      _basicRecipeNameController;
 
   late DateTime _startDate;
   DateTime get startDate => _startDate;
@@ -25,6 +28,10 @@ class NewMealPlanningState with ChangeNotifier {
     _isLoading = false;
     _isSearchModalOpen = false;
     _selectedRecipe = null;
+    _basicRecipeNameController = TextEditingController();
+    _basicRecipeNameController!.addListener(() {
+      notifyListeners();
+    });
     _startDate = DateTime.now().toLocal();
     _endDate = DateTime.now().add(const Duration(days: 1)).toLocal();
     _color = Colors.blue;
@@ -39,11 +46,13 @@ class NewMealPlanningState with ChangeNotifier {
       endDay: endDate,
       color: color.value,
       recipe: selectedRecipe,
+      basicRecipeName: basicRecipeNameController!.text,
     );
   }
 
   bool isPlanningValid() {
-    if (_selectedRecipe == null) {
+    if (_selectedRecipe == null &&
+        Global.isStringNullOrEmpty(_basicRecipeNameController!.text)) {
       return false;
     }
     if (endDate.isBefore(startDate)) {

@@ -33,7 +33,9 @@ class MealPlannerPageBuilder extends StatelessWidget {
           if (snapshot.hasError) {
             return ErrorPageHandler(error: snapshot.error.toString());
           } else {
-            var plannedMeals = snapshot.data!.object as List<PlannedMealModel>;
+            var plannedMeals = snapshot.data!.object != null
+                ? snapshot.data!.object as List<PlannedMealModel>
+                : <PlannedMealModel>[];
             context
                 .read<RecipeState>()
                 .setInitialMealPlanningData(plannedMeals);

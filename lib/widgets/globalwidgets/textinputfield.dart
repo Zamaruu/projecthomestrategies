@@ -8,6 +8,7 @@ class TextInputField extends StatefulWidget {
   final IconData? suffixIcon;
   final int? maxChars;
   final FocusNode focusNode;
+  final bool enabled;
   final double borderWidth;
   final int? maxLines;
   final Function? onTap;
@@ -31,6 +32,7 @@ class TextInputField extends StatefulWidget {
     this.horizontalMargin = 0.0,
     this.inputFormatters,
     this.readonly = false,
+    this.enabled = true,
   }) : super(key: key);
 
   @override
@@ -122,6 +124,7 @@ class _TextInputFieldState extends State<TextInputField> {
             ? () => widget.onTap!()
             : null,
         readOnly: widget.readonly,
+        enabled: widget.enabled,
         controller: widget.controller,
         keyboardType: widget.type,
         obscureText: widget.type == TextInputType.visiblePassword,
