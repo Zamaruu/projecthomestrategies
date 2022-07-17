@@ -14,7 +14,7 @@ class MealPlannerPage extends StatelessWidget {
 
   Future<void> _fetchMealPlannings(BuildContext ctx) async {
     var loader = LoadingSnackbar(ctx);
-    var token = Global.getToken(ctx);
+    var token = await Global.getToken(ctx);
 
     loader.showLoadingSnackbar();
     ctx.read<RecipeState>().setIsLoading(true);

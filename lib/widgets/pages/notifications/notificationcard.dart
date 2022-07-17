@@ -85,7 +85,7 @@ class _NotificationCardState extends State<NotificationCard> {
 
   Future<void> setNotificationOnSeen(BuildContext ctx) async {
     toggleLoading(true);
-    var token = ctx.read<AuthenticationState>().token;
+    var token = await Global.getToken(ctx);
     var response = await NotificationService(token).setNotificationOnseen(
       widget.notification.notificationId!,
     );

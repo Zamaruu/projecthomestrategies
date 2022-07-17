@@ -35,7 +35,7 @@ class _RecipeActionsState extends State<RecipeActions> {
     if (currentStatus) {
       setIsLoading(true);
 
-      var token = Global.getToken(ctx);
+      var token = await Global.getToken(ctx);
       var response = await RecipeService(token).removeRecipeAsFavourite(id);
 
       setIsLoading(false);
@@ -52,7 +52,7 @@ class _RecipeActionsState extends State<RecipeActions> {
     } else {
       setIsLoading(true);
 
-      var token = Global.getToken(ctx);
+      var token = await Global.getToken(ctx);
       var response = await RecipeService(token).setRecipeAsFavourite(id);
 
       setIsLoading(false);

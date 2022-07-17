@@ -1,7 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:projecthomestrategies/configure_services.dart';
+import 'package:projecthomestrategies/pages/authpages/signinpage.dart';
+import 'package:projecthomestrategies/pages/homepage/homepage.dart';
+import 'package:projecthomestrategies/pages/homepage/initialloader.dart';
 import 'package:projecthomestrategies/utils/colortheme.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/utils/localnotificationbuilder.dart';
@@ -31,39 +36,16 @@ class AppConfigLoader extends StatefulWidget {
 }
 
 class _AppConfigLoaderState extends State<AppConfigLoader> {
-  late FirebaseMessaging _firebaseMessaging;
   final GlobalKey<NavigatorState> navigatorKey =
       GlobalKey(debugLabel: "Main Navigator");
+
+  late ServiceConfiguration serviceConfiguration;
 
   @override
   void initState() {
     super.initState();
-    _firebaseMessaging = FirebaseMessaging.instance;
-    _firebaseMessaging.getToken().then((value) {
-      debugPrint(value);
-    });
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      debugPrint("message recieved");
-      debugPrint(message.notification!.body);
-      LocalNotificationBuilder(navigatorKey)
-          .createLocalFcmNotification(message);
-    });
-    // FirebaseMessaging.onBackgroundMessage(
-    //   onBackgroundHanlder,
-    // );
-    FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      debugPrint('Message clicked!');
-
-      var serviceHandler = NotificationServiceHandler(navigatorKey);
-      var route = serviceHandler.getRouteFromData(message.data["route"]);
-
-      debugPrint(route.toString());
-
-      if (route != null) {
-        serviceHandler.navigateBasedOnRoute(route);
-      }
-    });
-    FirebaseMessaging.instance.requestPermission();
+    serviceConfiguration = ServiceConfiguration(navigatorKey);
+    serviceConfiguration.initializeFirebaseMessaging();
   }
 
   @override
@@ -81,9 +63,17 @@ class _AppConfigLoaderState extends State<AppConfigLoader> {
         Locale('de', 'DE'),
       ],
       theme: context.watch<AppTheme>().customTheme,
-      initialRoute: '/auth',
+      // initialRoute: '/auth',
       routes: Global.appRoutes,
-      //home: const HomePage(),
+      home: Consumer<User?>(
+        builder: (context, user, _) {
+          if (user != null) {
+            return const InitialLoader();
+          } else {
+            return const SignInPage();
+          }
+        },
+      ),
     );
   }
 }

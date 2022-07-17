@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:projecthomestrategies/bloc/models/apiresponse_model.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
+import 'package:projecthomestrategies/bloc/provider/firebase_authentication_state.dart';
 import 'package:projecthomestrategies/pages/authpages/signuppage.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/utils/securestoragehandler.dart';
@@ -49,18 +50,21 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   Future<ApiResponseModel> tryLogin(
-      AuthenticationState authState, BuildContext ctx) async {
+    FirebaseAuthenticationState authState,
+    BuildContext ctx,
+  ) async {
     if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
       if (Global.validateEmail(emailController.text.trim())) {
         setState(() {
           isLoading = true;
         });
 
-        return await authState.signIn(
-          ctx,
+        var result = await authState.signIn(
           email: emailController.text.trim(),
           password: passwordController.text.trim(),
         );
+
+        return ApiResponseModel.success(200, result);
       } else {
         return ApiResponseModel.error(
           601,
@@ -75,7 +79,8 @@ class _SignInPageState extends State<SignInPage> {
     }
   }
 
-  Future handleSignIn(AuthenticationState auth, BuildContext ctx) async {
+  Future handleSignIn(
+      FirebaseAuthenticationState auth, BuildContext ctx) async {
     var response = await tryLogin(auth, ctx);
     setState(() {
       isLoading = false;
@@ -95,16 +100,16 @@ class _SignInPageState extends State<SignInPage> {
     }
   }
 
-  Future handleTryAgainWithSavedCredentials(
-      AuthenticationState auth, BuildContext ctx) async {
-    var credentials = await SecureStorageHandler().getLoggedInUserCredentials();
+  // Future handleTryAgainWithSavedCredentials(
+  //     FirebaseAuthenticationState auth, BuildContext ctx) async {
+  //   var credentials = await SecureStorageHandler().getLoggedInUserCredentials();
 
-    if (credentials != null) {
-      await auth.signInWithSavedCredentials(credentials, ctx);
-    } else {
-      return;
-    }
-  }
+  //   if (credentials != null) {
+  //     await auth.signInWithSavedCredentials(credentials, ctx);
+  //   } else {
+  //     return;
+  //   }
+  // }
 
   void setSignedIn(bool newValue) {
     setState(() {
@@ -116,7 +121,7 @@ class _SignInPageState extends State<SignInPage> {
   Widget build(BuildContext context) {
     return HomeStrategiesLoadingBuilder(
       isLoading: isLoading,
-      child: Consumer<AuthenticationState>(
+      child: Consumer<FirebaseAuthenticationState>(
         builder: (context, auth, _) {
           return KeyboardVisibilityBuilder(
             builder: (context, isKeyboadVisible) {
@@ -175,16 +180,18 @@ class _SignInPageState extends State<SignInPage> {
                                 style: ElevatedButton.styleFrom(
                                   minimumSize: const Size.fromHeight(40), // NEW
                                 ),
-                                onPressed: () => handleSignIn(auth, context),
+                                onPressed: () => tryLogin(auth, context),
                                 child: const Text("Anmelden"),
                               ),
                               TextButton(
                                 style: ElevatedButton.styleFrom(
                                   minimumSize: const Size.fromHeight(40), // NEW
                                 ),
-                                onPressed: () =>
-                                    handleTryAgainWithSavedCredentials(
-                                        auth, context),
+                                onPressed: () => {},
+                                //     handleTryAgainWithSavedCredentials(
+                                //   auth,
+                                //   context,
+                                // ),
                                 child: const Text("Erneut versuchen"),
                               ),
                             ],
@@ -202,24 +209,6 @@ class _SignInPageState extends State<SignInPage> {
                       ),
                   ],
                 ),
-                // floatingActionButton: !isKeyboadVisible
-                //     ? SizedBox(
-                //         width: MediaQuery.of(context).size.width,
-                //         child: Row(
-                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //           children: [
-                //             Padding(
-                //               padding: const EdgeInsets.only(left: 40.0),
-                //               child: TextButton(
-                //                 onPressed: () =>
-                //                     navigateToRegisterPage(context),
-                //                 child: const Text("Noch kein Konto?"),
-                //               ),
-                //             ),
-                //           ],
-                //         ),
-                //       )
-                //     : null,
               );
             },
           );

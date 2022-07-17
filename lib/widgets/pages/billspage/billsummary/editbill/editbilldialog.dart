@@ -6,6 +6,7 @@ import 'package:projecthomestrategies/bloc/models/billimage_model.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/provider/billing_state.dart';
 import 'package:projecthomestrategies/bloc/provider/edit_bill_state.dart';
+import 'package:projecthomestrategies/bloc/provider/firebase_authentication_state.dart';
 import 'package:projecthomestrategies/service/apiresponsehandler_service.dart';
 import 'package:projecthomestrategies/service/billing_service.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
@@ -55,7 +56,7 @@ class EditBillDialog extends StatelessWidget {
 
   BillModel _buildBill(BuildContext ctx, EditBillState editState) {
     var currentBill = editState.bill;
-    var user = ctx.read<AuthenticationState>().sessionUser;
+    var user = ctx.read<FirebaseAuthenticationState>().sessionUser;
     var amount = double.tryParse(
       editState.moneySumController.text.trim(),
     );
@@ -87,7 +88,7 @@ class EditBillDialog extends StatelessWidget {
 
     toggleLoading(true, ctx, loader);
 
-    var token = ctx.read<AuthenticationState>().token;
+    var token = await Global.getToken(ctx);
     var changedBill = _buildBill(ctx, editState);
     var response = await BillingService(token).editBill(changedBill);
 
@@ -137,7 +138,7 @@ class EditBillDialog extends StatelessWidget {
       if (result) {
         toggleLoading(true, ctx, loader);
 
-        var token = ctx.read<AuthenticationState>().token;
+        var token = await Global.getToken(ctx);
         var imageResponse = await _deleteBillImages(ctx, deleteAll: true);
         var response = await BillingService(token).deleteBill(bill.billId!);
 
@@ -174,7 +175,7 @@ class EditBillDialog extends StatelessWidget {
     BuildContext ctx, {
     bool deleteAll = false,
   }) async {
-    var token = Global.getToken(ctx);
+    var token = await Global.getToken(ctx);
     var deleteImages = deleteAll
         ? ctx
             .read<EditBillState>()

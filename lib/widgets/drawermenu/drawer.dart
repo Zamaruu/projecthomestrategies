@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/models/user_model.dart';
+import 'package:projecthomestrategies/bloc/provider/firebase_authentication_state.dart';
 import 'package:projecthomestrategies/main.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/draweravatar.dart';
@@ -18,7 +19,7 @@ class MenuDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: SafeArea(
-        child: Consumer<AuthenticationState>(
+        child: Consumer<FirebaseAuthenticationState>(
           builder: (context, authState, _) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,13 +126,13 @@ class MenuDrawer extends StatelessWidget {
                   icon: FontAwesomeIcons.signOutAlt,
                   drawerTitle: "Abmelden",
                   onClick: () async {
-                    await context.read<AuthenticationState>().signOut();
-                    Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(
-                        builder: (context) => const HomeStrategies(),
-                      ),
-                      (route) => false,
-                    );
+                    await context.read<FirebaseAuthenticationState>().signOut();
+                    // Navigator.of(context).pushAndRemoveUntil(
+                    //   MaterialPageRoute(
+                    //     builder: (context) => const HomeStrategies(),
+                    //   ),
+                    //   (route) => false,
+                    // );
                   },
                 ),
               ],

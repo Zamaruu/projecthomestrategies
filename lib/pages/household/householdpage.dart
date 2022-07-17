@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/models/household_model.dart';
+import 'package:projecthomestrategies/bloc/provider/firebase_authentication_state.dart';
 import 'package:projecthomestrategies/pages/household/createhousehold.dart';
 import 'package:projecthomestrategies/pages/household/householdmanagementpage.dart';
 import 'package:projecthomestrategies/widgets/basescaffold/basescaffold.dart';
@@ -13,7 +14,8 @@ class HouseholdPage extends StatelessWidget {
   HouseholdPage({Key? key}) : super(key: key);
 
   Widget checkIfUserHasHousehold(BuildContext context) {
-    household = context.read<AuthenticationState>().sessionUser.household;
+    household =
+        context.read<FirebaseAuthenticationState>().sessionUser.household;
 
     if (household == null) {
       return const CreateHouseholdPage();

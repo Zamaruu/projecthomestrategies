@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/models/user_model.dart';
+import 'package:projecthomestrategies/bloc/provider/firebase_authentication_state.dart';
 import 'package:projecthomestrategies/pages/household/createnewhouseholddialog.dart';
 import 'package:projecthomestrategies/widgets/basescaffold/basescaffold.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +32,7 @@ class CreateHouseholdPage extends StatelessWidget {
             ElevatedButton(
               onPressed: () => createNewHousehold(
                 context,
-                context.read<AuthenticationState>().sessionUser,
+                context.read<FirebaseAuthenticationState>().sessionUser,
               ),
               child: const Icon(
                 Icons.group_add,

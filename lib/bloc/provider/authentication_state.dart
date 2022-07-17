@@ -8,7 +8,7 @@ import 'package:projecthomestrategies/utils/securestoragehandler.dart';
 
 enum Status { uninitialized, authenticated, authenticating, unauthenticated }
 
-class AuthenticationState with ChangeNotifier {
+class OldAuthenticationState with ChangeNotifier {
   late UserModel sessionUser;
   late String token;
   // ignore: prefer_final_fields

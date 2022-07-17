@@ -108,7 +108,7 @@ class _CreateHouseholdDialogState extends State<CreateHouseholdDialog> {
       );
 
       toggleLoading(true);
-      var token = Global.getToken(ctx);
+      var token = await Global.getToken(ctx);
       var response =
           await HouseholdService(token).createNewHousehold(newHousehold);
 

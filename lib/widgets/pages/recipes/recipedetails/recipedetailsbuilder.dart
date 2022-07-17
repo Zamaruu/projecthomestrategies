@@ -5,6 +5,7 @@ import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/provider/detailrecipe_state.dart';
 import 'package:projecthomestrategies/bloc/provider/recipe_state.dart';
 import 'package:projecthomestrategies/service/recipe_service.dart';
+import 'package:projecthomestrategies/utils/token_provider.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/errorpage.dart';
 import 'package:projecthomestrategies/widgets/pages/recipes/recipedetails/recipedetailspage.dart';
 import 'package:provider/provider.dart';
@@ -24,9 +25,9 @@ class RecipeDetailsBuilder extends StatelessWidget {
         child: const RecipeDetailsPage(),
       );
     } else {
-      return Consumer<AuthenticationState>(
-        builder: (context, auth, _) => FutureBuilder<ApiResponseModel>(
-          future: RecipeService(auth.token).getSingleRecipe(id),
+      return TokenProvider(
+        tokenBuilder: (token) => FutureBuilder<ApiResponseModel>(
+          future: RecipeService(token).getSingleRecipe(id),
           builder: (
             BuildContext context,
             AsyncSnapshot<ApiResponseModel> snapshot,

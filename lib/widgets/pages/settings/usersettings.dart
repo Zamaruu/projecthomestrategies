@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/models/user_model.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
+import 'package:projecthomestrategies/bloc/provider/firebase_authentication_state.dart';
 import 'package:projecthomestrategies/widgets/pages/homepage/panelheading.dart';
 import 'package:projecthomestrategies/widgets/pages/settings/datatile.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +13,7 @@ class UserSettings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Selector<AuthenticationState, UserModel>(
+    return Selector<FirebaseAuthenticationState, UserModel>(
       selector: (context, model) => model.sessionUser,
       builder: (context, user, _) {
         return Column(

@@ -54,7 +54,7 @@ class _UserManagementTileState extends State<UserManagementTile> {
     setState(() {
       isLoading = true;
     });
-    var token = ctx.read<AuthenticationState>().token;
+    var token = await Global.getToken(ctx);
     var response = await HouseholdService(token).removeUserFromHousehold(
       widget.user,
       widget.householdId,

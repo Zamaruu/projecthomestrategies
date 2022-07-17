@@ -3,8 +3,10 @@ import 'package:projecthomestrategies/bloc/models/user_model.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/models/billcategory_model.dart';
 import 'package:projecthomestrategies/bloc/models/household_model.dart';
+import 'package:projecthomestrategies/bloc/provider/firebase_authentication_state.dart';
 import 'package:projecthomestrategies/service/billing_service.dart';
 import 'package:projecthomestrategies/service/messenger_service.dart';
+import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/cancelbutton.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/primarybutton.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/loading/somesrategiesloadingbuilder.dart';
@@ -100,15 +102,31 @@ class _CreateBillCategoryDialogState extends State<CreateBillCategoryDialog> {
       ),
       actions: [
         CancelButton(onCancel: () => Navigator.of(context).pop()),
-        Consumer<AuthenticationState>(
+        Consumer<FirebaseAuthenticationState>(
           builder: (context, state, _) {
-            return PrimaryButton(
-              onPressed: () => createNewCategory(
-                state.sessionUser,
-                state.token,
-              ),
-              text: "Erstellen",
-              icon: Icons.add,
+            return FutureBuilder<String>(
+              future: Global.getToken(context),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return PrimaryButton(
+                    onPressed: () => createNewCategory(
+                      state.sessionUser,
+                      snapshot.data!,
+                    ),
+                    text: "Lädt...",
+                    icon: Icons.sync,
+                  );
+                } else {
+                  return PrimaryButton(
+                    onPressed: () => createNewCategory(
+                      state.sessionUser,
+                      snapshot.data!,
+                    ),
+                    text: "Erstellen",
+                    icon: Icons.add,
+                  );
+                }
+              },
             );
           },
         ),

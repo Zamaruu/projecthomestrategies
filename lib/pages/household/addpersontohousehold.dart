@@ -34,7 +34,7 @@ class _AddUserToHouseholdState extends State<AddUserToHousehold> {
         isLoading = true;
       });
 
-      var token = Global.getToken(ctx);
+      var token = await Global.getToken(ctx);
       var response =
           await HouseholdService(token).getUserToAddToHousehold(email);
 

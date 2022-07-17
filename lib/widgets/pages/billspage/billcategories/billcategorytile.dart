@@ -17,8 +17,7 @@ class BillCategoryTile extends StatelessWidget {
       : super(key: key);
 
   void editBillCategory(BuildContext ctx) async {
-    billCategory.household =
-        ctx.read<AuthenticationState>().sessionUser.household!;
+    billCategory.household = Global.getCurrentHousehold(ctx);
     var result = await showDialog<ApiResponseModel>(
       context: ctx,
       builder: (context) {
@@ -57,7 +56,7 @@ class BillCategoryTile extends StatelessWidget {
 
     if (result != null) {
       if (result) {
-        var token = ctx.read<AuthenticationState>().token;
+        var token = await Global.getToken(ctx);
         var response = await BillingService(token)
             .deleteBillCategory(billCategory.billCategoryId!);
 

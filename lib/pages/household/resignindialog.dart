@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
+import 'package:projecthomestrategies/bloc/provider/firebase_authentication_state.dart';
 import 'package:projecthomestrategies/main.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/primarybutton.dart';
 import 'package:provider/provider.dart';
@@ -24,12 +25,12 @@ class ReSignInDialog extends StatelessWidget {
             ),
             PrimaryButton(
               onPressed: () {
-                context.read<AuthenticationState>().signOut();
+                context.read<FirebaseAuthenticationState>().signOut();
 
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  "/auth",
-                  (route) => false,
-                );
+                // Navigator.of(context).pushNamedAndRemoveUntil(
+                //   "/auth",
+                //   (route) => false,
+                // );
                 // Navigator.pushAndRemoveUntil(
                 //   context,
                 //   MaterialPageRoute(

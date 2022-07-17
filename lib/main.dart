@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:projecthomestrategies/app_config_loader.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/provider/filter_bills_state.dart';
+import 'package:projecthomestrategies/bloc/provider/firebase_authentication_state.dart';
 import 'package:projecthomestrategies/bloc/provider/recipe_state.dart';
 import 'package:projecthomestrategies/utils/colortheme.dart';
 import 'package:provider/provider.dart';
@@ -29,9 +31,9 @@ class HomeStrategies extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => AppTheme(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => AuthenticationState(),
-        ),
+        // ChangeNotifierProvider(
+        //   create: (context) => AuthenticationState(),
+        // ),
         ChangeNotifierProvider(
           create: (context) => BillingState(
             <BillCategoryModel>[],
@@ -51,6 +53,13 @@ class HomeStrategies extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => BillFilterState(),
+        ),
+        ChangeNotifierProvider(
+            create: (_) => FirebaseAuthenticationState(FirebaseAuth.instance)),
+        StreamProvider(
+          create: (context) =>
+              context.read<FirebaseAuthenticationState>().authState,
+          initialData: null,
         ),
       ],
       child: const AppConfigLoader(),

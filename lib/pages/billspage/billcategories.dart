@@ -4,6 +4,7 @@ import 'package:projecthomestrategies/bloc/models/apiresponse_model.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/models/billcategory_model.dart';
 import 'package:projecthomestrategies/bloc/provider/billing_state.dart';
+import 'package:projecthomestrategies/bloc/provider/firebase_authentication_state.dart';
 import 'package:projecthomestrategies/service/apiresponsehandler_service.dart';
 import 'package:projecthomestrategies/service/billing_service.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
@@ -50,9 +51,8 @@ class BillCategoriesDialog extends StatelessWidget {
   }
 
   Future<void> refreshBillCategories(BuildContext ctx) async {
-    var token = Global.getToken(ctx);
-    var householdId =
-        ctx.read<AuthenticationState>().sessionUser.household!.householdId!;
+    var token = await Global.getToken(ctx);
+    var householdId = Global.getCurrentHousehold(ctx).householdId!;
     var response =
         await BillingService(token).getBillCategoriesForHousehold(householdId);
 

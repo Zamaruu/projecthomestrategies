@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/models/billcategory_model.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/service/billing_service.dart';
+import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/cancelbutton.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/primarybutton.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/loading/somesrategiesloadingbuilder.dart';
@@ -59,7 +60,7 @@ class _EditCategoryDialogState extends State<EditCategoryDialog> {
 
     widget.catgeory.billCategoryName = nameController.text.trim();
 
-    var token = context.read<AuthenticationState>().token;
+    var token = await Global.getToken(context);
     var result =
         await BillingService(token).editBillingCategory(widget.catgeory);
 

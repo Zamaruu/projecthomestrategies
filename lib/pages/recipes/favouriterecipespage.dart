@@ -12,7 +12,7 @@ class FavouriteRecipesPage extends StatelessWidget {
   const FavouriteRecipesPage({Key? key}) : super(key: key);
 
   Future<void> refreshFavourites(BuildContext ctx) async {
-    var token = Global.getToken(ctx);
+    var token = await Global.getToken(ctx);
     ApiResponseModel response =
         await RecipeService(token).getFavouriteRecipes();
 

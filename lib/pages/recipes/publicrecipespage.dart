@@ -35,7 +35,7 @@ class _PublicRecipesPageState extends State<PublicRecipesPage> {
   }
 
   Future<void> refreshRecipes(BuildContext ctx) async {
-    var token = Global.getToken(ctx);
+    var token = await Global.getToken(ctx);
     ApiResponseModel response = await RecipeService(token).getRecipesBasic();
 
     if (response.isSuccess()) {
@@ -117,7 +117,7 @@ class PaginationArea extends StatelessWidget {
     recipeState.setIsLoading(true);
 
     var page = recipeState.pageCount;
-    var token = Global.getToken(ctx);
+    var token = await Global.getToken(ctx);
 
     page = page + 1;
 

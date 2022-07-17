@@ -13,7 +13,7 @@ class NotificationDialog extends StatelessWidget {
   const NotificationDialog({Key? key}) : super(key: key);
 
   Future<void> refreshNotifications(BuildContext ctx) async {
-    var token = Global.getToken(ctx);
+    var token = await Global.getToken(ctx);
     var response = await NotificationService(token).getUnseenNotifcations();
 
     if (response.statusCode == 200) {

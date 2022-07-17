@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
+import 'package:projecthomestrategies/bloc/provider/firebase_authentication_state.dart';
 import 'package:projecthomestrategies/service/apiresponsehandler_service.dart';
 import 'package:projecthomestrategies/service/settings_service.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
@@ -23,7 +24,7 @@ class SelectColorTile extends StatelessWidget {
   }
 
   Future<void> setColor(BuildContext ctx, Color color) async {
-    var token = Global.getToken(ctx);
+    var token = await Global.getToken(ctx);
     var user = Global.getCurrentUser(ctx);
 
     user.color = color;
@@ -40,7 +41,7 @@ class SelectColorTile extends StatelessWidget {
     loader.dismissSnackbar();
 
     if (response.statusCode == 200) {
-      var model = ctx.read<AuthenticationState>();
+      var model = ctx.read<FirebaseAuthenticationState>();
       var temp = model.sessionUser;
       temp.color = color;
       model.setUser(temp);
@@ -54,7 +55,7 @@ class SelectColorTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AuthenticationState>(
+    return Consumer<FirebaseAuthenticationState>(
       builder: (context, model, _) => ListTile(
         leading: Container(
           height: 35,

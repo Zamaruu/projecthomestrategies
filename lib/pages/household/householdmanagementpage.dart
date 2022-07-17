@@ -23,26 +23,41 @@ class HouseholdDataLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<ApiResponseModel>(
-      future: HouseholdService(Global.getToken(context))
-          .getHouseholdForManagement(householdModel.householdId!),
-      builder:
-          (BuildContext context, AsyncSnapshot<ApiResponseModel> snapshot) {
+    return FutureBuilder<String>(
+      future: Global.getToken(context),
+      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const LoadingProcess();
-        }
-        if (snapshot.hasError || snapshot.data!.hasError!) {
-          var error = snapshot.hasError
-              ? snapshot.error.toString
-              : snapshot.data!.message;
-          return ErrorPageHandler(error: error as String);
+          return Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+          );
         } else {
-          // List<UserModel> member = List<UserModel>.from(
-          //   snapshot.data!.object.map((model) => UserModel.fromJson(model)),
-          // );
-          // householdModel.householdMember = member;
-          return HouseholdManagement(
-            householdModel: snapshot.data!.object as HouseholdModel,
+          return FutureBuilder<ApiResponseModel>(
+            future: HouseholdService(snapshot.data!)
+                .getHouseholdForManagement(householdModel.householdId!),
+            builder: (BuildContext context,
+                AsyncSnapshot<ApiResponseModel> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const LoadingProcess();
+              }
+              if (snapshot.hasError || snapshot.data!.hasError!) {
+                var error = snapshot.hasError
+                    ? snapshot.error.toString
+                    : snapshot.data!.message;
+                return ErrorPageHandler(error: error as String);
+              } else {
+                // List<UserModel> member = List<UserModel>.from(
+                //   snapshot.data!.object.map((model) => UserModel.fromJson(model)),
+                // );
+                // householdModel.householdMember = member;
+                return HouseholdManagement(
+                  householdModel: snapshot.data!.object as HouseholdModel,
+                );
+              }
+            },
           );
         }
       },
@@ -85,7 +100,7 @@ class _HouseholdManagementState extends State<HouseholdManagement> {
     var exists = widget.householdModel.householdMember!
         .where((element) => element.email == newUser.email);
     if (exists.isEmpty) {
-      var token = Global.getToken(ctx);
+      var token = await Global.getToken(ctx);
 
       var response = await HouseholdService(token).addUserToHousehold(
         newUser,

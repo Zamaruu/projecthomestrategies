@@ -14,7 +14,7 @@ class NotificationOptions extends StatelessWidget {
     BuildContext ctx,
     List<int> ids,
   ) async {
-    var token = Global.getToken(ctx);
+    var token = await Global.getToken(ctx);
 
     _loader(ctx);
     var response = await NotificationService(token).setNotificationsOnseen(ids);
@@ -31,7 +31,7 @@ class NotificationOptions extends StatelessWidget {
   }
 
   Future<void> deleteAllNotifications(BuildContext ctx) async {
-    var token = Global.getToken(ctx);
+    var token = await Global.getToken(ctx);
 
     _loader(ctx);
     var response = await NotificationService(token).deleteAllNotifications();

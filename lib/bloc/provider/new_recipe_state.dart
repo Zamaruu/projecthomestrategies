@@ -62,8 +62,7 @@ class NewRecipeState with ChangeNotifier {
 
   RecipeModel buildRecipe(BuildContext ctx) {
     return RecipeModel(
-      householdId:
-          ctx.read<AuthenticationState>().getSessionHousehold()!.householdId!,
+      householdId: Global.getCurrentHousehold(ctx).householdId,
       creatorId: Global.getCurrentUser(ctx).userId!,
       name: recipeName.text.trim(),
       desctiption: description.text.trim(),

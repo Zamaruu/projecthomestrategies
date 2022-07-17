@@ -67,7 +67,7 @@ class _SearchMealBarState extends State<SearchMealBar> {
     _toggleIsLoading(true);
 
     await _addItemToSearchHistory(query);
-    var token = ctx.read<AuthenticationState>().token;
+    var token = await Global.getToken(ctx);
     var response = await RecipeService(token).queryRecipesByName(query);
 
     _toggleIsLoading(false);

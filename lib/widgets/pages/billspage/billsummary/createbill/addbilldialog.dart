@@ -4,6 +4,7 @@ import 'package:projecthomestrategies/bloc/models/billcategory_model.dart';
 import 'package:projecthomestrategies/bloc/models/billimage_model.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/provider/billing_state.dart';
+import 'package:projecthomestrategies/bloc/provider/firebase_authentication_state.dart';
 import 'package:projecthomestrategies/bloc/provider/new_bill_state.dart';
 import 'package:projecthomestrategies/service/apiresponsehandler_service.dart';
 import 'package:projecthomestrategies/service/billing_service.dart';
@@ -66,9 +67,9 @@ class _AddBillModalState extends State<AddBillModal> {
 
     toggleLoading(true, ctx, loader);
 
-    var token = Global.getToken(ctx);
+    var token = await Global.getToken(ctx);
 
-    var user = ctx.read<AuthenticationState>().sessionUser;
+    var user = ctx.read<FirebaseAuthenticationState>().sessionUser;
     var amount = double.tryParse(
         ctx.read<NewBillState>().moneySumController.text.trim());
     var category =

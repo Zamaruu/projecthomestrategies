@@ -67,9 +67,8 @@ class _BillsSummaryState extends State<BillsSummary> {
   }
 
   Future<void> refreshBills(BuildContext ctx) async {
-    var token = Global.getToken(ctx);
-    var householdId =
-        ctx.read<AuthenticationState>().sessionUser.household!.householdId!;
+    var token = await Global.getToken(ctx);
+    var householdId = Global.getCurrentHousehold(ctx).householdId!;
     var response =
         await BillingService(token).getBillsForHousehold(householdId);
 
@@ -134,13 +133,13 @@ class _BillsSummaryState extends State<BillsSummary> {
     setLoading(true);
 
     var page = billState.pageCount;
-    var token = Global.getToken(ctx);
-    var household = ctx.read<AuthenticationState>().getSessionHousehold();
+    var token = await Global.getToken(ctx);
+    var household = Global.getCurrentHousehold(ctx);
 
     page = page + 1;
 
     var response = await BillingService(token).getBillsForHousehold(
-      household!.householdId!,
+      household.householdId!,
       pageNumber: page,
       pageSize: billState.pageSize,
     );

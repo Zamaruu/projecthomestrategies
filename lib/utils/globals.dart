@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:projecthomestrategies/bloc/models/household_model.dart';
 import 'package:projecthomestrategies/bloc/models/user_model.dart';
+import 'package:projecthomestrategies/bloc/provider/firebase_authentication_state.dart';
 import 'package:projecthomestrategies/pages/billspage/billpagebuilder.dart';
 import 'package:projecthomestrategies/pages/homepage/initialloader.dart';
 import 'package:projecthomestrategies/pages/homepage/notificationdialog.dart';
@@ -39,7 +40,7 @@ class Global {
     "/signup": (context) => const SignUpPage(),
     "/household": (context) => HouseholdPage(),
     "/recipes": (context) => const RecipeBuilder(),
-    "/auth": (context) => const AuthenticationHander(),
+    // "/auth": (context) => const AuthenticationHander(),
     "/notifications": (context) => const NotificationDialog(),
     "/settings": (context) => const SettingsPage(),
   };
@@ -51,7 +52,7 @@ class Global {
     "/signup": const SignUpPage(),
     "/household": HouseholdPage(),
     "/recipes": const RecipeBuilder(),
-    "/auth": const AuthenticationHander(),
+    // "/auth": const AuthenticationHander(),
     "/notifications": const NotificationDialog(),
     "/settings": const SettingsPage(),
   };
@@ -80,9 +81,7 @@ class Global {
   ) {
     key.currentState!.push(
       MaterialPageRoute(
-        builder: (context) => AuthenticationWrapper(
-          child: staticAppRoutes[key]!,
-        ),
+        builder: (context) => staticAppRoutes[key]!,
       ),
     );
     //key.currentState!.pushNamed(nav);
@@ -123,16 +122,16 @@ class Global {
     return text.replaceAll('"', "");
   }
 
-  static String getToken(BuildContext context) {
-    return context.read<AuthenticationState>().token;
+  static Future<String> getToken(BuildContext context) async {
+    return await context.read<FirebaseAuthenticationState>().getToken();
   }
 
   static UserModel getCurrentUser(BuildContext context) {
-    return context.read<AuthenticationState>().sessionUser;
+    return context.read<FirebaseAuthenticationState>().sessionUser;
   }
 
   static HouseholdModel getCurrentHousehold(BuildContext context) {
-    return context.read<AuthenticationState>().getSessionHousehold()!;
+    return context.read<FirebaseAuthenticationState>().getSessionHousehold()!;
   }
 
   static bool isStringNullOrEmpty(String? s) {

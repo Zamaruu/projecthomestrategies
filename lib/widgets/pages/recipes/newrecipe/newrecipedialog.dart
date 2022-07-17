@@ -18,7 +18,7 @@ class NewRecipeDialog extends StatelessWidget {
     var loader = LoadingSnackbar(ctx);
 
     var recipe = ctx.read<NewRecipeState>().buildRecipe(ctx);
-    var token = Global.getToken(ctx);
+    var token = await Global.getToken(ctx);
 
     loader.showLoadingSnackbar();
     ctx.read<NewRecipeState>().setIsLoading(true);
