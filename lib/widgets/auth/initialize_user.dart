@@ -17,7 +17,9 @@ class InitializeUser extends StatelessWidget {
     var user = data.object as UserModel;
 
     ctx.read<FirebaseAuthenticationState>().setUser(user);
-    ctx.read<FirebaseAuthenticationState>().setHosuehold(user.household!);
+    if (user.household != null) {
+      ctx.read<FirebaseAuthenticationState>().setHosuehold(user.household!);
+    }
   }
 
   @override

@@ -29,7 +29,15 @@ class BillContentBuilder extends StatelessWidget {
                 BuildContext context,
                 AsyncSnapshot<Map<String, List>> snapshot,
               ) {
-                if (snapshot.connectionState == ConnectionState.waiting) {}
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Scaffold(
+                    body: Center(
+                      child: CircularProgressIndicator(
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  );
+                }
                 if (snapshot.hasError) {
                   return ErrorPageHandler(error: snapshot.error.toString());
                 } else {
