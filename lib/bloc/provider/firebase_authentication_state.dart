@@ -6,6 +6,7 @@ import 'package:projecthomestrategies/bloc/models/user_model.dart';
 class FirebaseAuthenticationState with ChangeNotifier {
   final FirebaseAuth firebaseAuth;
   late UserModel sessionUser;
+  late HouseholdModel sessionHousehold;
 
   //FirebaseAuth instance
   FirebaseAuthenticationState(this.firebaseAuth);
@@ -73,8 +74,13 @@ class FirebaseAuthenticationState with ChangeNotifier {
     return sessionUser.household;
   }
 
-  void setUser(UserModel newUser) {
+  void setUser(UserModel newUser, {bool notify = false}) {
     sessionUser = newUser;
-    notifyListeners();
+    if (notify) notifyListeners();
+  }
+
+  void setHosuehold(HouseholdModel newHousehold, {bool notify = false}) {
+    sessionHousehold = newHousehold;
+    if (notify) notifyListeners();
   }
 }

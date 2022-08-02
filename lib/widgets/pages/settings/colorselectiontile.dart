@@ -44,7 +44,7 @@ class SelectColorTile extends StatelessWidget {
       var model = ctx.read<FirebaseAuthenticationState>();
       var temp = model.sessionUser;
       temp.color = color;
-      model.setUser(temp);
+      model.setUser(temp, notify: true);
     } else {
       ApiResponseHandlerService.fromResponseModel(
         context: ctx,

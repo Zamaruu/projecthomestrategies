@@ -55,7 +55,8 @@ class HomeStrategies extends StatelessWidget {
           create: (context) => BillFilterState(),
         ),
         ChangeNotifierProvider(
-            create: (_) => FirebaseAuthenticationState(FirebaseAuth.instance)),
+          create: (_) => FirebaseAuthenticationState(FirebaseAuth.instance),
+        ),
         StreamProvider(
           create: (context) =>
               context.read<FirebaseAuthenticationState>().authState,
