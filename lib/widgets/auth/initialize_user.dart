@@ -3,6 +3,7 @@ import 'package:projecthomestrategies/bloc/models/apiresponse_model.dart';
 import 'package:projecthomestrategies/bloc/models/user_model.dart';
 import 'package:projecthomestrategies/bloc/provider/firebase_authentication_state.dart';
 import 'package:projecthomestrategies/service/user_service.dart';
+import 'package:projecthomestrategies/utils/homestrategies_fullscreen_loader.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/errorpage.dart';
 import 'package:provider/provider.dart';
 
@@ -29,12 +30,8 @@ class InitializeUser extends StatelessWidget {
       builder:
           (BuildContext context, AsyncSnapshot<ApiResponseModel> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
+          return const HomestrategiesFullscreenLoader(
+            loaderLabel: "Lade Benutzerdaten",
           );
         } else if (snapshot.hasError) {
           return ErrorPageHandler(error: snapshot.error.toString());

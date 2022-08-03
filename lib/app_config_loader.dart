@@ -6,7 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:projecthomestrategies/configure_services.dart';
 import 'package:projecthomestrategies/pages/authpages/signinpage.dart';
 import 'package:projecthomestrategies/pages/homepage/homepage.dart';
-import 'package:projecthomestrategies/pages/homepage/initialloader.dart';
+import 'package:projecthomestrategies/widgets/homepage/initialloader.dart';
 import 'package:projecthomestrategies/utils/colortheme.dart';
 import 'package:projecthomestrategies/utils/globals.dart';
 import 'package:projecthomestrategies/utils/localnotificationbuilder.dart';

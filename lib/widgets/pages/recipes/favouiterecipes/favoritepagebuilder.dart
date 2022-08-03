@@ -6,6 +6,7 @@ import 'package:projecthomestrategies/bloc/provider/firebase_authentication_stat
 import 'package:projecthomestrategies/bloc/provider/recipe_state.dart';
 import 'package:projecthomestrategies/pages/recipes/favouriterecipespage.dart';
 import 'package:projecthomestrategies/service/recipe_service.dart';
+import 'package:projecthomestrategies/utils/homestrategies_fullscreen_loader.dart';
 import 'package:projecthomestrategies/utils/token_provider.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/errorpage.dart';
 import 'package:provider/provider.dart';
@@ -28,21 +29,23 @@ class FavouritePageBuilder extends StatelessWidget {
                 AsyncSnapshot<ApiResponseModel> snapshot,
               ) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Scaffold(
-                    backgroundColor: Colors.transparent,
-                    body: Center(
-                      child: CircularProgressIndicator(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
+                  return const HomestrategiesFullscreenLoader(
+                    loaderLabel: "Lade Favoriten",
                   );
                 }
                 if (snapshot.hasError) {
                   return ErrorPageHandler(error: snapshot.error.toString());
                 } else {
-                  var favouriteRecipes =
-                      snapshot.data!.object as List<FullRecipeModel>;
-                  context.read<RecipeState>().setFavourites(favouriteRecipes);
+                  var favouriteRecipes = snapshot.data!.object;
+
+                  if (favouriteRecipes != null) {
+                    context.read<RecipeState>().setFavourites(
+                        favouriteRecipes as List<FullRecipeModel>);
+                  } else {
+                    context
+                        .read<RecipeState>()
+                        .setFavourites(<FullRecipeModel>[]);
+                  }
 
                   return const FavouriteRecipesPage();
                 }

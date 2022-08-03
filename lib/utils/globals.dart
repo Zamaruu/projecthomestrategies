@@ -4,7 +4,7 @@ import 'package:projecthomestrategies/bloc/models/household_model.dart';
 import 'package:projecthomestrategies/bloc/models/user_model.dart';
 import 'package:projecthomestrategies/bloc/provider/firebase_authentication_state.dart';
 import 'package:projecthomestrategies/pages/billspage/billpagebuilder.dart';
-import 'package:projecthomestrategies/pages/homepage/initialloader.dart';
+import 'package:projecthomestrategies/widgets/homepage/initialloader.dart';
 import 'package:projecthomestrategies/pages/homepage/notificationdialog.dart';
 import 'package:projecthomestrategies/pages/recipes/recipebuilder.dart';
 import 'package:projecthomestrategies/pages/settings/settingspage.dart';
@@ -81,7 +81,7 @@ class Global {
   ) {
     key.currentState!.push(
       MaterialPageRoute(
-        builder: (context) => staticAppRoutes[key]!,
+        builder: (context) => staticAppRoutes[nav]!,
       ),
     );
     //key.currentState!.pushNamed(nav);

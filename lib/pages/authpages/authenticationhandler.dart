@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/pages/authpages/signinpage.dart';
 import 'package:projecthomestrategies/pages/homepage/homepage.dart';
-import 'package:projecthomestrategies/pages/homepage/initialloader.dart';
+import 'package:projecthomestrategies/widgets/homepage/initialloader.dart';
 import 'package:projecthomestrategies/utils/securestoragehandler.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/errorpage.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/loading/loadingprocessor.dart';

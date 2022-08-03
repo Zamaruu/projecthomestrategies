@@ -7,6 +7,7 @@ import 'package:projecthomestrategies/bloc/provider/billing_state.dart';
 import 'package:projecthomestrategies/bloc/provider/filter_bills_state.dart';
 import 'package:projecthomestrategies/bloc/provider/firebase_authentication_state.dart';
 import 'package:projecthomestrategies/pages/billspage/billspage.dart';
+import 'package:projecthomestrategies/utils/homestrategies_fullscreen_loader.dart';
 import 'package:projecthomestrategies/utils/token_provider.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/errorpage.dart';
 import 'package:provider/provider.dart';
@@ -30,12 +31,8 @@ class BillContentBuilder extends StatelessWidget {
                 AsyncSnapshot<Map<String, List>> snapshot,
               ) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Scaffold(
-                    body: Center(
-                      child: CircularProgressIndicator(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
+                  return const HomestrategiesFullscreenLoader(
+                    loaderLabel: "Lade Rechnungen",
                   );
                 }
                 if (snapshot.hasError) {

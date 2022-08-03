@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:projecthomestrategies/bloc/models/apiresponse_model.dart';
 import 'package:projecthomestrategies/bloc/models/fullrecipe.dart';
-import 'package:projecthomestrategies/bloc/provider/authentication_state.dart';
 import 'package:projecthomestrategies/bloc/provider/firebase_authentication_state.dart';
 import 'package:projecthomestrategies/bloc/provider/recipe_state.dart';
 import 'package:projecthomestrategies/pages/recipes/recipepage.dart';
 import 'package:projecthomestrategies/service/recipe_service.dart';
+import 'package:projecthomestrategies/utils/homestrategies_fullscreen_loader.dart';
 import 'package:projecthomestrategies/utils/token_provider.dart';
 import 'package:projecthomestrategies/widgets/globalwidgets/errorpage.dart';
 import 'package:provider/provider.dart';
@@ -28,12 +28,8 @@ class RecipeBuilder extends StatelessWidget {
                 AsyncSnapshot<ApiResponseModel> snapshot,
               ) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Scaffold(
-                    body: Center(
-                      child: CircularProgressIndicator(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
+                  return const HomestrategiesFullscreenLoader(
+                    loaderLabel: "Lade Rezepte",
                   );
                 }
                 if (snapshot.hasError) {
